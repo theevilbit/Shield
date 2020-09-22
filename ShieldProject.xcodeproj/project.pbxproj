@@ -1,0 +1,735 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		414158BD2492081D00DABD0D /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 414158BC2492081D00DABD0D /* Preferences.m */; };
+		4141E6C7248F661A00C090BA /* ProcessMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */; };
+		4141E6C8248F661A00C090BA /* Process.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C888248D8C8800D6CBD2 /* Process.m */; };
+		4141E6C9248F661A00C090BA /* signing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88A248D8C8800D6CBD2 /* signing.m */; };
+		4141E6CA248F661A00C090BA /* utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88D248D8C8800D6CBD2 /* utilities.m */; };
+		4164BF3D248D938B00B5F881 /* libEndpointSecurity.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */; };
+		4164BF3E248D939200B5F881 /* libbsm.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */; };
+		4181AD1524A7CE0E0043B995 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4181AD1424A7CE0E0043B995 /* AppDelegate.m */; };
+		4181AD1724A7CE0E0043B995 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4181AD1624A7CE0E0043B995 /* Assets.xcassets */; };
+		4181AD1A24A7CE0E0043B995 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4181AD1824A7CE0E0043B995 /* MainMenu.xib */; };
+		4181AD1D24A7CE0E0043B995 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4181AD1C24A7CE0E0043B995 /* main.m */; };
+		4181AD2324A7CE380043B995 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4181AD2224A7CE380043B995 /* ServiceManagement.framework */; };
+		4181AD2524A7CF1F0043B995 /* ShieldHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4181AD1124A7CE0E0043B995 /* ShieldHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4185C83E248D064700D6CBD2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C83D248D064700D6CBD2 /* AppDelegate.m */; };
+		4185C840248D064800D6CBD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4185C83F248D064800D6CBD2 /* Assets.xcassets */; };
+		4185C843248D064800D6CBD2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4185C841248D064800D6CBD2 /* MainMenu.xib */; };
+		4185C846248D064800D6CBD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C845248D064800D6CBD2 /* main.m */; };
+		4185C85A248D14E700D6CBD2 /* dot.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4185C859248D14E700D6CBD2 /* dot.pdf */; };
+		4185C88E248D8C8800D6CBD2 /* ProcessMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */; };
+		4185C88F248D8C8800D6CBD2 /* Process.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C888248D8C8800D6CBD2 /* Process.m */; };
+		4185C890248D8C8800D6CBD2 /* signing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88A248D8C8800D6CBD2 /* signing.m */; };
+		4185C891248D8C8800D6CBD2 /* utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88D248D8C8800D6CBD2 /* utilities.m */; };
+		4185C8AF248D8E0E00D6CBD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C8AE248D8E0E00D6CBD2 /* main.m */; };
+		4185C8B4248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 4185C8A7248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4185C8BB248D8EB400D6CBD2 /* libbsm.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */; };
+		4185C8BD248D8ED700D6CBD2 /* libEndpointSecurity.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */; };
+		41A184D7248E209000A71944 /* ShieldExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A184D6248E209000A71944 /* ShieldExtension.m */; };
+		41AD8A8024A5375F00DF7F23 /* logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AD8A7F24A5375F00DF7F23 /* logging.m */; };
+		41AD8A8124A5375F00DF7F23 /* logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AD8A7F24A5375F00DF7F23 /* logging.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4185C8B2248D8E0E00D6CBD2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4185C831248D064700D6CBD2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4185C8A6248D8E0E00D6CBD2;
+			remoteInfo = Extension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4164BF40248D9B2300B5F881 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4181AD2424A7CEF00043B995 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				4181AD2524A7CF1F0043B995 /* ShieldHelper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C8B8248D8E0E00D6CBD2 /* Embed System Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				4185C8B4248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension in Embed System Extensions */,
+			);
+			name = "Embed System Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4132F7CE248E624500422FB2 /* XPCProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCProtocol.h; sourceTree = "<group>"; };
+		414158BA2491F34F00DABD0D /* todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = todo.txt; sourceTree = SOURCE_ROOT; };
+		414158BB249207CD00DABD0D /* Preferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		414158BC2492081D00DABD0D /* Preferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
+		414158BE249208AB00DABD0D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		4181AD1124A7CE0E0043B995 /* ShieldHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShieldHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4181AD1324A7CE0E0043B995 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4181AD1424A7CE0E0043B995 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4181AD1624A7CE0E0043B995 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4181AD1924A7CE0E0043B995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4181AD1B24A7CE0E0043B995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4181AD1C24A7CE0E0043B995 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4181AD1E24A7CE0E0043B995 /* ShieldHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldHelper.entitlements; sourceTree = "<group>"; };
+		4181AD2224A7CE380043B995 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		4185C839248D064700D6CBD2 /* Shield.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shield.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4185C83C248D064700D6CBD2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4185C83D248D064700D6CBD2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4185C83F248D064800D6CBD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4185C842248D064800D6CBD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4185C844248D064800D6CBD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4185C845248D064800D6CBD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4185C847248D064800D6CBD2 /* Shield.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shield.entitlements; sourceTree = "<group>"; };
+		4185C859248D14E700D6CBD2 /* dot.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = dot.pdf; path = Assets.xcassets/Logo.imageset/dot.pdf; sourceTree = "<group>"; };
+		4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessMonitor.m; sourceTree = "<group>"; };
+		4185C888248D8C8800D6CBD2 /* Process.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Process.m; sourceTree = "<group>"; };
+		4185C889248D8C8800D6CBD2 /* utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilities.h; sourceTree = "<group>"; };
+		4185C88A248D8C8800D6CBD2 /* signing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signing.m; sourceTree = "<group>"; };
+		4185C88B248D8C8800D6CBD2 /* ProcessMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessMonitor.h; sourceTree = "<group>"; };
+		4185C88C248D8C8800D6CBD2 /* signing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signing.h; sourceTree = "<group>"; };
+		4185C88D248D8C8800D6CBD2 /* utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = utilities.m; sourceTree = "<group>"; };
+		4185C8A7248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = com.csaba.fitzl.shield.Extension.systemextension; sourceTree = BUILT_PRODUCTS_DIR; };
+		4185C8AE248D8E0E00D6CBD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4185C8B0248D8E0E00D6CBD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4185C8B1248D8E0E00D6CBD2 /* Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Extension.entitlements; sourceTree = "<group>"; };
+		4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbsm.tbd; path = usr/lib/libbsm.tbd; sourceTree = SDKROOT; };
+		4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libEndpointSecurity.tbd; path = usr/lib/libEndpointSecurity.tbd; sourceTree = SDKROOT; };
+		41A184D5248E1FEB00A71944 /* ShieldExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShieldExtension.h; sourceTree = "<group>"; };
+		41A184D6248E209000A71944 /* ShieldExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShieldExtension.m; sourceTree = "<group>"; };
+		41AD8A7F24A5375F00DF7F23 /* logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = logging.m; sourceTree = "<group>"; };
+		41AD8A8224A537B300DF7F23 /* logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4181AD0E24A7CE0E0043B995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C836248D064700D6CBD2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4181AD2324A7CE380043B995 /* ServiceManagement.framework in Frameworks */,
+				4164BF3D248D938B00B5F881 /* libEndpointSecurity.tbd in Frameworks */,
+				4164BF3E248D939200B5F881 /* libbsm.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C8A4248D8E0E00D6CBD2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4185C8BD248D8ED700D6CBD2 /* libEndpointSecurity.tbd in Frameworks */,
+				4185C8BB248D8EB400D6CBD2 /* libbsm.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4132F7CD248E621900422FB2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				414158BA2491F34F00DABD0D /* todo.txt */,
+				4132F7CE248E624500422FB2 /* XPCProtocol.h */,
+				414158BE249208AB00DABD0D /* Constants.h */,
+				41AD8A7F24A5375F00DF7F23 /* logging.m */,
+				41AD8A8224A537B300DF7F23 /* logging.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4181AD1224A7CE0E0043B995 /* ShieldHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4181AD1324A7CE0E0043B995 /* AppDelegate.h */,
+				4181AD1424A7CE0E0043B995 /* AppDelegate.m */,
+				4181AD1624A7CE0E0043B995 /* Assets.xcassets */,
+				4181AD1824A7CE0E0043B995 /* MainMenu.xib */,
+				4181AD1B24A7CE0E0043B995 /* Info.plist */,
+				4181AD1C24A7CE0E0043B995 /* main.m */,
+				4181AD1E24A7CE0E0043B995 /* ShieldHelper.entitlements */,
+			);
+			path = ShieldHelper;
+			sourceTree = "<group>";
+		};
+		4185C830248D064700D6CBD2 = {
+			isa = PBXGroup;
+			children = (
+				4132F7CD248E621900422FB2 /* Common */,
+				4185C83B248D064700D6CBD2 /* Shield */,
+				4185C897248D8CF400D6CBD2 /* procmon */,
+				4185C8AA248D8E0E00D6CBD2 /* Extension */,
+				4181AD1224A7CE0E0043B995 /* ShieldHelper */,
+				4185C873248D8BBE00D6CBD2 /* Frameworks */,
+				4185C83A248D064700D6CBD2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4185C83A248D064700D6CBD2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4185C839248D064700D6CBD2 /* Shield.app */,
+				4185C8A7248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension */,
+				4181AD1124A7CE0E0043B995 /* ShieldHelper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4185C83B248D064700D6CBD2 /* Shield */ = {
+			isa = PBXGroup;
+			children = (
+				4185C859248D14E700D6CBD2 /* dot.pdf */,
+				4185C83C248D064700D6CBD2 /* AppDelegate.h */,
+				4185C83D248D064700D6CBD2 /* AppDelegate.m */,
+				4185C83F248D064800D6CBD2 /* Assets.xcassets */,
+				4185C841248D064800D6CBD2 /* MainMenu.xib */,
+				4185C844248D064800D6CBD2 /* Info.plist */,
+				4185C845248D064800D6CBD2 /* main.m */,
+				4185C847248D064800D6CBD2 /* Shield.entitlements */,
+			);
+			path = Shield;
+			sourceTree = "<group>";
+		};
+		4185C873248D8BBE00D6CBD2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4181AD2224A7CE380043B995 /* ServiceManagement.framework */,
+				4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */,
+				4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4185C897248D8CF400D6CBD2 /* procmon */ = {
+			isa = PBXGroup;
+			children = (
+				4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */,
+				4185C888248D8C8800D6CBD2 /* Process.m */,
+				4185C889248D8C8800D6CBD2 /* utilities.h */,
+				4185C88A248D8C8800D6CBD2 /* signing.m */,
+				4185C88B248D8C8800D6CBD2 /* ProcessMonitor.h */,
+				4185C88C248D8C8800D6CBD2 /* signing.h */,
+				4185C88D248D8C8800D6CBD2 /* utilities.m */,
+			);
+			path = procmon;
+			sourceTree = "<group>";
+		};
+		4185C8AA248D8E0E00D6CBD2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				4185C8AE248D8E0E00D6CBD2 /* main.m */,
+				4185C8B0248D8E0E00D6CBD2 /* Info.plist */,
+				4185C8B1248D8E0E00D6CBD2 /* Extension.entitlements */,
+				41A184D5248E1FEB00A71944 /* ShieldExtension.h */,
+				41A184D6248E209000A71944 /* ShieldExtension.m */,
+				414158BB249207CD00DABD0D /* Preferences.h */,
+				414158BC2492081D00DABD0D /* Preferences.m */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4181AD1024A7CE0E0043B995 /* ShieldHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4181AD1F24A7CE0E0043B995 /* Build configuration list for PBXNativeTarget "ShieldHelper" */;
+			buildPhases = (
+				4181AD0D24A7CE0E0043B995 /* Sources */,
+				4181AD0E24A7CE0E0043B995 /* Frameworks */,
+				4181AD0F24A7CE0E0043B995 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShieldHelper;
+			productName = ShieldHelper;
+			productReference = 4181AD1124A7CE0E0043B995 /* ShieldHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4185C838248D064700D6CBD2 /* Shield */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4185C84A248D064800D6CBD2 /* Build configuration list for PBXNativeTarget "Shield" */;
+			buildPhases = (
+				4185C835248D064700D6CBD2 /* Sources */,
+				4185C836248D064700D6CBD2 /* Frameworks */,
+				4185C837248D064700D6CBD2 /* Resources */,
+				4185C8B8248D8E0E00D6CBD2 /* Embed System Extensions */,
+				4181AD2424A7CEF00043B995 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4185C8B3248D8E0E00D6CBD2 /* PBXTargetDependency */,
+			);
+			name = Shield;
+			productName = menuBar;
+			productReference = 4185C839248D064700D6CBD2 /* Shield.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4185C8A6248D8E0E00D6CBD2 /* Shield System Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4185C8B5248D8E0E00D6CBD2 /* Build configuration list for PBXNativeTarget "Shield System Extension" */;
+			buildPhases = (
+				4185C8A3248D8E0E00D6CBD2 /* Sources */,
+				4185C8A4248D8E0E00D6CBD2 /* Frameworks */,
+				4185C8A5248D8E0E00D6CBD2 /* Resources */,
+				4164BF40248D9B2300B5F881 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Shield System Extension";
+			productName = Extension;
+			productReference = 4185C8A7248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension */;
+			productType = "com.apple.product-type.system-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4185C831248D064700D6CBD2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = csaba.fitzl;
+				TargetAttributes = {
+					4181AD1024A7CE0E0043B995 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					4185C838248D064700D6CBD2 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					4185C8A6248D8E0E00D6CBD2 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+				};
+			};
+			buildConfigurationList = 4185C834248D064700D6CBD2 /* Build configuration list for PBXProject "ShieldProject" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4185C830248D064700D6CBD2;
+			productRefGroup = 4185C83A248D064700D6CBD2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4185C838248D064700D6CBD2 /* Shield */,
+				4185C8A6248D8E0E00D6CBD2 /* Shield System Extension */,
+				4181AD1024A7CE0E0043B995 /* ShieldHelper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4181AD0F24A7CE0E0043B995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4181AD1724A7CE0E0043B995 /* Assets.xcassets in Resources */,
+				4181AD1A24A7CE0E0043B995 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C837248D064700D6CBD2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4185C85A248D14E700D6CBD2 /* dot.pdf in Resources */,
+				4185C840248D064800D6CBD2 /* Assets.xcassets in Resources */,
+				4185C843248D064800D6CBD2 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C8A5248D8E0E00D6CBD2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4181AD0D24A7CE0E0043B995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4181AD1D24A7CE0E0043B995 /* main.m in Sources */,
+				4181AD1524A7CE0E0043B995 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C835248D064700D6CBD2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4185C891248D8C8800D6CBD2 /* utilities.m in Sources */,
+				4185C88E248D8C8800D6CBD2 /* ProcessMonitor.m in Sources */,
+				4185C890248D8C8800D6CBD2 /* signing.m in Sources */,
+				41AD8A8024A5375F00DF7F23 /* logging.m in Sources */,
+				4185C846248D064800D6CBD2 /* main.m in Sources */,
+				4185C83E248D064700D6CBD2 /* AppDelegate.m in Sources */,
+				4185C88F248D8C8800D6CBD2 /* Process.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4185C8A3248D8E0E00D6CBD2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4141E6C7248F661A00C090BA /* ProcessMonitor.m in Sources */,
+				4141E6C8248F661A00C090BA /* Process.m in Sources */,
+				4141E6C9248F661A00C090BA /* signing.m in Sources */,
+				41AD8A8124A5375F00DF7F23 /* logging.m in Sources */,
+				414158BD2492081D00DABD0D /* Preferences.m in Sources */,
+				4141E6CA248F661A00C090BA /* utilities.m in Sources */,
+				4185C8AF248D8E0E00D6CBD2 /* main.m in Sources */,
+				41A184D7248E209000A71944 /* ShieldExtension.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4185C8B3248D8E0E00D6CBD2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4185C8A6248D8E0E00D6CBD2 /* Shield System Extension */;
+			targetProxy = 4185C8B2248D8E0E00D6CBD2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4181AD1824A7CE0E0043B995 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4181AD1924A7CE0E0043B995 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4185C841248D064800D6CBD2 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4185C842248D064800D6CBD2 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4181AD2024A7CE0E0043B995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ShieldHelper/ShieldHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 33YRLYRBYV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = ShieldHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.ShieldHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4181AD2124A7CE0E0043B995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ShieldHelper/ShieldHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 33YRLYRBYV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = ShieldHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.ShieldHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		4185C848248D064800D6CBD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4185C849248D064800D6CBD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4185C84B248D064800D6CBD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shield/Shield.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 33YRLYRBYV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Shield/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield;
+				PRODUCT_NAME = Shield;
+			};
+			name = Debug;
+		};
+		4185C84C248D064800D6CBD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shield/Shield.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 33YRLYRBYV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Shield/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield;
+				PRODUCT_NAME = Shield;
+			};
+			name = Release;
+		};
+		4185C8B6248D8E0E00D6CBD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Extension/Extension.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = 33YRLYRBYV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Extension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.9.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.Extension;
+				PRODUCT_NAME = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = mac.shield.extension;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4185C8B7248D8E0E00D6CBD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Extension/Extension.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = 33YRLYRBYV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Extension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 0.9.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.Extension;
+				PRODUCT_NAME = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = mac.shield.extension;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4181AD1F24A7CE0E0043B995 /* Build configuration list for PBXNativeTarget "ShieldHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4181AD2024A7CE0E0043B995 /* Debug */,
+				4181AD2124A7CE0E0043B995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4185C834248D064700D6CBD2 /* Build configuration list for PBXProject "ShieldProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4185C848248D064800D6CBD2 /* Debug */,
+				4185C849248D064800D6CBD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4185C84A248D064800D6CBD2 /* Build configuration list for PBXNativeTarget "Shield" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4185C84B248D064800D6CBD2 /* Debug */,
+				4185C84C248D064800D6CBD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4185C8B5248D8E0E00D6CBD2 /* Build configuration list for PBXNativeTarget "Shield System Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4185C8B6248D8E0E00D6CBD2 /* Debug */,
+				4185C8B7248D8E0E00D6CBD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4185C831248D064700D6CBD2 /* Project object */;
+}
