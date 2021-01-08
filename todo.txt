@@ -1,2 +1,5 @@
 - whitelist apps based on path/cs
 - better prompt
+
+known bug:
+Notifications are broken on Big Sur.
