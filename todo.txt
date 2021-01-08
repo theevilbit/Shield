@@ -1,2 +1,2 @@
-- enforce library validation
 - whitelist apps based on path/cs
+- better prompt

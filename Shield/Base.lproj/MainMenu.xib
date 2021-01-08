@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,6 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="dylibHijackSwitch" destination="XJW-BF-j2H" id="vyK-xp-3q6"/>
                 <outlet property="electronSwitch" destination="gIx-yT-RRP" id="YcE-eR-2x4"/>
                 <outlet property="envVarSwitch" destination="I7r-j6-CJK" id="47E-2Y-iWd"/>
                 <outlet property="isBlockedSwitch" destination="bZP-HZ-uBz" id="hEg-LL-QzE"/>
@@ -690,18 +692,18 @@
         <window identifier="prefWindow" title="Shield Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="YJY-uC-qnE">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="179" y="218" width="418" height="440"/>
+            <rect key="contentRect" x="179" y="218" width="418" height="477"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1097"/>
             <view key="contentView" id="5td-5X-db0">
-                <rect key="frame" x="0.0" y="0.0" width="418" height="440"/>
+                <rect key="frame" x="0.0" y="0.0" width="418" height="477"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gEF-P0-RIL">
-                        <rect key="frame" x="28" y="372" width="48" height="48"/>
+                        <rect key="frame" x="28" y="409" width="48" height="48"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Shield" id="D1o-NG-1uo"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zc2-bF-DAc">
-                        <rect key="frame" x="96" y="318" width="101" height="19"/>
+                        <rect key="frame" x="96" y="355" width="101" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="blocking mode" id="ntV-fL-2Bc">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -709,7 +711,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MAR-6r-67Z">
-                        <rect key="frame" x="96" y="281" width="143" height="19"/>
+                        <rect key="frame" x="96" y="318" width="143" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="ignore Apple binaries" id="wtS-7U-Y3I">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -717,7 +719,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KHg-gG-E3o">
-                        <rect key="frame" x="96" y="192" width="208" height="19"/>
+                        <rect key="frame" x="96" y="229" width="208" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="injection: environment variables" id="pil-OR-b8K">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -725,7 +727,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="suR-y5-BHD">
-                        <rect key="frame" x="96" y="155" width="177" height="19"/>
+                        <rect key="frame" x="96" y="192" width="177" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="injection: task_for_pid calls" id="p5m-9L-qQF">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -733,41 +735,42 @@
                         </textFieldCell>
                     </textField>
                     <switch identifier="onoffButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="q0y-mz-mT5">
-                        <rect key="frame" x="123" y="383" width="42" height="24"/>
+                        <rect key="frame" x="123" y="420" width="42" height="24"/>
                         <connections>
                             <action selector="onoffAction:" target="Voe-Tx-rLC" id="vsy-bk-FrW"/>
                         </connections>
                     </switch>
                     <switch identifier="blockButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="bZP-HZ-uBz">
-                        <rect key="frame" x="31" y="315" width="42" height="24"/>
+                        <rect key="frame" x="31" y="352" width="42" height="24"/>
                         <connections>
                             <action selector="blockAction:" target="Voe-Tx-rLC" id="8f0-UE-DZS"/>
                         </connections>
                     </switch>
                     <switch identifier="ignoreButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="D55-uH-iHi">
-                        <rect key="frame" x="31" y="278" width="42" height="24"/>
+                        <rect key="frame" x="31" y="315" width="42" height="24"/>
                         <connections>
                             <action selector="skipAppleAction:" target="Voe-Tx-rLC" id="LMm-mX-hIJ"/>
                         </connections>
                     </switch>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I3v-tS-ogO">
-                        <rect key="frame" x="96" y="118" width="209" height="19"/>
+                        <rect key="frame" x="96" y="155" width="209" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="injection: Electron debug switch" id="CPR-Vj-uXa">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQR-aY-z7y">
-                        <rect key="frame" x="96" y="32" width="110" height="19"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="launch at startup" id="7fh-rx-mTy">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7E-1f-Fu3">
+                        <rect key="frame" x="96" y="120" width="247" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="injection: dylib hijacking and proxying" id="y9p-E4-CKE">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7R-uB-aIV">
-                        <rect key="frame" x="183" y="385" width="191" height="19"/>
+                        <rect key="frame" x="183" y="422" width="191" height="19"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="buM-aU-VEU"/>
                             <constraint firstAttribute="width" constant="68" id="fr5-iv-JEp"/>
@@ -779,47 +782,62 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NKG-Sv-bwe">
-                        <rect key="frame" x="31" y="237" width="187" height="19"/>
+                        <rect key="frame" x="31" y="274" width="187" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Injection protection settings:" id="azo-Gx-B5L">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <switch identifier="dyldButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="I7r-j6-CJK">
+                        <rect key="frame" x="31" y="227" width="42" height="24"/>
+                        <connections>
+                            <action selector="injEnvVarsAction:" target="Voe-Tx-rLC" id="DK3-Gw-VjT"/>
+                        </connections>
+                    </switch>
+                    <switch identifier="tfpButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="yGx-nZ-l82">
+                        <rect key="frame" x="31" y="190" width="42" height="24"/>
+                        <connections>
+                            <action selector="injTfpAction:" target="Voe-Tx-rLC" id="jC3-Jk-MOc"/>
+                        </connections>
+                    </switch>
+                    <switch identifier="electronButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="gIx-yT-RRP">
+                        <rect key="frame" x="31" y="153" width="42" height="24"/>
+                        <connections>
+                            <action selector="injElectronAction:" target="Voe-Tx-rLC" id="F8D-kG-BhO"/>
+                        </connections>
+                    </switch>
+                    <switch identifier="dylibButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XJW-BF-j2H">
+                        <rect key="frame" x="31" y="116" width="42" height="24"/>
+                        <connections>
+                            <action selector="injDylibAction:" target="Voe-Tx-rLC" id="OsH-Ac-RDI"/>
+                        </connections>
+                    </switch>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQR-aY-z7y">
+                        <rect key="frame" x="96" y="33" width="110" height="19"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="launch at startup" id="7fh-rx-mTy">
+                            <font key="font" size="14" name="AvenirNext-Regular"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZqC-bR-LXI">
-                        <rect key="frame" x="31" y="75" width="69" height="19"/>
+                        <rect key="frame" x="31" y="76" width="69" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Main app:" id="mWF-Sf-gor">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <switch identifier="dyldButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="I7r-j6-CJK">
-                        <rect key="frame" x="31" y="190" width="42" height="24"/>
-                        <connections>
-                            <action selector="injEnvVarsAction:" target="Voe-Tx-rLC" id="DK3-Gw-VjT"/>
-                        </connections>
-                    </switch>
-                    <switch identifier="tfpButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="yGx-nZ-l82">
-                        <rect key="frame" x="31" y="153" width="42" height="24"/>
-                        <connections>
-                            <action selector="injTfpAction:" target="Voe-Tx-rLC" id="jC3-Jk-MOc"/>
-                        </connections>
-                    </switch>
-                    <switch identifier="electronButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="gIx-yT-RRP">
-                        <rect key="frame" x="31" y="116" width="42" height="24"/>
-                        <connections>
-                            <action selector="injElectronAction:" target="Voe-Tx-rLC" id="F8D-kG-BhO"/>
-                        </connections>
-                    </switch>
                     <switch identifier="electronButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="ahy-QI-Brn">
-                        <rect key="frame" x="31" y="28" width="42" height="24"/>
+                        <rect key="frame" x="31" y="29" width="42" height="24"/>
                         <connections>
                             <action selector="loginItemAction:" target="Voe-Tx-rLC" id="RnL-T2-Uab"/>
                         </connections>
                     </switch>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="XJW-BF-j2H" firstAttribute="top" secondItem="gIx-yT-RRP" secondAttribute="bottom" constant="16" id="0d1-7H-uhZ"/>
                     <constraint firstItem="bZP-HZ-uBz" firstAttribute="leading" secondItem="I7r-j6-CJK" secondAttribute="leading" id="2mk-dq-tbC"/>
                     <constraint firstItem="yGx-nZ-l82" firstAttribute="top" secondItem="I7r-j6-CJK" secondAttribute="bottom" constant="16" id="7G1-yL-MD7"/>
                     <constraint firstItem="bZP-HZ-uBz" firstAttribute="centerY" secondItem="Zc2-bF-DAc" secondAttribute="centerY" id="7G6-JN-a4o"/>
@@ -827,6 +845,7 @@
                     <constraint firstItem="bZP-HZ-uBz" firstAttribute="leading" secondItem="D55-uH-iHi" secondAttribute="leading" id="AFg-7q-t9b"/>
                     <constraint firstItem="MAR-6r-67Z" firstAttribute="top" secondItem="Zc2-bF-DAc" secondAttribute="bottom" constant="18" id="MIA-ls-mwB"/>
                     <constraint firstItem="ahy-QI-Brn" firstAttribute="top" secondItem="ZqC-bR-LXI" secondAttribute="bottom" constant="24" id="NHM-mp-pQX"/>
+                    <constraint firstAttribute="bottom" secondItem="ahy-QI-Brn" secondAttribute="bottom" constant="31" id="OTr-Fs-ZV8"/>
                     <constraint firstItem="W7R-uB-aIV" firstAttribute="leading" secondItem="q0y-mz-mT5" secondAttribute="trailing" constant="22" id="PSa-6i-JCJ"/>
                     <constraint firstItem="W7R-uB-aIV" firstAttribute="top" secondItem="5td-5X-db0" secondAttribute="top" constant="36" id="PrI-bJ-Gsx"/>
                     <constraint firstItem="gEF-P0-RIL" firstAttribute="leading" secondItem="5td-5X-db0" secondAttribute="leading" constant="28" id="Pra-QQ-Ryv"/>
@@ -843,7 +862,6 @@
                     <constraint firstItem="D55-uH-iHi" firstAttribute="top" secondItem="bZP-HZ-uBz" secondAttribute="bottom" constant="16" id="eeR-f0-Asy"/>
                     <constraint firstItem="ahy-QI-Brn" firstAttribute="leading" secondItem="5td-5X-db0" secondAttribute="leading" constant="33" id="en9-Wp-e58"/>
                     <constraint firstItem="Zc2-bF-DAc" firstAttribute="leading" secondItem="bZP-HZ-uBz" secondAttribute="trailing" constant="27" id="fJN-NH-gHW"/>
-                    <constraint firstItem="ZqC-bR-LXI" firstAttribute="top" secondItem="I3v-tS-ogO" secondAttribute="bottom" constant="24" id="gQG-Fb-hjb"/>
                     <constraint firstItem="KHg-gG-E3o" firstAttribute="leading" secondItem="I7r-j6-CJK" secondAttribute="trailing" constant="27" id="hsl-5w-bsM"/>
                     <constraint firstItem="eQR-aY-z7y" firstAttribute="leading" secondItem="ahy-QI-Brn" secondAttribute="trailing" constant="27" id="jwt-5Z-GSv"/>
                     <constraint firstItem="bZP-HZ-uBz" firstAttribute="leading" secondItem="5td-5X-db0" secondAttribute="leading" constant="33" id="kko-bk-i4L"/>
@@ -858,7 +876,7 @@
                     <constraint firstItem="suR-y5-BHD" firstAttribute="leading" secondItem="yGx-nZ-l82" secondAttribute="trailing" constant="27" id="zCT-gU-agQ"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="108" y="10"/>
+            <point key="canvasLocation" x="108" y="28.5"/>
         </window>
     </objects>
     <resources>

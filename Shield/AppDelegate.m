@@ -30,6 +30,8 @@ enum menuItems
 @property (weak) IBOutlet NSSwitch *electronSwitch;
 @property (weak) IBOutlet NSSwitch *tfpSwitch;
 @property (weak) IBOutlet NSSwitch *envVarSwitch;
+@property (weak) IBOutlet NSSwitch *dylibHijackSwitch;
+
 @property (weak) IBOutlet NSSwitch *skipAppleSwitch;
 @property (weak) IBOutlet NSSwitch *isBlockedSwitch;
 @property (weak) IBOutlet NSSwitch *onoffSwitch;
@@ -46,6 +48,7 @@ enum menuItems
     self.prefs[@"prefElectron"] = @YES;
     self.prefs[@"prefEnvVars"] = @YES;
     self.prefs[@"prefTFP"] = @YES;
+    self.prefs[@"prefDylib"] = @YES;
     self.prefs[@"skipApple"] = @YES;
     self.prefs[@"isBlocking"] = @YES;
 
@@ -137,6 +140,7 @@ enum menuItems
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:n];
 }
 
+/*
 -(void)alertUser:(NSString *)alertString {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert setMessageText:alertString];
@@ -144,6 +148,7 @@ enum menuItems
     [alert setAlertStyle:NSAlertStyleWarning];
     [alert beginSheetModalForWindow:self.prefWindow completionHandler:nil];
 }
+ */
 
 - (NSMenu*)buildMenu {
     //create status bar menu
@@ -301,6 +306,7 @@ enum menuItems
             self.prefs[@"prefElectron"] = reply[@"prefElectron"];
             self.prefs[@"prefEnvVars"] = reply[@"prefEnvVars"];
             self.prefs[@"prefTFP"] = reply[@"prefTFP"];
+            self.prefs[@"prefDylib"] = reply[@"prefDylib"];
             self.prefs[@"skipApple"] = reply[@"skipApple"];
             self.prefs[@"isBlocking"] = reply[@"isBlocking"];
             self.isRunning = [[reply objectForKey:@"isRunning"] boolValue];
@@ -308,6 +314,11 @@ enum menuItems
                 self.electronSwitch.state = NSControlStateValueOn;
             else
                 self.electronSwitch.state = NSControlStateValueOff;
+
+            if ([[self.prefs objectForKey:@"prefDylib"] boolValue] == YES)
+                self.dylibHijackSwitch.state = NSControlStateValueOn;
+            else
+                self.dylibHijackSwitch.state = NSControlStateValueOff;
 
             if ([[self.prefs objectForKey:@"prefEnvVars"] boolValue] == YES)
                 self.envVarSwitch.state = NSControlStateValueOn;
@@ -391,6 +402,16 @@ enum menuItems
         self.prefs[@"prefElectron"] = @YES;
     else
         self.prefs[@"prefElectron"] = @NO;
+    [self updatePrefs];
+    [self getStatus];
+}
+
+- (IBAction)injDylibAction:(id)sender {
+    [self registerProvider];
+    if(self.dylibHijackSwitch.state == NSControlStateValueOn)
+        self.prefs[@"prefDylib"] = @YES;
+    else
+        self.prefs[@"prefDylib"] = @NO;
     [self updatePrefs];
     [self getStatus];
 }

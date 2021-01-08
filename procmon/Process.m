@@ -100,6 +100,12 @@ pid_t getParentID(pid_t child);
             case ES_EVENT_TYPE_AUTH_GET_TASK:
                 process = message->process;
                 break;
+                
+            //mmap
+            case ES_EVENT_TYPE_AUTH_MMAP:
+                process = message->process;
+                break;
+                
             //default
             default:
                 
@@ -108,7 +114,8 @@ pid_t getParentID(pid_t child);
                 break;
         }
         
-        self.target_pid = audit_token_to_pid(message->event.get_task.target->audit_token);
+        //this is crashing the ap if MMAP events are monitored
+        //self.target_pid = audit_token_to_pid(message->event.get_task.target->audit_token);
 
         //init pid
         self.pid = audit_token_to_pid(process->audit_token);

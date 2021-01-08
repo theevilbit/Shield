@@ -11,7 +11,7 @@
 #import "ShieldExtension.h"
 #import <Security/Security.h>
 #import "../Common/Constants.h"
-
+#import "../procmon/utilities.h"
 //interface for 'extension' to NSXPCConnection
 // ->allows us to access the 'private' auditToken iVar
 @interface ExtendedNSXPCConnection : NSXPCConnection
@@ -49,10 +49,11 @@ OSStatus SecTaskValidateForRequirement(SecTaskRef task, CFStringRef requirement)
     if(self != nil)
     {
         self.prefs = [Preferences new];
-        if ([self.prefs.preferences count] < 5) {
+        if ([self.prefs.preferences count] < 6) {
             self.prefs.preferences[@"prefElectron"] = @YES;
             self.prefs.preferences[@"prefEnvVars"] = @YES;
             self.prefs.preferences[@"prefTFP"] = @YES;
+            self.prefs.preferences[@"prefDylib"] = @YES;
             self.prefs.preferences[@"skipApple"] = @YES;
             self.prefs.preferences[@"isBlocking"] = @YES;
             [self.prefs save];
@@ -237,6 +238,7 @@ bail:
         self.prefs.preferences[@"prefElectron"] = [prefs objectForKey:@"prefElectron"];
         self.prefs.preferences[@"prefEnvVars"] = [prefs objectForKey:@"prefEnvVars"];
         self.prefs.preferences[@"prefTFP"] = [prefs objectForKey:@"prefTFP"];
+        self.prefs.preferences[@"prefDylib"] = [prefs objectForKey:@"prefDylib"];
         self.prefs.preferences[@"skipApple"] = [prefs objectForKey:@"skipApple"];
         self.prefs.preferences[@"isBlocking"] = [prefs objectForKey:@"isBlocking"];
     }
@@ -259,7 +261,7 @@ bail:
 - (BOOL) monitor
 {
     //(process) events of interest
-    es_event_type_t events[] = {ES_EVENT_TYPE_AUTH_GET_TASK, ES_EVENT_TYPE_AUTH_EXEC};
+    es_event_type_t events[] = {ES_EVENT_TYPE_AUTH_GET_TASK, ES_EVENT_TYPE_AUTH_EXEC, ES_EVENT_TYPE_AUTH_MMAP};
 
     //init monitor
     self.procMon = [[ProcessMonitor alloc] init];
@@ -296,6 +298,68 @@ bail:
         //main logic
         switch(process.event)
         {
+            //mmap event
+            case ES_EVENT_TYPE_AUTH_MMAP:
+            {
+                es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
+                bool set_cache = false;
+                //check if we care about dylib hijack
+                if([[self.prefs.preferences objectForKey:@"prefDylib"] boolValue] == YES) {
+                    //enable cache if we verify the dylib
+                    set_cache = true;
+                    //extract mmap event
+                    es_event_mmap_t * mmap = &message->event.mmap;
+                    
+                    //extract path from mmap event
+                    NSString *path = convertStringToken(&mmap->source->path);
+                    
+                    //get extension
+                    NSString *ext = [path pathExtension];
+                    if ([ext isEqualToString:@"dylib"]) {
+                        //variables for code signing
+                        SecStaticCodeRef staticCode = NULL;
+                        SecRequirementRef requirementRef = NULL;
+                        NSURL *urlpath = [NSURL URLWithString:path];
+                        //hold status
+                        OSStatus status = !noErr;
+
+                        //create static code ref from path
+                        status = SecStaticCodeCreateWithPath((__bridge CFURLRef)urlpath, kSecCSDefaultFlags, &staticCode);
+                        if (status == noErr) {
+                            //create req string
+                            //set req string, teamid = of the process
+                           NSString *requirementString = [NSString stringWithFormat:@"(anchor apple) or (anchor apple generic and certificate leaf[subject.OU] = \"%@\")", process.teamID];
+                            status = SecRequirementCreateWithString((__bridge CFStringRef _Nonnull)(requirementString), kSecCSDefaultFlags, &requirementRef);
+                            if (status == noErr) {
+                                //check code validity
+                                status = SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirementRef);
+                                if (status != noErr) {
+                                    if([[self.prefs.preferences objectForKey:@"isBlocking"] boolValue] == NO) {
+                                        /*
+                                         we notify users about detection, but postpone AUTH decision to later in case
+                                        other checks find issues
+                                         */
+                                        NSString* notificationString = [NSString stringWithFormat:@"Dylib hijacking detected in:\n%@\ndylib path:%@\n", process.path, path];
+                                        logMsg(LOG_TO_FILE|LOG_WARNING, notificationString);
+                                        [self notifyUser:notificationString blocked:NO];
+                                    }
+                                    //blocking mode
+                                    else {
+                                        authResult = ES_AUTH_RESULT_DENY;
+                                        NSString* notificationString = [NSString stringWithFormat:@"Dylib hijacking blocked in:\n%@\ndylib path:%@\n", process.path, path];
+                                        logMsg(LOG_TO_FILE|LOG_WARNING, notificationString);
+                                        [self notifyUser:notificationString blocked:YES];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //set cache to true
+                res = es_respond_auth_result(client, message, authResult, set_cache);
+
+                break;
+            }
             //exec authorization
             case ES_EVENT_TYPE_AUTH_EXEC:
             {
@@ -383,10 +447,14 @@ bail:
                 break;
             }
             default:
+            {
+                es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
+                res = es_respond_auth_result(client, message, authResult, false);
                 break;
+            }
         }
         
-        };
+    };
         
     //start monitoring
     // pass in events, count, and callback block for events
