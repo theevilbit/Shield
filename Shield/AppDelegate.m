@@ -62,9 +62,7 @@ enum menuItems
     NSImage *icon = [NSImage imageNamed:@"Logo"];
     self.statusItem.button.image = icon;
     self.statusItem.menu = [self buildMenu];
-    [self registerProvider];
-    [self getStatus];
-
+    
     //init logging, with non-root user
     setLoggingUser(1);
     if(YES != initLogging(logFilePath(0))) {

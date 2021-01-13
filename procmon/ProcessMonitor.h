@@ -11,6 +11,8 @@
 
 /* CONSTS */
 
+
+
 //code signing keys
 #define KEY_SIGNATURE_FLAGS @"csFlags"
 #define KEY_SIGNATURE_STATUS @"signatureStatus"
@@ -27,7 +29,7 @@ enum Signer{None, Apple, AppStore, DevID, AdHoc};
 
 //cs options
 #define CS_STATIC_CHECK YES
-
+#define CS_CDHASH_LEN 20
 /* CLASSES */
 @class Process;
 
