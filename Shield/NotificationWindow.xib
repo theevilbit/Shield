@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NotificationWindowController">
+            <connections>
+                <outlet property="button_allow" destination="VIq-Zg-aXP" id="Jk2-fw-llA"/>
+                <outlet property="button_ok" destination="DKw-L1-SCg" id="ldT-xG-MAe"/>
+                <outlet property="label_arguments" destination="Pp9-qA-5PE" id="yVR-Bc-Vt6"/>
+                <outlet property="label_attack_type" destination="73f-6p-c1u" id="PnA-BK-nzF"/>
+                <outlet property="label_attacker_process" destination="5Ew-Vg-btU" id="Nqr-CH-uz5"/>
+                <outlet property="label_dylib_path" destination="KHb-RP-8xv" id="Xj3-Ub-ZzU"/>
+                <outlet property="label_env" destination="c5e-zl-DEd" id="eKc-iX-GHM"/>
+                <outlet property="label_victim_process" destination="aXf-uK-C4A" id="HmW-4Q-x2W"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="Tmk-iH-KgN"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Shield Notification" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="616" height="327"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="616" height="327"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EPQ-BZ-vgz">
+                        <rect key="frame" x="25" y="200" width="99" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Attacker Process:" id="Aca-or-FhH">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ROd-XZ-ZhF">
+                        <rect key="frame" x="25" y="169" width="87" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Victim Process:" id="Cc6-g6-SZu">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AEg-Vi-vU7">
+                        <rect key="frame" x="60" y="146" width="67" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="arguments:" id="ldG-eA-uGY">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d2w-SI-f8Z">
+                        <rect key="frame" x="60" y="100" width="64" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="dylib path:" id="Gdx-wZ-cRn">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hSQ-s7-P16">
+                        <rect key="frame" x="60" y="123" width="130" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="environment variables:" id="mQg-Ni-jMf">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-dL-gmu">
+                        <rect key="frame" x="25" y="231" width="83" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Injection type:" id="q6e-X8-Lh0">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ANs-jS-eh1">
+                        <rect key="frame" x="548" y="259" width="48" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="48" id="6IO-uJ-gs4"/>
+                            <constraint firstAttribute="width" constant="48" id="AOS-sh-jTk"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="shield_yellow" id="Tzh-1e-7Yx"/>
+                    </imageView>
+                    <textField identifier="label_injection_type" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73f-6p-c1u">
+                        <rect key="frame" x="201" y="231" width="35" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="0Tg-FO-OWZ">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField identifier="label_attacker_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ew-Vg-btU">
+                        <rect key="frame" x="201" y="200" width="35" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="QEi-jH-nAt">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField identifier="label_victim_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXf-uK-C4A">
+                        <rect key="frame" x="201" y="169" width="35" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Cfn-F1-uOF">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField identifier="label_arguments" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pp9-qA-5PE">
+                        <rect key="frame" x="236" y="146" width="35" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="OeN-QA-quu">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField identifier="label_env" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5e-zl-DEd">
+                        <rect key="frame" x="236" y="123" width="324" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="320" id="vHd-72-1DM"/>
+                        </constraints>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="aah-Gr-ETp">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField identifier="label_dylib_path" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KHb-RP-8xv">
+                        <rect key="frame" x="236" y="100" width="35" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="3vg-lb-Jtb">
+                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VIq-Zg-aXP">
+                        <rect key="frame" x="279" y="28" width="272" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Allow Next Time (Not Implemented Yet)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NdP-F0-BgE">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AvenirNext-Medium"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="button_allow_action:" target="-2" id="llH-Q3-ZNr"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKw-L1-SCg">
+                        <rect key="frame" x="164" y="28" width="54" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MfL-Hb-2CO">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="AvenirNext-Medium"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="button_ok_action:" target="-2" id="jaj-en-vmD"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="EPQ-BZ-vgz" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="27" id="77d-SX-VAO"/>
+                    <constraint firstItem="ROd-XZ-ZhF" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="27" id="7hN-oK-i3p"/>
+                    <constraint firstItem="aXf-uK-C4A" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="203" id="A8Q-cE-SZZ"/>
+                    <constraint firstItem="EPQ-BZ-vgz" firstAttribute="top" secondItem="ZBO-dL-gmu" secondAttribute="bottom" constant="15" id="AzF-Jf-8n9"/>
+                    <constraint firstItem="Pp9-qA-5PE" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="238" id="BSg-MK-oyK"/>
+                    <constraint firstItem="ZBO-dL-gmu" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="27" id="D1e-1h-y13"/>
+                    <constraint firstItem="5Ew-Vg-btU" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="203" id="KVh-sV-Um2"/>
+                    <constraint firstAttribute="trailing" secondItem="ANs-jS-eh1" secondAttribute="trailing" constant="20" symbolic="YES" id="NOX-j9-tm2"/>
+                    <constraint firstItem="KHb-RP-8xv" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="238" id="PkS-4l-ZPf"/>
+                    <constraint firstItem="KHb-RP-8xv" firstAttribute="top" secondItem="c5e-zl-DEd" secondAttribute="bottom" constant="7" id="QOG-U3-7Kc"/>
+                    <constraint firstItem="c5e-zl-DEd" firstAttribute="top" secondItem="Pp9-qA-5PE" secondAttribute="bottom" constant="7" id="SS4-81-J5x"/>
+                    <constraint firstItem="73f-6p-c1u" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="203" id="UgP-Nu-mEg"/>
+                    <constraint firstAttribute="trailing" secondItem="ANs-jS-eh1" secondAttribute="trailing" constant="20" symbolic="YES" id="Y9h-vn-c4r"/>
+                    <constraint firstItem="d2w-SI-f8Z" firstAttribute="top" secondItem="hSQ-s7-P16" secondAttribute="bottom" constant="7" id="YVP-WR-rmB"/>
+                    <constraint firstItem="ANs-jS-eh1" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="b3T-dQ-9BL"/>
+                    <constraint firstItem="hSQ-s7-P16" firstAttribute="top" secondItem="AEg-Vi-vU7" secondAttribute="bottom" constant="7" id="dNp-mv-ase"/>
+                    <constraint firstItem="ANs-jS-eh1" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="dTU-5X-MaK"/>
+                    <constraint firstItem="ZBO-dL-gmu" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="80" id="eAM-Qy-jhv"/>
+                    <constraint firstItem="c5e-zl-DEd" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="238" id="fgF-7K-9KR"/>
+                    <constraint firstItem="aXf-uK-C4A" firstAttribute="top" secondItem="5Ew-Vg-btU" secondAttribute="bottom" constant="15" id="geN-Tj-7Fd"/>
+                    <constraint firstItem="5Ew-Vg-btU" firstAttribute="top" secondItem="73f-6p-c1u" secondAttribute="bottom" constant="15" id="hJV-7s-HGm"/>
+                    <constraint firstItem="AEg-Vi-vU7" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="62" id="jI6-2i-dTv"/>
+                    <constraint firstItem="73f-6p-c1u" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="80" id="kCi-We-hPx"/>
+                    <constraint firstItem="ROd-XZ-ZhF" firstAttribute="top" secondItem="EPQ-BZ-vgz" secondAttribute="bottom" constant="15" id="lUx-KI-DxP"/>
+                    <constraint firstItem="d2w-SI-f8Z" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="62" id="nSS-IH-OCU"/>
+                    <constraint firstItem="hSQ-s7-P16" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="62" id="ot1-Ep-EiF"/>
+                    <constraint firstItem="Pp9-qA-5PE" firstAttribute="top" secondItem="aXf-uK-C4A" secondAttribute="bottom" constant="7" id="tPm-ui-rPU"/>
+                    <constraint firstItem="AEg-Vi-vU7" firstAttribute="top" secondItem="ROd-XZ-ZhF" secondAttribute="bottom" constant="7" id="v7q-8r-q17"/>
+                </constraints>
+            </view>
+            <connections>
+                <binding destination="e1d-dm-ZGX" name="title" keyPath="values" id="GQ2-LM-zOS"/>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="-260" y="144.5"/>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="e1d-dm-ZGX"/>
+    </objects>
+    <resources>
+        <image name="shield_yellow" width="512" height="512"/>
+    </resources>
+</document>

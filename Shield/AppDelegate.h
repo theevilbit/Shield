@@ -6,25 +6,44 @@
 //  Copyright © 2020. csaba.fitzl. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "../Common/XPCProtocol.h"
-#import "../Common/logging.h"
-#import "../Common/Constants.h"
+@import OSLog;
+@import Cocoa;
+
+#import "Constants.h"
+#import "AllowList.h"
+#import "Preferences.h"
+#import "XPCApp.h"
+#import "XPCExtensionClient.h"
+#import "InstallerWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (readwrite, retain) IBOutlet NSStatusItem *statusItem;
-@property BOOL isRunning;
-@property BOOL isRegistered;
-@property BOOL extensionLoaded;
-@property NSMutableDictionary* prefs;
-@property NSString* machServiceName;
-@property id<ProviderCommunication> systemExtensionProvider;
-@property NSXPCInterface * interface;
-@property NSXPCConnection * connection;
-@property NSString* helperBundleID;
+/* properties */
 
+//drop down menu
+@property (readwrite, retain) IBOutlet NSStatusItem *statusItem;
+
+//is endpoint security client running
+@property BOOL isRunning;
+
+//track extension loading
+@property BOOL extensionLoaded;
+
+//preferences to store locally
+@property NSMutableDictionary* prefs;
+
+//xpc connection
+@property XPCExtensionClient* xpc_extension_client;
+
+//installer window
+@property InstallerWindowController* installer_window;
+
+/* methods */
+
+//build menu
 - (NSMenu *)buildMenu;
 
+//initialize xpc communication with the extension
+- (void) init_xpc;
 @end
 

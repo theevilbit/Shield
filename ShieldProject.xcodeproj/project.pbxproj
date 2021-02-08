@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4140452825CFC1550013FFE1 /* NotificationWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4140452625CFC1550013FFE1 /* NotificationWindowController.m */; };
+		4140452925CFC1550013FFE1 /* NotificationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4140452725CFC1550013FFE1 /* NotificationWindow.xib */; };
 		414158BD2492081D00DABD0D /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 414158BC2492081D00DABD0D /* Preferences.m */; };
 		4141E6C7248F661A00C090BA /* ProcessMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */; };
 		4141E6C8248F661A00C090BA /* Process.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C888248D8C8800D6CBD2 /* Process.m */; };
 		4141E6C9248F661A00C090BA /* signing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88A248D8C8800D6CBD2 /* signing.m */; };
 		4141E6CA248F661A00C090BA /* utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88D248D8C8800D6CBD2 /* utilities.m */; };
+		4153843825D12E2700C85BD1 /* InstallerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4153843625D12E2700C85BD1 /* InstallerWindowController.m */; };
+		4153843925D12E2700C85BD1 /* InstallerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4153843725D12E2700C85BD1 /* InstallerWindowController.xib */; };
 		4164BF3D248D938B00B5F881 /* libEndpointSecurity.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */; };
 		4164BF3E248D939200B5F881 /* libbsm.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */; };
 		4181AD1524A7CE0E0043B995 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4181AD1424A7CE0E0043B995 /* AppDelegate.m */; };
@@ -25,17 +29,18 @@
 		4185C843248D064800D6CBD2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4185C841248D064800D6CBD2 /* MainMenu.xib */; };
 		4185C846248D064800D6CBD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C845248D064800D6CBD2 /* main.m */; };
 		4185C85A248D14E700D6CBD2 /* dot.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4185C859248D14E700D6CBD2 /* dot.pdf */; };
-		4185C88E248D8C8800D6CBD2 /* ProcessMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */; };
-		4185C88F248D8C8800D6CBD2 /* Process.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C888248D8C8800D6CBD2 /* Process.m */; };
-		4185C890248D8C8800D6CBD2 /* signing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88A248D8C8800D6CBD2 /* signing.m */; };
 		4185C891248D8C8800D6CBD2 /* utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C88D248D8C8800D6CBD2 /* utilities.m */; };
 		4185C8AF248D8E0E00D6CBD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4185C8AE248D8E0E00D6CBD2 /* main.m */; };
 		4185C8B4248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 4185C8A7248D8E0E00D6CBD2 /* com.csaba.fitzl.shield.Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4185C8BB248D8EB400D6CBD2 /* libbsm.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */; };
 		4185C8BD248D8ED700D6CBD2 /* libEndpointSecurity.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */; };
-		41A184D7248E209000A71944 /* ShieldExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A184D6248E209000A71944 /* ShieldExtension.m */; };
-		41AD8A8024A5375F00DF7F23 /* logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AD8A7F24A5375F00DF7F23 /* logging.m */; };
-		41AD8A8124A5375F00DF7F23 /* logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AD8A7F24A5375F00DF7F23 /* logging.m */; };
+		418BD6D625CEC5D700ED1074 /* AllowList.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BD6D525CEC5D700ED1074 /* AllowList.m */; };
+		418BD6DF25CED6FD00ED1074 /* XPCListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BD6DE25CED6FD00ED1074 /* XPCListener.m */; };
+		418BD6E525CEDD4500ED1074 /* XPCAppClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BD6E325CEDD4500ED1074 /* XPCAppClient.m */; };
+		418BD6EB25CEE15400ED1074 /* XPCExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 418BD6E925CEE15400ED1074 /* XPCExtension.m */; };
+		418DD42E25CF3C2000A0A432 /* XPCExtensionClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 418DD42D25CF3C2000A0A432 /* XPCExtensionClient.m */; };
+		41A184D7248E209000A71944 /* ShieldMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A184D6248E209000A71944 /* ShieldMonitor.m */; };
+		41BE749E25CF43730047A7D3 /* XPCApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BE749D25CF43730047A7D3 /* XPCApp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,11 +88,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4132F7CE248E624500422FB2 /* XPCProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCProtocol.h; sourceTree = "<group>"; };
+		4140452525CFC1550013FFE1 /* NotificationWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationWindowController.h; sourceTree = "<group>"; };
+		4140452625CFC1550013FFE1 /* NotificationWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationWindowController.m; sourceTree = "<group>"; };
+		4140452725CFC1550013FFE1 /* NotificationWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationWindow.xib; sourceTree = "<group>"; };
 		414158BA2491F34F00DABD0D /* todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = todo.txt; sourceTree = SOURCE_ROOT; };
 		414158BB249207CD00DABD0D /* Preferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		414158BC2492081D00DABD0D /* Preferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		414158BE249208AB00DABD0D /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		4153843525D12E2600C85BD1 /* InstallerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstallerWindowController.h; sourceTree = "<group>"; };
+		4153843625D12E2700C85BD1 /* InstallerWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstallerWindowController.m; sourceTree = "<group>"; };
+		4153843725D12E2700C85BD1 /* InstallerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstallerWindowController.xib; sourceTree = "<group>"; };
 		4181AD1124A7CE0E0043B995 /* ShieldHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShieldHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4181AD1324A7CE0E0043B995 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4181AD1424A7CE0E0043B995 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -119,10 +129,23 @@
 		4185C8B1248D8E0E00D6CBD2 /* Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Extension.entitlements; sourceTree = "<group>"; };
 		4185C8BA248D8EB400D6CBD2 /* libbsm.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbsm.tbd; path = usr/lib/libbsm.tbd; sourceTree = SDKROOT; };
 		4185C8BC248D8ED700D6CBD2 /* libEndpointSecurity.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libEndpointSecurity.tbd; path = usr/lib/libEndpointSecurity.tbd; sourceTree = SDKROOT; };
-		41A184D5248E1FEB00A71944 /* ShieldExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShieldExtension.h; sourceTree = "<group>"; };
-		41A184D6248E209000A71944 /* ShieldExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShieldExtension.m; sourceTree = "<group>"; };
-		41AD8A7F24A5375F00DF7F23 /* logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = logging.m; sourceTree = "<group>"; };
-		41AD8A8224A537B300DF7F23 /* logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
+		418BD6D125CEC0AC00ED1074 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		418BD6D425CEC39900ED1074 /* AllowList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllowList.h; sourceTree = "<group>"; };
+		418BD6D525CEC5D700ED1074 /* AllowList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AllowList.m; sourceTree = "<group>"; };
+		418BD6DB25CED3DF00ED1074 /* XPCAppProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCAppProtocol.h; sourceTree = "<group>"; };
+		418BD6DC25CED4C800ED1074 /* XPCExtensionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCExtensionProtocol.h; sourceTree = "<group>"; };
+		418BD6DD25CED5D800ED1074 /* XPCListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCListener.h; sourceTree = "<group>"; };
+		418BD6DE25CED6FD00ED1074 /* XPCListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPCListener.m; sourceTree = "<group>"; };
+		418BD6E225CEDCB800ED1074 /* XPCAppClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCAppClient.h; sourceTree = "<group>"; };
+		418BD6E325CEDD4500ED1074 /* XPCAppClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPCAppClient.m; sourceTree = "<group>"; };
+		418BD6E825CEE0FF00ED1074 /* XPCExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCExtension.h; sourceTree = "<group>"; };
+		418BD6E925CEE15400ED1074 /* XPCExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPCExtension.m; sourceTree = "<group>"; };
+		418DD42A25CF3A1400A0A432 /* XPCExtensionClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCExtensionClient.h; sourceTree = "<group>"; };
+		418DD42D25CF3C2000A0A432 /* XPCExtensionClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPCExtensionClient.m; sourceTree = "<group>"; };
+		41A184D5248E1FEB00A71944 /* ShieldMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShieldMonitor.h; sourceTree = "<group>"; };
+		41A184D6248E209000A71944 /* ShieldMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShieldMonitor.m; sourceTree = "<group>"; };
+		41BE749C25CF42F40047A7D3 /* XPCApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPCApp.h; sourceTree = "<group>"; };
+		41BE749D25CF43730047A7D3 /* XPCApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPCApp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,10 +182,9 @@
 			isa = PBXGroup;
 			children = (
 				414158BA2491F34F00DABD0D /* todo.txt */,
-				4132F7CE248E624500422FB2 /* XPCProtocol.h */,
 				414158BE249208AB00DABD0D /* Constants.h */,
-				41AD8A7F24A5375F00DF7F23 /* logging.m */,
-				41AD8A8224A537B300DF7F23 /* logging.h */,
+				418BD6DB25CED3DF00ED1074 /* XPCAppProtocol.h */,
+				418BD6DC25CED4C800ED1074 /* XPCExtensionProtocol.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -208,8 +230,18 @@
 			isa = PBXGroup;
 			children = (
 				4185C859248D14E700D6CBD2 /* dot.pdf */,
+				41BE749C25CF42F40047A7D3 /* XPCApp.h */,
+				41BE749D25CF43730047A7D3 /* XPCApp.m */,
+				418DD42A25CF3A1400A0A432 /* XPCExtensionClient.h */,
+				418DD42D25CF3C2000A0A432 /* XPCExtensionClient.m */,
 				4185C83C248D064700D6CBD2 /* AppDelegate.h */,
 				4185C83D248D064700D6CBD2 /* AppDelegate.m */,
+				4153843525D12E2600C85BD1 /* InstallerWindowController.h */,
+				4153843625D12E2700C85BD1 /* InstallerWindowController.m */,
+				4153843725D12E2700C85BD1 /* InstallerWindowController.xib */,
+				4140452525CFC1550013FFE1 /* NotificationWindowController.h */,
+				4140452625CFC1550013FFE1 /* NotificationWindowController.m */,
+				4140452725CFC1550013FFE1 /* NotificationWindow.xib */,
 				4185C83F248D064800D6CBD2 /* Assets.xcassets */,
 				4185C841248D064800D6CBD2 /* MainMenu.xib */,
 				4185C844248D064800D6CBD2 /* Info.plist */,
@@ -232,11 +264,11 @@
 		4185C897248D8CF400D6CBD2 /* procmon */ = {
 			isa = PBXGroup;
 			children = (
-				4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */,
 				4185C888248D8C8800D6CBD2 /* Process.m */,
 				4185C889248D8C8800D6CBD2 /* utilities.h */,
 				4185C88A248D8C8800D6CBD2 /* signing.m */,
 				4185C88B248D8C8800D6CBD2 /* ProcessMonitor.h */,
+				4185C887248D8C8800D6CBD2 /* ProcessMonitor.m */,
 				4185C88C248D8C8800D6CBD2 /* signing.h */,
 				4185C88D248D8C8800D6CBD2 /* utilities.m */,
 			);
@@ -246,13 +278,22 @@
 		4185C8AA248D8E0E00D6CBD2 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				418BD6D125CEC0AC00ED1074 /* main.h */,
 				4185C8AE248D8E0E00D6CBD2 /* main.m */,
+				418BD6E825CEE0FF00ED1074 /* XPCExtension.h */,
+				418BD6E925CEE15400ED1074 /* XPCExtension.m */,
+				418BD6D425CEC39900ED1074 /* AllowList.h */,
+				418BD6D525CEC5D700ED1074 /* AllowList.m */,
 				4185C8B0248D8E0E00D6CBD2 /* Info.plist */,
 				4185C8B1248D8E0E00D6CBD2 /* Extension.entitlements */,
-				41A184D5248E1FEB00A71944 /* ShieldExtension.h */,
-				41A184D6248E209000A71944 /* ShieldExtension.m */,
+				41A184D5248E1FEB00A71944 /* ShieldMonitor.h */,
+				41A184D6248E209000A71944 /* ShieldMonitor.m */,
 				414158BB249207CD00DABD0D /* Preferences.h */,
 				414158BC2492081D00DABD0D /* Preferences.m */,
+				418BD6DD25CED5D800ED1074 /* XPCListener.h */,
+				418BD6DE25CED6FD00ED1074 /* XPCListener.m */,
+				418BD6E225CEDCB800ED1074 /* XPCAppClient.h */,
+				418BD6E325CEDD4500ED1074 /* XPCAppClient.m */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -321,7 +362,7 @@
 		4185C831248D064700D6CBD2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = csaba.fitzl;
 				TargetAttributes = {
 					4181AD1024A7CE0E0043B995 = {
@@ -371,6 +412,8 @@
 			files = (
 				4185C85A248D14E700D6CBD2 /* dot.pdf in Resources */,
 				4185C840248D064800D6CBD2 /* Assets.xcassets in Resources */,
+				4153843925D12E2700C85BD1 /* InstallerWindowController.xib in Resources */,
+				4140452925CFC1550013FFE1 /* NotificationWindow.xib in Resources */,
 				4185C843248D064800D6CBD2 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,12 +442,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4185C891248D8C8800D6CBD2 /* utilities.m in Sources */,
-				4185C88E248D8C8800D6CBD2 /* ProcessMonitor.m in Sources */,
-				4185C890248D8C8800D6CBD2 /* signing.m in Sources */,
-				41AD8A8024A5375F00DF7F23 /* logging.m in Sources */,
+				418DD42E25CF3C2000A0A432 /* XPCExtensionClient.m in Sources */,
+				4140452825CFC1550013FFE1 /* NotificationWindowController.m in Sources */,
+				4153843825D12E2700C85BD1 /* InstallerWindowController.m in Sources */,
+				41BE749E25CF43730047A7D3 /* XPCApp.m in Sources */,
 				4185C846248D064800D6CBD2 /* main.m in Sources */,
 				4185C83E248D064700D6CBD2 /* AppDelegate.m in Sources */,
-				4185C88F248D8C8800D6CBD2 /* Process.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,13 +456,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4141E6C7248F661A00C090BA /* ProcessMonitor.m in Sources */,
+				418BD6EB25CEE15400ED1074 /* XPCExtension.m in Sources */,
 				4141E6C8248F661A00C090BA /* Process.m in Sources */,
 				4141E6C9248F661A00C090BA /* signing.m in Sources */,
-				41AD8A8124A5375F00DF7F23 /* logging.m in Sources */,
 				414158BD2492081D00DABD0D /* Preferences.m in Sources */,
+				418BD6D625CEC5D700ED1074 /* AllowList.m in Sources */,
 				4141E6CA248F661A00C090BA /* utilities.m in Sources */,
 				4185C8AF248D8E0E00D6CBD2 /* main.m in Sources */,
-				41A184D7248E209000A71944 /* ShieldExtension.m in Sources */,
+				418BD6E525CEDD4500ED1074 /* XPCAppClient.m in Sources */,
+				41A184D7248E209000A71944 /* ShieldMonitor.m in Sources */,
+				418BD6DF25CED6FD00ED1074 /* XPCListener.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ShieldHelper/ShieldHelper.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 33YRLYRBYV;
@@ -467,6 +514,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.ShieldHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -478,6 +526,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ShieldHelper/ShieldHelper.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 33YRLYRBYV;
@@ -487,6 +536,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.ShieldHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -519,6 +569,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -577,6 +628,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -607,6 +659,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shield/Shield.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 33YRLYRBYV;
@@ -616,7 +669,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.9;
+				MARKETING_VERSION = 0.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield;
 				PRODUCT_NAME = Shield;
 			};
@@ -627,6 +680,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shield/Shield.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 33YRLYRBYV;
@@ -636,7 +690,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.9;
+				MARKETING_VERSION = 0.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield;
 				PRODUCT_NAME = Shield;
 			};
@@ -649,7 +703,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 33YRLYRBYV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Extension/Info.plist;
@@ -659,7 +713,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.9.3;
+				MARKETING_VERSION = 0.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.Extension;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = mac.shield.extension.dev;
@@ -674,7 +728,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 33YRLYRBYV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Extension/Info.plist;
@@ -684,7 +738,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.9.3;
+				MARKETING_VERSION = 0.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.csaba.fitzl.shield.Extension;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = mac.shield.extension.dev;

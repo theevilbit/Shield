@@ -42,7 +42,7 @@ typedef void (^ProcessCallbackBlock)(Process* _Nonnull, es_client_t* _Nonnull, e
 
 //start monitoring
 // pass in events of interest, count of said events, flag for codesigning, and callback
--(BOOL)start:(es_event_type_t* _Nonnull)events count:(uint32_t)count csOption:(NSUInteger)csOption callback:(ProcessCallbackBlock _Nonnull)callback;
+-(es_new_client_result_t)start:(es_event_type_t* _Nonnull)events count:(uint32_t)count csOption:(NSUInteger)csOption callback:(ProcessCallbackBlock _Nonnull)callback;
 
 //stop monitoring
 -(BOOL)stop;

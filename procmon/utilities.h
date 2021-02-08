@@ -15,5 +15,6 @@
 
 //convert es_string_token_t to string
 NSString* convertStringToken(es_string_token_t* stringToken);
+NSString* getProcessPath(pid_t pid);
 
 #endif /* utilities_h */

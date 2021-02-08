@@ -6,12 +6,15 @@
 //  Copyright © 2020. csaba.fitzl. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "Preferences.h"
 #import "../Common/Constants.h"
 #import "../Common/logging.h"
 
+@import OSLog;
+
 /* GLOBALS */
+extern os_log_t log_handle;
+
 
 @implementation Preferences
 
@@ -27,7 +30,7 @@
         if(YES != [self load])
         {
             //err msg
-            logMsg(LOG_TO_FILE|LOG_ERR, [NSString stringWithFormat:@"failed to loads preferences from %@", PREFS_FILE]);
+            os_log_error(log_handle, "failed to loads preferences from %@", PREFS_FILE);
             
             //unset
             //self = nil;
@@ -54,14 +57,21 @@ bail:
                                                    attributes:nil
                                                         error:&error];
         if (error != nil) {
-            logMsg(LOG_TO_FILE|LOG_ERR, [NSString stringWithFormat:@"Preferences: Error creating directory: %@", error]);
+            os_log_error(log_handle, "Preferences: Error creating directory: %@", error);
             goto bail;
         }
     }
     self.preferences = [NSMutableDictionary new];
+    self.preferences[@"prefElectron"] = @YES;
+    self.preferences[@"prefEnvVars"] = @YES;
+    self.preferences[@"prefTFP"] = @YES;
+    self.preferences[@"prefDylib"] = @YES;
+    self.preferences[@"skipApple"] = @YES;
+    self.preferences[@"isBlocking"] = @NO;
+
     BOOL saved = [self save];
     if(saved == NO) {
-        logMsg(LOG_TO_FILE|LOG_ERR, @"Preferences: Error saving preferences");
+        os_log_error(log_handle, "Preferences: Error saving preferences");
         goto bail;
     }
     
@@ -85,8 +95,8 @@ bail:
     }
     
     //dbg msg
-    logMsg(LOG_TO_FILE|LOG_DEBUG, [NSString stringWithFormat:@"loaded preferences: %@", self.preferences]);
-    
+    os_log_debug(log_handle, "loaded preferences: %@", self.preferences);
+
     //happy
     loaded = YES;
     

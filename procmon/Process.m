@@ -213,6 +213,7 @@ pid_t getParentID(pid_t child);
         
         //convert argument
         argument = convertStringToken(&currentArg);
+        //argument = [NSString stringWithUTF8String:currentArg];
         if(nil != argument)
         {
             //append
@@ -253,7 +254,7 @@ bail:
         
         //convert env
         environment = convertStringToken(&currentEnv);
-        if(nil != env)
+        if(nil != environment)
         {
             //append
             [self.env addObject:environment];

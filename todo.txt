@@ -1,5 +1,13 @@
-- whitelist apps based on path/cs
-- better prompt
+v1.0
 
-known bug:
-Notifications are broken on Big Sur.
+- improve prompting
+- implement allow list based on path
+
+v1.1
+
+- learning mode
+
+v1.2
+
+- allow list based on codesigning info
+

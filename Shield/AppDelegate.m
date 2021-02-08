@@ -11,6 +11,13 @@
 #import <SystemExtensions/SystemExtensions.h>
 #import <ServiceManagement/ServiceManagement.h>
 
+/* GLOBALS */
+extern os_log_t log_handle;
+
+extern AllowList* allowlist;
+
+extern Preferences* preferences;
+
 enum menuItems
 {
     status = 100,
@@ -24,7 +31,7 @@ enum menuItems
     end
 };
 
-@interface AppDelegate ()<OSSystemExtensionRequestDelegate, AppCommunication>
+@interface AppDelegate ()<OSSystemExtensionRequestDelegate>
 
 //switch buttons
 @property (weak) IBOutlet NSSwitch *electronSwitch;
@@ -44,6 +51,23 @@ enum menuItems
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+
+    // must be run from /Applications
+    if(YES != [NSBundle.mainBundle.bundlePath isEqualToString:[@"/Applications" stringByAppendingPathComponent:APP_NAME]])
+    {
+        //dbg msg
+        os_log_debug(log_handle, "Shield was started from %{public}@, not from within /Applications", NSBundle.mainBundle.bundlePath);
+        
+        //foreground
+        [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+        
+        //show alert
+        [self create_alert:[NSString stringWithFormat:@"Shield must run from:\n  %@", [@"/Applications" stringByAppendingPathComponent:APP_NAME]]];
+        
+        //exit
+        [NSApplication.sharedApplication terminate:self];
+    }
+    
     self.prefs = [NSMutableDictionary new];
     self.prefs[@"prefElectron"] = @YES;
     self.prefs[@"prefEnvVars"] = @YES;
@@ -52,31 +76,20 @@ enum menuItems
     self.prefs[@"skipApple"] = @YES;
     self.prefs[@"isBlocking"] = @YES;
 
-
     self.isRunning = NO;
-    self.isRegistered = NO;
-    self.machServiceName = @"33YRLYRBYV.com.csaba.fitzl.shield.Extension.xpc";
+    
     //create status bar
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+
     //the image to use for the icon, the system will auto-inverrt it, as Logo is a template
     NSImage *icon = [NSImage imageNamed:@"Logo"];
     self.statusItem.button.image = icon;
     self.statusItem.menu = [self buildMenu];
     
-    //init logging, with non-root user
-    setLoggingUser(1);
-    if(YES != initLogging(logFilePath(0))) {
-        //err msg
-        logMsg(LOG_ERR, @"failed to init logging");
-        [self exit:NULL];
-            
-    }
-
     //check if helper app is running
-    self.helperBundleID = @"com.csaba.fitzl.shield.ShieldHelper";
-
+    
     //lookup under running apps
-    NSArray<NSRunningApplication *> *runningShieldHelper = [NSRunningApplication runningApplicationsWithBundleIdentifier:self.helperBundleID];
+    NSArray<NSRunningApplication *> *runningShieldHelper = [NSRunningApplication runningApplicationsWithBundleIdentifier:HELPER_BUNDLE_ID];
     //running app not found
     if (runningShieldHelper == nil || [runningShieldHelper count] == 0) {
         self.loginItemSwitch.state = NSControlStateValueOff;
@@ -86,47 +99,52 @@ enum menuItems
         self.loginItemSwitch.state = NSControlStateValueOn;
     }
     
-}
-
-//setup XPC connection
-- (void)connect {
-    logMsg(LOG_NOTICE|LOG_TO_FILE, [NSString stringWithFormat:@"Connecting to Mach service: %@", self.machServiceName]);
-    NSString*  service_name = self.machServiceName;
-
-    self.connection = [[NSXPCConnection alloc] initWithMachServiceName:service_name options:0x1000];
-
-    self.interface = [NSXPCInterface interfaceWithProtocol:@protocol(ProviderCommunication)];
-
-    [self.connection setRemoteObjectInterface:self.interface];
-
-    [self.connection resume];
-
-    self.connection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(AppCommunication)];
-    self.connection.exportedObject = self;
-}
-
-- (void)registerProvider {
-
-    if(self.isRegistered == NO)
-    {
-       [self connect];
+    //disable menus until extsnion is installed
+    [self disable_menu_actions];
     
-        self.systemExtensionProvider = [self.connection remoteObjectProxyWithErrorHandler:^(NSError* error) {
-             logMsg(LOG_ERR|LOG_TO_FILE, @"[-] Shield: Something went wrong with the remote object");
-             logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"[-] Shield: error --> %@", error]);
-            self.isRegistered = NO;
-         }];
-        [self.systemExtensionProvider registerWithReply:^(BOOL b){
-            logMsg(LOG_NOTICE|LOG_TO_FILE, [NSString stringWithFormat:@"Shield: SystemExtension registration: %hdd", b]);
-            self.isRegistered = YES;
-        }];
-    }
+    //auto-load extension
+    [self install_system_extension];
+    
+
+
+}
+
+//create alert
+- (void) create_alert: (NSString* )message {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:message];
+    [alert setAlertStyle:NSAlertStyleWarning];
+    [alert runModal];
+}
+
+//create xpc
+- (void) init_xpc {
+    self.xpc_extension_client = [XPCExtensionClient new];
+    [self getStatus];
+}
+
+//enable actions in the menu, this will be invoked if the sext is loaded
+- (void) enable_menu_actions {
+    [self.statusItem.menu itemWithTag:toggle].action = @selector(onoffActionMenu:);
+    [self.statusItem.menu itemWithTag:prefs].action = @selector(showPrefWindow:);
+    [self.statusItem.menu itemWithTag:uninstall].action = @selector(uninstall_system_extension);
+    //disable install button
+    [self.statusItem.menu itemWithTag:install].action = nil;
+}
+
+//disable actions in the menu, this will be invoked if the sext is loaded
+- (void) disable_menu_actions {
+    [self.statusItem.menu itemWithTag:toggle].action = nil;
+    [self.statusItem.menu itemWithTag:prefs].action = nil;
+    [self.statusItem.menu itemWithTag:uninstall].action = nil;
+    //disable install button
+    [self.statusItem.menu itemWithTag:install].action = @selector(install_system_extension);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
-    [self stopSystemExtension];
-    deinitLogging();
+    [self.xpc_extension_client stop];
 }
 
 -(void)notify:(NSString *)notification blocked:(BOOL)blockStatus{
@@ -138,21 +156,12 @@ enum menuItems
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:n];
 }
 
-/*
--(void)alertUser:(NSString *)alertString {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:alertString];
-    [alert addButtonWithTitle:@"I'm not happy, but OK"];
-    [alert setAlertStyle:NSAlertStyleWarning];
-    [alert beginSheetModalForWindow:self.prefWindow completionHandler:nil];
-}
- */
 
 - (NSMenu*)buildMenu {
     //create status bar menu
     NSMenu *menu = [[NSMenu alloc] init];
     if (menu == nil) {
-        logMsg(LOG_ERR|LOG_TO_FILE, @"[-] Shield error: can't create menu, terminating");
+        os_log_error(log_handle,"error: can't create menu, terminating");
         [NSApp terminate:self];
     }
     NSMenuItem* menuStatus = [NSMenuItem new];
@@ -170,13 +179,11 @@ enum menuItems
     NSMenuItem* menuToggle = [NSMenuItem new];
     menuToggle.tag = toggle;
     menuToggle.title = @"Start";
-    menuToggle.action = @selector(onoffActionMenu:);
     [menu addItem:menuToggle];
     
     NSMenuItem* menuPrefs = [NSMenuItem new];
     menuPrefs.tag = prefs;
     menuPrefs.title = @"Preferences";
-    menuPrefs.action = @selector(showPrefWindow:);
     [menu addItem:menuPrefs];
 
     [menu addItem:[NSMenuItem separatorItem]]; // A thin grey line
@@ -184,13 +191,12 @@ enum menuItems
     NSMenuItem* menuInstall = [NSMenuItem new];
     menuInstall.tag = install;
     menuInstall.title = @"Install System Extension";
-    menuInstall.action = @selector(installSystemExtension:);
+    menuInstall.action = @selector(install_system_extension);
     [menu addItem:menuInstall];
 
     NSMenuItem* menuUninstall = [NSMenuItem new];
     menuUninstall.tag = uninstall;
     menuUninstall.title = @"Uninstall System Extension";
-    menuUninstall.action = @selector(uninstallSystemExtension:);
     [menu addItem:menuUninstall];
 
     [menu addItem:[NSMenuItem separatorItem]]; // A thin grey line
@@ -207,12 +213,17 @@ enum menuItems
 }
 
 - (void)stopSystemExtension {
-    [self registerProvider];
-    if(self.isRunning == YES)
-        [self.systemExtensionProvider stopWithReply:^(BOOL b){
-            logMsg(LOG_NOTICE|LOG_TO_FILE, [NSString stringWithFormat:@"[i] Shield: SystemExtension stopped: %hdd", b]);
-            [self getStatus];
-        }];
+    if(self.isRunning == YES) {
+        BOOL stopped = [self.xpc_extension_client stop];
+        if(stopped) {
+            os_log_info(log_handle, "Shield: SystemExtension stopped");
+            self.isRunning = NO;
+        }
+        else {
+            os_log_error(log_handle, "Shield: SystemExtension couldn't be stopped");
+        }
+    }
+    [self getStatus];
 }
 
 
@@ -221,12 +232,33 @@ enum menuItems
 }
 
 - (void)startSystemExtension {
-    [self registerProvider];
-    if(self.isRunning == NO)
-        [self.systemExtensionProvider startWithReply:^(BOOL b){
-            logMsg(LOG_NOTICE|LOG_TO_FILE, [NSString stringWithFormat:@"Shield: SystemExtension started: %hdd", b]);
-            [self getStatus];
-        }];
+    if(self.isRunning == NO) {
+
+        es_new_client_result_t started = [self.xpc_extension_client start];
+        //successfully started
+        if(started == ES_NEW_CLIENT_RESULT_SUCCESS) {
+            os_log_info(log_handle, "Shield: SystemExtension started");
+            self.isRunning = YES;
+        }
+        
+        //requires FDA right
+        else if(started == ES_NEW_CLIENT_RESULT_ERR_NOT_PERMITTED) {
+            os_log_error(log_handle, "Shield: SystemExtension couldn't be started because it lacks full disk access");
+            //show installation helper
+            self.installer_window = [[InstallerWindowController alloc] initWithWindowNibName:@"InstallerWindowController"];
+            self.installer_window.message = @"Please grant Full Disk Access for the system extension in\nSystem Preferences -> Security & Privacy -> Privacy";
+            self.installer_window.image_name = @"sext_fda";
+            [self.installer_window showWindow:self];
+            [NSApp activateIgnoringOtherApps:YES];
+        }
+        
+        //other unspecified reason
+        else {
+            [self create_alert:[NSString stringWithFormat:@"Shield: SystemExtension couldn't be started, es_new_client_result_t: %d", started]];
+            os_log_error(log_handle, "Shield: SystemExtension couldn't be started, es_new_client_result_t: %d", started);
+        }
+    }
+    [self getStatus];
 }
 
 
@@ -234,8 +266,8 @@ enum menuItems
     [self startSystemExtension];
 }
 
-
-- (IBAction) installSystemExtension:(id)sender {
+//install extension
+- (void) install_system_extension {
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     OSSystemExtensionRequest *req;
     req = [OSSystemExtensionRequest activationRequestForExtension:@"com.csaba.fitzl.shield.Extension" queue:q];
@@ -245,7 +277,7 @@ enum menuItems
     }
 }
 
-- (IBAction) uninstallSystemExtension:(id)sender {
+- (void) uninstall_system_extension {
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     OSSystemExtensionRequest *req;
     req = [OSSystemExtensionRequest deactivationRequestForExtension:@"com.csaba.fitzl.shield.Extension" queue:q];
@@ -257,8 +289,7 @@ enum menuItems
 
 
 - (void)exit:(id)sender {
-    [self stopSystemExtension];
-    deinitLogging();
+    [self.xpc_extension_client stop];
     [NSApp terminate:self];
 }
 
@@ -297,85 +328,80 @@ enum menuItems
 
 //refresh GUI based on SE's state
 - (void) getStatus {
-    [self registerProvider];
-    [self.systemExtensionProvider getStatus:^(NSDictionary* reply) {
-        if(reply != nil) {
-            self.prefs[@"isRunning"] = reply[@"isRunning"];
-            self.prefs[@"prefElectron"] = reply[@"prefElectron"];
-            self.prefs[@"prefEnvVars"] = reply[@"prefEnvVars"];
-            self.prefs[@"prefTFP"] = reply[@"prefTFP"];
-            self.prefs[@"prefDylib"] = reply[@"prefDylib"];
-            self.prefs[@"skipApple"] = reply[@"skipApple"];
-            self.prefs[@"isBlocking"] = reply[@"isBlocking"];
-            self.isRunning = [[reply objectForKey:@"isRunning"] boolValue];
-            if ([[self.prefs objectForKey:@"prefElectron"] boolValue] == YES)
-                self.electronSwitch.state = NSControlStateValueOn;
-            else
-                self.electronSwitch.state = NSControlStateValueOff;
+    NSDictionary* reply = [self.xpc_extension_client getStatus];
+    if(reply != nil) {
+        self.prefs[@"isRunning"] = reply[@"isRunning"];
+        self.prefs[@"prefElectron"] = reply[@"prefElectron"];
+        self.prefs[@"prefEnvVars"] = reply[@"prefEnvVars"];
+        self.prefs[@"prefTFP"] = reply[@"prefTFP"];
+        self.prefs[@"prefDylib"] = reply[@"prefDylib"];
+        self.prefs[@"skipApple"] = reply[@"skipApple"];
+        self.prefs[@"isBlocking"] = reply[@"isBlocking"];
+        self.isRunning = [[reply objectForKey:@"isRunning"] boolValue];
+        if ([[self.prefs objectForKey:@"prefElectron"] boolValue] == YES)
+            self.electronSwitch.state = NSControlStateValueOn;
+        else
+            self.electronSwitch.state = NSControlStateValueOff;
 
-            if ([[self.prefs objectForKey:@"prefDylib"] boolValue] == YES)
-                self.dylibHijackSwitch.state = NSControlStateValueOn;
-            else
-                self.dylibHijackSwitch.state = NSControlStateValueOff;
+        if ([[self.prefs objectForKey:@"prefDylib"] boolValue] == YES)
+            self.dylibHijackSwitch.state = NSControlStateValueOn;
+        else
+            self.dylibHijackSwitch.state = NSControlStateValueOff;
 
-            if ([[self.prefs objectForKey:@"prefEnvVars"] boolValue] == YES)
-                self.envVarSwitch.state = NSControlStateValueOn;
-            else
-                self.envVarSwitch.state = NSControlStateValueOff;
+        if ([[self.prefs objectForKey:@"prefEnvVars"] boolValue] == YES)
+            self.envVarSwitch.state = NSControlStateValueOn;
+        else
+            self.envVarSwitch.state = NSControlStateValueOff;
 
-            if ([[self.prefs objectForKey:@"prefTFP"] boolValue] == YES)
-                self.tfpSwitch.state = NSControlStateValueOn;
-            else
-                self.tfpSwitch.state = NSControlStateValueOff;
+        if ([[self.prefs objectForKey:@"prefTFP"] boolValue] == YES)
+            self.tfpSwitch.state = NSControlStateValueOn;
+        else
+            self.tfpSwitch.state = NSControlStateValueOff;
 
-            if (self.isRunning == NO) {
-                [self.statusItem.menu itemWithTag:status].title = @"Stopped";
-                [self.statusItem.menu itemWithTag:toggle].title = @"Start";
-                self.onoffSwitch.state = NSControlStateValueOff;
-            }
-            else {
-                [self.statusItem.menu itemWithTag:status].title = @"Running";
-                [self.statusItem.menu itemWithTag:toggle].title = @"Stop";
-                self.onoffSwitch.state = NSControlStateValueOn;
-            }
-
-            if ([[self.prefs objectForKey:@"skipApple"] boolValue] == YES)
-                self.skipAppleSwitch.state = NSControlStateValueOn;
-            else
-                self.skipAppleSwitch.state = NSControlStateValueOff;
-
-            if ([[self.prefs objectForKey:@"isBlocking"] boolValue] == YES) {
-                [self.statusItem.menu itemWithTag:mode].title = @"Mode: Blocking";
-                //[self.statusItem.menu itemWithTag:block].title = @"Alert";
-                self.isBlockedSwitch.state = NSControlStateValueOn;
-            }
-            else {
-                self.isBlockedSwitch.state = NSControlStateValueOff;
-                [self.statusItem.menu itemWithTag:mode].title = @"Mode: Alerting";
-                //[self.statusItem.menu itemWithTag:block].title = @"Block";
-            }
+        if (self.isRunning == NO) {
+            [self.statusItem.menu itemWithTag:status].title = @"Stopped";
+            [self.statusItem.menu itemWithTag:toggle].title = @"Start";
+            self.onoffSwitch.state = NSControlStateValueOff;
         }
-    }];
+        else {
+            [self.statusItem.menu itemWithTag:status].title = @"Running";
+            [self.statusItem.menu itemWithTag:toggle].title = @"Stop";
+            self.onoffSwitch.state = NSControlStateValueOn;
+        }
+
+        if ([[self.prefs objectForKey:@"skipApple"] boolValue] == YES)
+            self.skipAppleSwitch.state = NSControlStateValueOn;
+        else
+            self.skipAppleSwitch.state = NSControlStateValueOff;
+
+        if ([[self.prefs objectForKey:@"isBlocking"] boolValue] == YES) {
+            [self.statusItem.menu itemWithTag:mode].title = @"Mode: Blocking";
+            //[self.statusItem.menu itemWithTag:block].title = @"Alert";
+            self.isBlockedSwitch.state = NSControlStateValueOn;
+        }
+        else {
+            self.isBlockedSwitch.state = NSControlStateValueOff;
+            [self.statusItem.menu itemWithTag:mode].title = @"Mode: Alerting";
+            //[self.statusItem.menu itemWithTag:block].title = @"Block";
+        }
+    }
 }
 
 - (void) updatePrefs {
     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:self.prefs copyItems:YES];
-    [self.systemExtensionProvider updatePrefs:dict];
+    [self.xpc_extension_client update_preferences:dict];
 }
 
 - (IBAction)skipAppleAction:(id)sender {
-    [self registerProvider];
     if(self.skipAppleSwitch.state == NSControlStateValueOn)
         self.prefs[@"skipApple"] = @YES;
     else
         self.prefs[@"skipApple"] = @NO;
     [self updatePrefs];
     [self getStatus];
-    
 }
 
 - (IBAction)injEnvVarsAction:(id)sender {
-    [self registerProvider];
     if(self.envVarSwitch.state == NSControlStateValueOn)
         self.prefs[@"prefEnvVars"] = @YES;
     else
@@ -385,7 +411,6 @@ enum menuItems
 }
 
 - (IBAction)injTfpAction:(id)sender {
-    [self registerProvider];
     if(self.tfpSwitch.state == NSControlStateValueOn)
         self.prefs[@"prefTFP"] = @YES;
     else
@@ -395,7 +420,6 @@ enum menuItems
 }
 
 - (IBAction)injElectronAction:(id)sender {
-    [self registerProvider];
     if(self.electronSwitch.state == NSControlStateValueOn)
         self.prefs[@"prefElectron"] = @YES;
     else
@@ -405,7 +429,6 @@ enum menuItems
 }
 
 - (IBAction)injDylibAction:(id)sender {
-    [self registerProvider];
     if(self.dylibHijackSwitch.state == NSControlStateValueOn)
         self.prefs[@"prefDylib"] = @YES;
     else
@@ -423,8 +446,8 @@ enum menuItems
     else {
         loginOnOff = NO;
     }
-    if (!SMLoginItemSetEnabled((__bridge CFStringRef)self.helperBundleID, loginOnOff)) {
-      logMsg(LOG_ERR, @"Shield: Login Item Was Not Successful");
+    if (!SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_BUNDLE_ID, loginOnOff)) {
+      os_log_error(log_handle, "Shield: Login Item Was Not Successful");
     }
 }
 
@@ -435,32 +458,53 @@ enum menuItems
                   actionForReplacingExtension:(OSSystemExtensionProperties *)old
                                 withExtension:(OSSystemExtensionProperties *)new
     API_AVAILABLE(macos(10.15)) {
-  logMsg(LOG_NOTICE|LOG_TO_FILE, [NSString stringWithFormat:@"SystemExtension \"%@\" request for replacement", request.identifier]);
+  os_log_info(log_handle,"SystemExtension \"%@\" request for replacement", request.identifier);
   return OSSystemExtensionReplacementActionReplace;
 }
 
 - (void)requestNeedsUserApproval:(OSSystemExtensionRequest *)request API_AVAILABLE(macos(10.15)) {
     NSString* logmsg = [NSString stringWithFormat:@"SystemExtension \"%@\" request needs user approval", request.identifier];
-    logMsg(LOG_ERR|LOG_TO_FILE, logmsg);
+    os_log_error(log_handle, "%@", logmsg);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        //show installation helper
+        self.installer_window = [[InstallerWindowController alloc] initWithWindowNibName:@"InstallerWindowController"];
+        self.installer_window.message = @"Please approve system extension in\nSystem Preferences -> Security & Privacy -> General";
+        self.installer_window.image_name = @"sext_approve";
+        [self.installer_window showWindow:self];
+        [NSApp activateIgnoringOtherApps:YES];
+    });
+
     self.extensionLoaded = NO;
 }
 
 - (void)request:(OSSystemExtensionRequest *)request
     didFailWithError:(NSError *)error API_AVAILABLE(macos(10.15)) {
     NSString* logmsg = [NSString stringWithFormat:@"SystemExtension \"%@\" request did fail: %@", request.identifier, error];
-    logMsg(LOG_ERR|LOG_TO_FILE, logmsg);
+    os_log_error(log_handle, "%@", logmsg);
     self.extensionLoaded = NO;
+
 }
 
 - (void)request:(OSSystemExtensionRequest *)request
     didFinishWithResult:(OSSystemExtensionRequestResult)result API_AVAILABLE(macos(10.15)) {
-  logMsg(LOG_NOTICE|LOG_TO_FILE, [NSString stringWithFormat:@"SystemExtension \"%@\" request did finish: %ld", request.identifier, (long)result]);
+    os_log_info(log_handle, "SystemExtension \"%@\" request did finish: %ld", request.identifier, (long)result);
     if(result == OSSystemExtensionRequestCompleted) {
         self.extensionLoaded = YES;
-        [self registerProvider];
+        
+        //now that the extesion is loaded we can init xpc
+        [self init_xpc];
+        
+        //enable menus
+        [self enable_menu_actions];
+        
     }
-    else {
-        self.extensionLoaded = NO;
+    if(result == OSSystemExtensionRequestWillCompleteAfterReboot) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self create_alert:@"The action requires a reboot"];
+            self.extensionLoaded = NO;
+        });
+        
     }
 }
 @end

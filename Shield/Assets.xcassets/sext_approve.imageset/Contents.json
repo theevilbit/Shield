@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "sext_approve.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

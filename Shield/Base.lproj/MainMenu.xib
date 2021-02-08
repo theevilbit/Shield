@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -693,7 +693,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="179" y="218" width="418" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1097"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <view key="contentView" id="5td-5X-db0">
                 <rect key="frame" x="0.0" y="0.0" width="418" height="477"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -719,7 +719,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KHg-gG-E3o">
-                        <rect key="frame" x="96" y="229" width="208" height="19"/>
+                        <rect key="frame" x="96" y="225" width="208" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="injection: environment variables" id="pil-OR-b8K">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -727,7 +727,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="suR-y5-BHD">
-                        <rect key="frame" x="96" y="192" width="177" height="19"/>
+                        <rect key="frame" x="96" y="188" width="177" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="injection: task_for_pid calls" id="p5m-9L-qQF">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -735,25 +735,25 @@
                         </textFieldCell>
                     </textField>
                     <switch identifier="onoffButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="q0y-mz-mT5">
-                        <rect key="frame" x="123" y="420" width="42" height="24"/>
+                        <rect key="frame" x="123" y="419" width="42" height="25"/>
                         <connections>
                             <action selector="onoffAction:" target="Voe-Tx-rLC" id="vsy-bk-FrW"/>
                         </connections>
                     </switch>
                     <switch identifier="blockButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="bZP-HZ-uBz">
-                        <rect key="frame" x="31" y="352" width="42" height="24"/>
+                        <rect key="frame" x="31" y="351" width="42" height="25"/>
                         <connections>
                             <action selector="blockAction:" target="Voe-Tx-rLC" id="8f0-UE-DZS"/>
                         </connections>
                     </switch>
                     <switch identifier="ignoreButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="D55-uH-iHi">
-                        <rect key="frame" x="31" y="315" width="42" height="24"/>
+                        <rect key="frame" x="31" y="313" width="42" height="25"/>
                         <connections>
                             <action selector="skipAppleAction:" target="Voe-Tx-rLC" id="LMm-mX-hIJ"/>
                         </connections>
                     </switch>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I3v-tS-ogO">
-                        <rect key="frame" x="96" y="155" width="209" height="19"/>
+                        <rect key="frame" x="96" y="151" width="209" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="injection: Electron debug switch" id="CPR-Vj-uXa">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -782,7 +782,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NKG-Sv-bwe">
-                        <rect key="frame" x="31" y="274" width="187" height="19"/>
+                        <rect key="frame" x="31" y="272" width="187" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Injection protection settings:" id="azo-Gx-B5L">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -790,25 +790,25 @@
                         </textFieldCell>
                     </textField>
                     <switch identifier="dyldButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="I7r-j6-CJK">
-                        <rect key="frame" x="31" y="227" width="42" height="24"/>
+                        <rect key="frame" x="31" y="224" width="42" height="25"/>
                         <connections>
                             <action selector="injEnvVarsAction:" target="Voe-Tx-rLC" id="DK3-Gw-VjT"/>
                         </connections>
                     </switch>
                     <switch identifier="tfpButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="yGx-nZ-l82">
-                        <rect key="frame" x="31" y="190" width="42" height="24"/>
+                        <rect key="frame" x="31" y="186" width="42" height="25"/>
                         <connections>
                             <action selector="injTfpAction:" target="Voe-Tx-rLC" id="jC3-Jk-MOc"/>
                         </connections>
                     </switch>
                     <switch identifier="electronButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="gIx-yT-RRP">
-                        <rect key="frame" x="31" y="153" width="42" height="24"/>
+                        <rect key="frame" x="31" y="148" width="42" height="25"/>
                         <connections>
                             <action selector="injElectronAction:" target="Voe-Tx-rLC" id="F8D-kG-BhO"/>
                         </connections>
                     </switch>
                     <switch identifier="dylibButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XJW-BF-j2H">
-                        <rect key="frame" x="31" y="116" width="42" height="24"/>
+                        <rect key="frame" x="31" y="110" width="42" height="25"/>
                         <connections>
                             <action selector="injDylibAction:" target="Voe-Tx-rLC" id="OsH-Ac-RDI"/>
                         </connections>
@@ -822,15 +822,15 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZqC-bR-LXI">
-                        <rect key="frame" x="31" y="76" width="69" height="19"/>
+                        <rect key="frame" x="31" y="77" width="69" height="19"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Main app:" id="mWF-Sf-gor">
                             <font key="font" size="14" name="AvenirNext-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <switch identifier="electronButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="ahy-QI-Brn">
-                        <rect key="frame" x="31" y="29" width="42" height="24"/>
+                    <switch identifier="startupButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="ahy-QI-Brn">
+                        <rect key="frame" x="31" y="29" width="42" height="25"/>
                         <connections>
                             <action selector="loginItemAction:" target="Voe-Tx-rLC" id="RnL-T2-Uab"/>
                         </connections>
