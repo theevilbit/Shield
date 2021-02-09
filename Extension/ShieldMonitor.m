@@ -30,14 +30,20 @@ extern os_log_t log_handle;
     self = [super init];
     if(self != nil)
     {
-        self.isRunning = NO;
         self.monitoredEnvVars = [NSArray arrayWithObjects:@"DYLD_INSERT_LIBRARIES",@"CFNETWORK_LIBRARY_PATH",@"RAWCAMERA_BUNDLE_PATH",@"ELECTRON_RUN_AS_NODE",nil];
         /*
          ELECTRON_RUN_AS_NODE
          https://www.trustedsec.com/blog/macos-injection-via-third-party-frameworks
          */
         self.xpc_client = [[XPCAppClient alloc] init];
-        
+
+        //for now we don't autostart the es client, and we ensure it's reflected in preferences
+        self.isRunning = NO;
+        if (preferences != nil) {
+            preferences.preferences[@"isRunning"] = @(self.isRunning);
+            [preferences save];
+        }
+
     }
     return self;
 }
@@ -112,8 +118,8 @@ extern os_log_t log_handle;
         BOOL blocked = NO;
         notification[@"type"] = @"";
         notification[@"victim_path"] = process.path;
-        notification[@"attacker_path"] = @"NA";
-        notification[@"dylib_path"] = @"NA";
+        notification[@"attacker_path"] = @"-";
+        notification[@"dylib_path"] = @"-";
         notification[@"env"] = @"";//[[process.env valueForKey:@"description"] componentsJoinedByString:@""];
         notification[@"arguments"] = [[process.arguments valueForKey:@"description"] componentsJoinedByString:@""];
         notification[@"id"] = [NSNumber numberWithUnsignedInt:(u_int)NSDate.date.timeIntervalSince1970];
@@ -156,10 +162,10 @@ extern os_log_t log_handle;
                             if (status == noErr) {
                                 //check code validity
                                 status = SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirementRef);
+                                notification[@"type"] = @"dylib";
+                                notification[@"dylib_path"] = path;
+                                notify = YES;
                                 if (status != noErr) {
-                                    notification[@"type"] = @"dylib";
-                                    notification[@"dylib_path"] = path;
-                                    notify = YES;
                                     if([[preferences.preferences objectForKey:@"isBlocking"] boolValue] == NO) {
                                         /*
                                          we notify users about detection, but postpone AUTH decision to later in case

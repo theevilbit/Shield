@@ -17,7 +17,7 @@
 //global prefs obj
 extern Preferences* preferences;
 
-//global whitelist obj
+//global allowlist obj
 extern AllowList* allowlist;
 
 //global shield monitor obj
@@ -32,6 +32,8 @@ extern os_log_t log_handle;
 -(void)startWithReply:(void (^)(es_new_client_result_t))reply
 {
     es_new_client_result_t started = [shield_monitor start];
+    preferences.preferences[@"isRunning"] = @(shield_monitor.isRunning);
+    [preferences save];
     reply(started);
 }
 
@@ -39,6 +41,8 @@ extern os_log_t log_handle;
 -(void)stopWithReply:(void (^)(BOOL))reply
 {
     BOOL stopped = [shield_monitor stop];
+    preferences.preferences[@"isRunning"] = @(shield_monitor.isRunning);
+    [preferences save];
     reply(stopped);
 }
 
@@ -73,7 +77,7 @@ extern os_log_t log_handle;
 
 -(void)update_allowlist:(NSMutableDictionary *)al reply:(void (^)(BOOL))reply
 {
-    os_log_debug(log_handle, "Updating whitelist");
+    os_log_debug(log_handle, "Updating allowlist");
     allowlist.allowlist_full = al;
     reply(YES);
 }

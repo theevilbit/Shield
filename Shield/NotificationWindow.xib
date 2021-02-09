@@ -24,10 +24,10 @@
         <window title="Shield Notification" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="616" height="327"/>
+            <rect key="contentRect" x="196" y="240" width="812" height="327"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="616" height="327"/>
+                <rect key="frame" x="0.0" y="0.0" width="812" height="327"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EPQ-BZ-vgz">
@@ -79,7 +79,7 @@
                         </textFieldCell>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ANs-jS-eh1">
-                        <rect key="frame" x="548" y="259" width="48" height="48"/>
+                        <rect key="frame" x="744" y="259" width="48" height="48"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="48" id="6IO-uJ-gs4"/>
                             <constraint firstAttribute="width" constant="48" id="AOS-sh-jTk"/>
@@ -111,7 +111,10 @@
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_arguments" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pp9-qA-5PE">
-                        <rect key="frame" x="236" y="146" width="35" height="16"/>
+                        <rect key="frame" x="236" y="146" width="514" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="510" id="znK-yQ-kC2"/>
+                        </constraints>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="OeN-QA-quu">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -119,9 +122,9 @@
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_env" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5e-zl-DEd">
-                        <rect key="frame" x="236" y="123" width="324" height="16"/>
+                        <rect key="frame" x="236" y="123" width="514" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="320" id="vHd-72-1DM"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="510" id="qiP-XH-hN3"/>
                         </constraints>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="aah-Gr-ETp">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
@@ -130,7 +133,10 @@
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_dylib_path" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KHb-RP-8xv">
-                        <rect key="frame" x="236" y="100" width="35" height="16"/>
+                        <rect key="frame" x="236" y="100" width="514" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="510" id="SQJ-bh-v7h"/>
+                        </constraints>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="3vg-lb-Jtb">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -195,7 +201,7 @@
                 <binding destination="e1d-dm-ZGX" name="title" keyPath="values" id="GQ2-LM-zOS"/>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-260" y="144.5"/>
+            <point key="canvasLocation" x="-162" y="144.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="e1d-dm-ZGX"/>
     </objects>
