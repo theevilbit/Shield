@@ -31,10 +31,17 @@
 
 //stop ES client
 -(BOOL)stop;
--(NSDictionary*)getStatus;
--(NSDictionary*)get_allowlist;
--(BOOL)update_preferences:(NSDictionary *)prefs;
--(BOOL)update_allowlist:(NSMutableDictionary *)wl;
 
+-(NSDictionary*)getStatus;
+-(BOOL)update_preferences:(NSDictionary *)prefs;
+
+//allowlist operation
+-(BOOL)add_item_to_allowlist:(NSDictionary *)al;
+-(BOOL)remove_item_from_allowlist:(NSDictionary *)al;
+-(NSArray*)get_allowlist;
+-(BOOL)clear_allowlist;
+
+//clear cache - to reset state if somethign was blocked but the user allows it
+-(void)clear_cache;
 
 @end

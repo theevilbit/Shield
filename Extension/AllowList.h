@@ -18,17 +18,27 @@
 
 /* PROPERTIES */
 
-//allowlist for various injections
-@property(nonatomic, retain)NSMutableArray* allowlist_task_for_pid;
-@property(nonatomic, retain)NSMutableArray* allowlist_dylib;
-@property(nonatomic, retain)NSMutableArray* allowlist_envvars;
-@property(nonatomic, retain)NSMutableArray* allowlist_electron;
+//allowlist
 @property(nonatomic, retain)NSMutableDictionary* allowlist_full;
+@property(nonatomic, retain)NSMutableArray* allowlist_items;
 
 /* METHODS */
 
 //load/save prefs from disk
 -(BOOL)load;
 -(BOOL)save;
+-(BOOL)init_file;
+
+//check if item in allowlist
+-(BOOL)is_item_in_allowlist:(NSDictionary*)item;
+
+//manage allowlist
+-(BOOL)add_item_to_allowlist:(NSDictionary*)item;
+
+-(BOOL)remove_item_from_allowlist:(NSDictionary*)item;
+
+-(NSDictionary*) get_allowlist;
+
+-(BOOL)clear_allowlist;
 
 @end

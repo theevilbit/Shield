@@ -9,12 +9,16 @@
 @import OSLog;
 @import Cocoa;
 
+#import <SystemExtensions/SystemExtensions.h>
+#import <ServiceManagement/ServiceManagement.h>
+
 #import "Constants.h"
 #import "AllowList.h"
 #import "Preferences.h"
 #import "XPCApp.h"
 #import "XPCExtensionClient.h"
 #import "InstallerWindowController.h"
+#import "AllowListWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -33,10 +37,15 @@
 @property NSMutableDictionary* prefs;
 
 //xpc connection
-@property XPCExtensionClient* xpc_extension_client;
+//@property XPCExtensionClient* xpc_extension_client;
 
 //installer window
 @property InstallerWindowController* installer_window;
+
+//allow list window
+@property AllowListWindowController* allowlist_window;
+
+
 
 /* methods */
 

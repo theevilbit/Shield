@@ -8,15 +8,14 @@
 //app icon: Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 #import "AppDelegate.h"
-#import <SystemExtensions/SystemExtensions.h>
-#import <ServiceManagement/ServiceManagement.h>
+
 
 /* GLOBALS */
 extern os_log_t log_handle;
 
-extern AllowList* allowlist;
-
 extern Preferences* preferences;
+
+extern XPCExtensionClient* xpc_extension_client;
 
 enum menuItems
 {
@@ -28,7 +27,8 @@ enum menuItems
     install,
     uninstall,
     autorun,
-    end
+    end,
+    allowlist
 };
 
 @interface AppDelegate ()<OSSystemExtensionRequestDelegate>
@@ -44,6 +44,7 @@ enum menuItems
 @property (weak) IBOutlet NSSwitch *onoffSwitch;
 @property (weak) IBOutlet NSWindow *prefWindow;
 @property (weak) IBOutlet NSSwitch *loginItemSwitch;
+@property (weak) IBOutlet NSSwitch *learningSwitch;
 
 @end
 
@@ -69,12 +70,13 @@ enum menuItems
     }
     
     self.prefs = [NSMutableDictionary new];
-    self.prefs[@"prefElectron"] = @YES;
-    self.prefs[@"prefEnvVars"] = @YES;
-    self.prefs[@"prefTFP"] = @YES;
-    self.prefs[@"prefDylib"] = @YES;
-    self.prefs[@"skipApple"] = @YES;
-    self.prefs[@"isBlocking"] = @YES;
+    self.prefs[PREF_ELECTRON] = @YES;
+    self.prefs[PREF_ENVVARS] = @YES;
+    self.prefs[PREF_TFP] = @YES;
+    self.prefs[PREF_DYLIB] = @YES;
+    self.prefs[PREF_SKIPAPPLE] = @YES;
+    self.prefs[PREF_ISBLOCKING] = @YES;
+    self.prefs[PREF_ISLEARNING] = @NO;
 
     self.isRunning = NO;
     
@@ -105,6 +107,10 @@ enum menuItems
     //auto-load extension
     [self install_system_extension];
     
+    //create allowlist window
+    self.allowlist_window = [[AllowListWindowController alloc] initWithWindowNibName:@"AllowListWindow"];
+    self.allowlist_window.allowlist_app = [NSArray new];
+
 
 
 }
@@ -120,7 +126,7 @@ enum menuItems
 
 //create xpc
 - (void) init_xpc {
-    self.xpc_extension_client = [XPCExtensionClient new];
+    xpc_extension_client = [XPCExtensionClient new];
     [self getStatus];
 }
 
@@ -129,22 +135,24 @@ enum menuItems
     [self.statusItem.menu itemWithTag:toggle].action = @selector(onoffActionMenu:);
     [self.statusItem.menu itemWithTag:prefs].action = @selector(showPrefWindow:);
     [self.statusItem.menu itemWithTag:uninstall].action = @selector(uninstall_system_extension);
+    [self.statusItem.menu itemWithTag:allowlist].action = @selector(showAllowWindow:);
     //disable install button
     [self.statusItem.menu itemWithTag:install].action = nil;
 }
 
-//disable actions in the menu, this will be invoked if the sext is loaded
+//disable actions in the menu, this will be invoked if the sext is unloaded
 - (void) disable_menu_actions {
     [self.statusItem.menu itemWithTag:toggle].action = nil;
     [self.statusItem.menu itemWithTag:prefs].action = nil;
     [self.statusItem.menu itemWithTag:uninstall].action = nil;
+    [self.statusItem.menu itemWithTag:allowlist].action = nil;
     //disable install button
     [self.statusItem.menu itemWithTag:install].action = @selector(install_system_extension);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
-    [self.xpc_extension_client stop];
+    [xpc_extension_client stop];
 }
 
 -(void)notify:(NSString *)notification blocked:(BOOL)blockStatus{
@@ -188,6 +196,13 @@ enum menuItems
 
     [menu addItem:[NSMenuItem separatorItem]]; // A thin grey line
 
+    NSMenuItem* menuAllow = [NSMenuItem new];
+    menuAllow.tag = allowlist;
+    menuAllow.title = @"Allowed Injections";
+    [menu addItem:menuAllow];
+
+    [menu addItem:[NSMenuItem separatorItem]]; // A thin grey line
+
     NSMenuItem* menuInstall = [NSMenuItem new];
     menuInstall.tag = install;
     menuInstall.title = @"Install System Extension";
@@ -205,6 +220,17 @@ enum menuItems
     return menu;
 }
 
+//show window for editing allow list
+- (IBAction)showAllowWindow:(id)sender {
+    self.allowlist_window.allowlist_app = [xpc_extension_client get_allowlist];
+    [self.allowlist_window.allowlist_table reloadData];
+
+    self.allowlist_window.window.isVisible = YES;
+    [NSApp activateIgnoringOtherApps:YES];
+
+}
+
+//display pref window
 - (IBAction)showPrefWindow:(id)sender {
     [self getStatus];
     self.prefWindow.isVisible = YES;
@@ -214,7 +240,7 @@ enum menuItems
 
 - (void)stopSystemExtension {
     if(self.isRunning == YES) {
-        BOOL stopped = [self.xpc_extension_client stop];
+        BOOL stopped = [xpc_extension_client stop];
         if(stopped) {
             os_log_info(log_handle, "Shield: SystemExtension stopped");
             self.isRunning = NO;
@@ -234,7 +260,7 @@ enum menuItems
 - (void)startSystemExtension {
     if(self.isRunning == NO) {
 
-        es_new_client_result_t started = [self.xpc_extension_client start];
+        es_new_client_result_t started = [xpc_extension_client start];
         //successfully started
         if(started == ES_NEW_CLIENT_RESULT_SUCCESS) {
             os_log_info(log_handle, "Shield: SystemExtension started");
@@ -244,8 +270,12 @@ enum menuItems
         //requires FDA right
         else if(started == ES_NEW_CLIENT_RESULT_ERR_NOT_PERMITTED) {
             os_log_error(log_handle, "Shield: SystemExtension couldn't be started because it lacks full disk access");
+            
             //show installation helper
-            self.installer_window = [[InstallerWindowController alloc] initWithWindowNibName:@"InstallerWindowController"];
+            //only create a window if we don't have one already, otherwise we will just update it
+            if (self.installer_window == nil) {
+                self.installer_window = [[InstallerWindowController alloc] initWithWindowNibName:@"InstallerWindowController"];
+            }
             self.installer_window.message = @"Please grant Full Disk Access for the system extension in\nSystem Preferences -> Security & Privacy -> Privacy";
             self.installer_window.image_name = @"sext_fda";
             [self.installer_window showWindow:self];
@@ -289,7 +319,7 @@ enum menuItems
 
 
 - (void)exit:(id)sender {
-    [self.xpc_extension_client stop];
+    [xpc_extension_client stop];
     [NSApp terminate:self];
 }
 
@@ -304,6 +334,19 @@ enum menuItems
     }
 }
 
+- (IBAction)learningAction:(id)sender {
+    if(self.learningSwitch.state == NSControlStateValueOn) {
+        self.prefs[PREF_ISLEARNING] = @YES;
+        [self updatePrefs];
+    }
+    else {
+        self.prefs[PREF_ISLEARNING] = @NO;
+        [self updatePrefs];
+    }
+    [self getStatus];
+}
+
+
 - (IBAction)onoffActionMenu:(id)sender {
     if(self.isRunning == NO) {
         [self startSystemExtension];
@@ -316,11 +359,11 @@ enum menuItems
 
 - (IBAction)blockAction:(id)sender {
     if (self.isBlockedSwitch.state == NSControlStateValueOn) {
-        self.prefs[@"isBlocking"] = @YES;
+        self.prefs[PREF_ISBLOCKING] = @YES;
         [self updatePrefs];
     }
     else {
-        self.prefs[@"isBlocking"] = @NO;
+        self.prefs[PREF_ISBLOCKING] = @NO;
         [self updatePrefs];
     }
     [self getStatus];
@@ -328,32 +371,34 @@ enum menuItems
 
 //refresh GUI based on SE's state
 - (void) getStatus {
-    NSDictionary* reply = [self.xpc_extension_client getStatus];
+    self.allowlist_window.allowlist_app = [xpc_extension_client get_allowlist];
+    NSDictionary* reply = [xpc_extension_client getStatus];
     if(reply != nil) {
-        self.prefs[@"isRunning"] = reply[@"isRunning"];
-        self.prefs[@"prefElectron"] = reply[@"prefElectron"];
-        self.prefs[@"prefEnvVars"] = reply[@"prefEnvVars"];
-        self.prefs[@"prefTFP"] = reply[@"prefTFP"];
-        self.prefs[@"prefDylib"] = reply[@"prefDylib"];
-        self.prefs[@"skipApple"] = reply[@"skipApple"];
-        self.prefs[@"isBlocking"] = reply[@"isBlocking"];
-        self.isRunning = [[reply objectForKey:@"isRunning"] boolValue];
-        if ([[self.prefs objectForKey:@"prefElectron"] boolValue] == YES)
+        self.prefs[PREF_ISRUNNING] = reply[PREF_ISRUNNING];
+        self.prefs[PREF_ISLEARNING] = reply[PREF_ISLEARNING];
+        self.prefs[PREF_ELECTRON] = reply[PREF_ELECTRON];
+        self.prefs[PREF_ENVVARS] = reply[PREF_ENVVARS];
+        self.prefs[PREF_TFP] = reply[PREF_TFP];
+        self.prefs[PREF_DYLIB] = reply[PREF_DYLIB];
+        self.prefs[PREF_SKIPAPPLE] = reply[PREF_SKIPAPPLE];
+        self.prefs[PREF_ISBLOCKING] = reply[PREF_ISBLOCKING];
+        self.isRunning = [[reply objectForKey:PREF_ISRUNNING] boolValue];
+        if ([[self.prefs objectForKey:PREF_ELECTRON] boolValue] == YES)
             self.electronSwitch.state = NSControlStateValueOn;
         else
             self.electronSwitch.state = NSControlStateValueOff;
 
-        if ([[self.prefs objectForKey:@"prefDylib"] boolValue] == YES)
+        if ([[self.prefs objectForKey:PREF_DYLIB] boolValue] == YES)
             self.dylibHijackSwitch.state = NSControlStateValueOn;
         else
             self.dylibHijackSwitch.state = NSControlStateValueOff;
 
-        if ([[self.prefs objectForKey:@"prefEnvVars"] boolValue] == YES)
+        if ([[self.prefs objectForKey:PREF_ENVVARS] boolValue] == YES)
             self.envVarSwitch.state = NSControlStateValueOn;
         else
             self.envVarSwitch.state = NSControlStateValueOff;
 
-        if ([[self.prefs objectForKey:@"prefTFP"] boolValue] == YES)
+        if ([[self.prefs objectForKey:PREF_TFP] boolValue] == YES)
             self.tfpSwitch.state = NSControlStateValueOn;
         else
             self.tfpSwitch.state = NSControlStateValueOff;
@@ -369,70 +414,77 @@ enum menuItems
             self.onoffSwitch.state = NSControlStateValueOn;
         }
 
-        if ([[self.prefs objectForKey:@"skipApple"] boolValue] == YES)
+        if ([[self.prefs objectForKey:PREF_SKIPAPPLE] boolValue] == YES)
             self.skipAppleSwitch.state = NSControlStateValueOn;
         else
             self.skipAppleSwitch.state = NSControlStateValueOff;
 
-        if ([[self.prefs objectForKey:@"isBlocking"] boolValue] == YES) {
+        if ([[self.prefs objectForKey:PREF_ISLEARNING] boolValue] == YES)
+            self.learningSwitch.state = NSControlStateValueOn;
+        else
+            self.learningSwitch.state = NSControlStateValueOff;
+
+        if ([[self.prefs objectForKey:PREF_ISBLOCKING] boolValue] == YES) {
             [self.statusItem.menu itemWithTag:mode].title = @"Mode: Blocking";
             //[self.statusItem.menu itemWithTag:block].title = @"Alert";
             self.isBlockedSwitch.state = NSControlStateValueOn;
+            self.learningSwitch.enabled = false;
         }
         else {
             self.isBlockedSwitch.state = NSControlStateValueOff;
             [self.statusItem.menu itemWithTag:mode].title = @"Mode: Alerting";
             //[self.statusItem.menu itemWithTag:block].title = @"Block";
+            self.learningSwitch.enabled = true;
         }
     }
 }
 
 - (void) updatePrefs {
     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:self.prefs copyItems:YES];
-    [self.xpc_extension_client update_preferences:dict];
+    [xpc_extension_client update_preferences:dict];
 }
 
 - (IBAction)skipAppleAction:(id)sender {
     if(self.skipAppleSwitch.state == NSControlStateValueOn)
-        self.prefs[@"skipApple"] = @YES;
+        self.prefs[PREF_SKIPAPPLE] = @YES;
     else
-        self.prefs[@"skipApple"] = @NO;
+        self.prefs[PREF_SKIPAPPLE] = @NO;
     [self updatePrefs];
     [self getStatus];
 }
 
 - (IBAction)injEnvVarsAction:(id)sender {
     if(self.envVarSwitch.state == NSControlStateValueOn)
-        self.prefs[@"prefEnvVars"] = @YES;
+        self.prefs[PREF_ENVVARS] = @YES;
     else
-        self.prefs[@"prefEnvVars"] = @NO;
+        self.prefs[PREF_ENVVARS] = @NO;
     [self updatePrefs];
     [self getStatus];
 }
 
 - (IBAction)injTfpAction:(id)sender {
     if(self.tfpSwitch.state == NSControlStateValueOn)
-        self.prefs[@"prefTFP"] = @YES;
+        self.prefs[PREF_TFP] = @YES;
     else
-        self.prefs[@"prefTFP"] = @NO;
+        self.prefs[PREF_TFP] = @NO;
     [self updatePrefs];
     [self getStatus];
 }
 
 - (IBAction)injElectronAction:(id)sender {
     if(self.electronSwitch.state == NSControlStateValueOn)
-        self.prefs[@"prefElectron"] = @YES;
+        self.prefs[PREF_ELECTRON] = @YES;
     else
-        self.prefs[@"prefElectron"] = @NO;
+        self.prefs[PREF_ELECTRON] = @NO;
     [self updatePrefs];
     [self getStatus];
 }
 
 - (IBAction)injDylibAction:(id)sender {
     if(self.dylibHijackSwitch.state == NSControlStateValueOn)
-        self.prefs[@"prefDylib"] = @YES;
+        self.prefs[PREF_DYLIB] = @YES;
     else
-        self.prefs[@"prefDylib"] = @NO;
+        self.prefs[PREF_DYLIB] = @NO;
     [self updatePrefs];
     [self getStatus];
 }
@@ -497,6 +549,11 @@ enum menuItems
         
         //enable menus
         [self enable_menu_actions];
+        
+        //close window if SEXT is installed
+        if(self.installer_window) {
+            [self.installer_window close];
+        }
         
     }
     if(result == OSSystemExtensionRequestWillCompleteAfterReboot) {

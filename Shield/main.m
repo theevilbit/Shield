@@ -8,14 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Preferences.h"
-#import "AllowList.h"
 #import "XPCExtensionClient.h"
 #import "XPCApp.h"
 #import "Constants.h"
 
 os_log_t log_handle = nil;
-
-AllowList* allowlist = nil;
 
 XPCExtensionClient* xpc_extension_client = nil;
 

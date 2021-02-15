@@ -32,7 +32,7 @@ extern os_log_t log_handle;
 -(void)startWithReply:(void (^)(es_new_client_result_t))reply
 {
     es_new_client_result_t started = [shield_monitor start];
-    preferences.preferences[@"isRunning"] = @(shield_monitor.isRunning);
+    preferences.preferences[PREF_ISRUNNING] = @(shield_monitor.isRunning);
     [preferences save];
     reply(started);
 }
@@ -41,7 +41,7 @@ extern os_log_t log_handle;
 -(void)stopWithReply:(void (^)(BOOL))reply
 {
     BOOL stopped = [shield_monitor stop];
-    preferences.preferences[@"isRunning"] = @(shield_monitor.isRunning);
+    preferences.preferences[PREF_ISRUNNING] = @(shield_monitor.isRunning);
     [preferences save];
     reply(stopped);
 }
@@ -50,12 +50,12 @@ extern os_log_t log_handle;
 - (void) update_preferences:(NSDictionary *)prefs reply:(void (^)(BOOL))reply {
     os_log_debug(log_handle, "Updating preferences");
     if(prefs != nil) {
-        preferences.preferences[@"prefElectron"] = [prefs objectForKey:@"prefElectron"];
-        preferences.preferences[@"prefEnvVars"] = [prefs objectForKey:@"prefEnvVars"];
-        preferences.preferences[@"prefTFP"] = [prefs objectForKey:@"prefTFP"];
-        preferences.preferences[@"prefDylib"] = [prefs objectForKey:@"prefDylib"];
-        preferences.preferences[@"skipApple"] = [prefs objectForKey:@"skipApple"];
-        preferences.preferences[@"isBlocking"] = [prefs objectForKey:@"isBlocking"];
+        for(id key in prefs) {
+            //update all prefs except for is running
+            if(![key isEqualToString:PREF_ISRUNNING]) {
+                preferences.preferences[key] = [prefs objectForKey:key];
+            }
+        }
     }
     [preferences save];
     reply(YES);
@@ -64,24 +64,36 @@ extern os_log_t log_handle;
 //send our local status variables to the main app
 - (void) getStatus:(void (^)(NSDictionary *))reply {
     os_log_debug(log_handle, "Sending status to app");
-    preferences.preferences[@"isRunning"] = @(shield_monitor.isRunning);
+    preferences.preferences[PREF_ISRUNNING] = @(shield_monitor.isRunning);
     NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:preferences.preferences copyItems:YES];
     reply(dict);
 }
 
-- (void) get_allowlist:(void (^)(NSDictionary *))reply {
+- (void) get_allowlist:(void (^)(NSArray *))reply {
     os_log_debug(log_handle, "Sending allowlist to app");
-    NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:allowlist.allowlist_full copyItems:YES];
-    reply(dict);
+    reply([allowlist.allowlist_items copy]);
 }
 
--(void)update_allowlist:(NSMutableDictionary *)al reply:(void (^)(BOOL))reply
+-(void)add_item_to_allowlist:(NSDictionary *)al reply:(void (^)(BOOL))reply
 {
     os_log_debug(log_handle, "Updating allowlist");
-    allowlist.allowlist_full = al;
-    reply(YES);
+    reply([allowlist add_item_to_allowlist:[al mutableCopy]]);
 }
 
+-(void)remove_item_from_allowlist:(NSDictionary *)al reply:(void (^)(BOOL))reply
+{
+    os_log_debug(log_handle, "Updating allowlist");
+    reply([allowlist remove_item_from_allowlist:[al mutableCopy]]);
+}
 
+-(void)clear_allowlist:(void (^)(BOOL))reply
+{
+    os_log_debug(log_handle, "Clearing allowlist");
+    reply([allowlist clear_allowlist]);
+}
+
+-(void)clear_cache {
+    [shield_monitor clear_cache];
+}
 
 @end

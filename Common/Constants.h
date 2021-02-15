@@ -21,12 +21,28 @@
 #define DIR_PATH_ES  @"/Library/Application Support/Shield"
 #define MACH_SERVICE @"33YRLYRBYV.com.csaba.fitzl.shield.Extension.xpc"
 
+//preferences strings
+
+#define PREF_ELECTRON @"prefElectron"
+#define PREF_ENVVARS @"prefEnvVars"
+#define PREF_TFP @"prefTFP"
+#define PREF_DYLIB @"prefDylib"
+#define PREF_SKIPAPPLE @"skipApple"
+#define PREF_ISBLOCKING @"isBlocking"
+#define PREF_ISLEARNING @"isLearning"
+#define PREF_ISRUNNING @"isRunning"
+
+//notification strings
+#define NOTIFICATION_TYPE @"type"
+#define NOTIFICATION_ID @"id"
+#define NOTIFICATION_VICTIM_PATH @"victim_path"
+#define NOTIFICATION_ATTACKER_PATH @"attacker_path"
+#define NOTIFICATION_DYLIB_PATH @"dylib_path"
+#define NOTIFICATION_ENV @"env"
+#define NOTIFICATION_ARGUMENTS @"arguments"
+
 #define CS_VALID 0x00000001
 #define CS_RUNTIME 0x00010000
 #define CS_REQUIRE_LV               0x00002000
-//log to file flag
-#define LOG_TO_FILE 0x10
-
-#define LOG_ROOT 0x0
 
 #endif /* Constants_h */

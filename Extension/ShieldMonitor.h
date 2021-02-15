@@ -27,6 +27,8 @@
 - (es_new_client_result_t) start;
 - (BOOL) stop;
 
+- (void) clear_cache;
+
 
 @end
 

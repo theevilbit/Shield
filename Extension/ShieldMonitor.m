@@ -18,6 +18,9 @@ extern AllowList* allowlist;
 
 extern os_log_t log_handle;
 
+//global for endpoint
+extern es_client_t* endpointClient;
+
 @implementation ShieldMonitor
 
 
@@ -36,13 +39,7 @@ extern os_log_t log_handle;
          https://www.trustedsec.com/blog/macos-injection-via-third-party-frameworks
          */
         self.xpc_client = [[XPCAppClient alloc] init];
-
-        //for now we don't autostart the es client, and we ensure it's reflected in preferences
         self.isRunning = NO;
-        if (preferences != nil) {
-            preferences.preferences[@"isRunning"] = @(self.isRunning);
-            [preferences save];
-        }
 
     }
     return self;
@@ -73,6 +70,12 @@ extern os_log_t log_handle;
     return stopped;
 }
 
+-(void)clear_cache {
+    if(endpointClient) {
+        es_clear_cache(endpointClient);
+    }
+}
+
 /*
  Methods to handle ES
  */
@@ -89,7 +92,7 @@ extern os_log_t log_handle;
     ProcessCallbackBlock block = ^(Process* process, es_client_t *client, es_message_t *message)
     {
         //ingore apple?
-        if( (YES == [[preferences.preferences objectForKey:@"skipApple"] boolValue]) && (YES == process.isPlatformBinary.boolValue))
+        if( (YES == [[preferences.preferences objectForKey:PREF_SKIPAPPLE] boolValue]) && (YES == process.isPlatformBinary.boolValue))
         {
             /*
              Apple processes getting task ports extremly frequently, and causing ~20% CPU usage
@@ -116,13 +119,15 @@ extern os_log_t log_handle;
         NSMutableDictionary* notification = [NSMutableDictionary new];
         BOOL notify = NO;
         BOOL blocked = NO;
-        notification[@"type"] = @"";
-        notification[@"victim_path"] = process.path;
-        notification[@"attacker_path"] = @"-";
-        notification[@"dylib_path"] = @"-";
-        notification[@"env"] = @"";//[[process.env valueForKey:@"description"] componentsJoinedByString:@""];
-        notification[@"arguments"] = [[process.arguments valueForKey:@"description"] componentsJoinedByString:@""];
-        notification[@"id"] = [NSNumber numberWithUnsignedInt:(u_int)NSDate.date.timeIntervalSince1970];
+        notification[NOTIFICATION_TYPE] = @"";
+        notification[NOTIFICATION_VICTIM_PATH] = process.path;
+        notification[NOTIFICATION_ATTACKER_PATH] = @"-";
+        notification[NOTIFICATION_DYLIB_PATH] = @"-";
+        notification[NOTIFICATION_ENV] = @"";//[[process.env valueForKey:@"description"] componentsJoinedByString:@""];
+        notification[NOTIFICATION_ARGUMENTS] = [[process.arguments valueForKey:@"description"] componentsJoinedByString:@" "];
+        
+        //timestamp is not sufficient id for mass alert, like Firefox, we use UUID
+        notification[@"id"] = [[NSUUID UUID] UUIDString];
 
         //main logic
         switch(process.event)
@@ -133,7 +138,7 @@ extern os_log_t log_handle;
                 es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
                 bool set_cache = false;
                 //check if we care about dylib hijack
-                if([[preferences.preferences objectForKey:@"prefDylib"] boolValue] == YES) {
+                if([[preferences.preferences objectForKey:PREF_DYLIB] boolValue] == YES) {
                     //enable cache if we verify the dylib
                     set_cache = true;
                     //extract mmap event
@@ -144,40 +149,54 @@ extern os_log_t log_handle;
                     
                     //get extension
                     NSString *ext = [path pathExtension];
-                    if ([ext isEqualToString:@"Dylib Hijacking"]) {
+                    if ([ext isEqualToString:@"dylib"]) {
+                        os_log_debug(log_handle,"checking dylib for process %@, dylib: %@",process.path, path);
                         //variables for code signing
                         SecStaticCodeRef staticCode = NULL;
                         SecRequirementRef requirementRef = NULL;
-                        NSURL *urlpath = [NSURL URLWithString:path];
                         //hold status
                         OSStatus status = !noErr;
 
                         //create static code ref from path
-                        status = SecStaticCodeCreateWithPath((__bridge CFURLRef)urlpath, kSecCSDefaultFlags, &staticCode);
-                        if (status == noErr) {
-                            //create req string
-                            //set req string, teamid = of the process
-                           NSString *requirementString = [NSString stringWithFormat:@"(anchor apple) or (anchor apple generic and certificate leaf[subject.OU] = \"%@\")", process.teamID];
-                            status = SecRequirementCreateWithString((__bridge CFStringRef _Nonnull)(requirementString), kSecCSDefaultFlags, &requirementRef);
+                        CFURLRef cfurl = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)[path cStringUsingEncoding:NSUTF8StringEncoding], path.length, false);
+                        //conversion successful
+                        if(cfurl) {
+                            status = SecStaticCodeCreateWithPath(cfurl, kSecCSDefaultFlags, &staticCode);
+                            os_log_debug(log_handle,"SecStaticCodeCreateWithPath error: 0x%x",status);
                             if (status == noErr) {
-                                //check code validity
-                                status = SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirementRef);
-                                notification[@"type"] = @"dylib";
-                                notification[@"dylib_path"] = path;
-                                notify = YES;
-                                if (status != noErr) {
-                                    if([[preferences.preferences objectForKey:@"isBlocking"] boolValue] == NO) {
-                                        /*
-                                         we notify users about detection, but postpone AUTH decision to later in case
-                                        other checks find issues
-                                         */
-                                        os_log_error(log_handle,"dylib hijackign detected in process %@, dylib: %@",process.path, path);
-                                    }
-                                    //blocking mode
-                                    else {
-                                        authResult = ES_AUTH_RESULT_DENY;
-                                        os_log_error(log_handle,"dylib hijackign blocked in process %@, dylib: %@",process.path, path);
-                                        blocked = YES;
+                                //create req string
+                                //set req string, teamid = of the process
+                               NSString *requirementString = [NSString stringWithFormat:@"(anchor apple) or (anchor apple generic and certificate leaf[subject.OU] = \"%@\")", process.teamID];
+                                os_log_debug(log_handle,"Req string: %@", requirementString);
+
+                                status = SecRequirementCreateWithString((__bridge CFStringRef _Nonnull)(requirementString), kSecCSDefaultFlags, &requirementRef);
+                                os_log_debug(log_handle,"SecRequirementCreateWithString error: 0x%x",status);
+                                if (status == noErr) {
+                                    //check code validity
+                                    status = SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirementRef);
+                                    os_log_debug(log_handle,"SecStaticCodeCheckValidity error: 0x%x",status);
+                                   if (status != noErr) {
+                                        notification[NOTIFICATION_TYPE] = @"Dylib hijacking";
+                                        notification[NOTIFICATION_DYLIB_PATH] = path;
+                                        //check whitelist
+                                        if([allowlist is_item_in_allowlist:notification]) {
+                                            res = es_respond_auth_result(client, message, authResult, false);
+                                            break;
+                                        }
+                                        notify = YES;
+                                        if([[preferences.preferences objectForKey:PREF_ISBLOCKING] boolValue] == NO) {
+                                            /*
+                                             we notify users about detection, but postpone AUTH decision to later in case
+                                            other checks find issues
+                                             */
+                                            os_log_error(log_handle,"dylib hijackign detected in process %@, dylib: %@",process.path, path);
+                                        }
+                                        //blocking mode
+                                        else {
+                                            authResult = ES_AUTH_RESULT_DENY;
+                                            os_log_error(log_handle,"dylib hijackign blocked in process %@, dylib: %@",process.path, path);
+                                            blocked = YES;
+                                        }
                                     }
                                 }
                             }
@@ -194,22 +213,28 @@ extern os_log_t log_handle;
             {
                 //we allow by default
                 es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
-                if([[preferences.preferences objectForKey:@"prefEnvVars"] boolValue] == YES) {
+                if([[preferences.preferences objectForKey:PREF_ENVVARS] boolValue] == YES) {
                     //loop through all monitored env vars
                     for (NSString *searchString in self.monitoredEnvVars) {
                         NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@",searchString];
                         NSArray *searchResults = [process.env filteredArrayUsingPredicate:searchPredicate];
                         if([searchResults count] > 0)
                         {
-                            notification[@"env"] = [[searchResults valueForKey:@"description"] componentsJoinedByString:@""];
-                            notification[@"type"] = @"Injection through environment variables";
+                            notification[NOTIFICATION_ENV] = [[searchResults valueForKey:@"description"] componentsJoinedByString:@" "];
+                            notification[NOTIFICATION_TYPE] = @"Injection through environment variables";
+                            //check whitelist
+                            if([allowlist is_item_in_allowlist:notification]) {
+                                res = es_respond_auth_result(client, message, authResult, false);
+                                break;
+                            }
                             notify = YES;
-                            if([[preferences.preferences objectForKey:@"isBlocking"] boolValue] == NO) {
+                            if([[preferences.preferences objectForKey:PREF_ISBLOCKING] boolValue] == NO) {
                                 /*
                                  we notify users about detection, but postpone AUTH decision to later in case
                                 other checks find issues
                                  */
                                 os_log_error(log_handle, "Environment variable %@ injection detected, victim process:%@ env: %@", searchString, process.path, [[process.env valueForKey:@"description"] componentsJoinedByString:@""]);
+                                //check if learning mode, this is only important when in non-blocking mode
                             }
                             //blocking mode
                             else {
@@ -223,15 +248,20 @@ extern os_log_t log_handle;
                 }
                 
                 //check for electron debug port use
-                if([[preferences.preferences objectForKey:@"prefElectron"] boolValue] == YES) {
+                if([[preferences.preferences objectForKey:PREF_ELECTRON] boolValue] == YES) {
                     NSString *electronDebugSearchString = @"--inspect";
                     NSPredicate *electronDebugPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@",electronDebugSearchString];
                     NSArray *electronDebugSearchResults = [process.arguments filteredArrayUsingPredicate:electronDebugPredicate];
                     if ([electronDebugSearchResults count] > 0)
                     {
-                        notification[@"type"] = @"Injection through Electron debug port";
+                        notification[NOTIFICATION_TYPE] = @"Injection through Electron debug port";
+                        //check whitelist
+                        if([allowlist is_item_in_allowlist:notification]) {
+                            res = es_respond_auth_result(client, message, authResult, false);
+                            break;
+                        }
                         notify = YES;
-                        if([[preferences.preferences objectForKey:@"isBlocking"] boolValue] == NO) {
+                        if([[preferences.preferences objectForKey:PREF_ISBLOCKING] boolValue] == NO) {
                             /*
                              we notify users about detection, but postpone AUTH decision to later in case
                             other checks find issues
@@ -256,12 +286,17 @@ extern os_log_t log_handle;
             case ES_EVENT_TYPE_AUTH_GET_TASK:
             {
                 es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
-                if([[preferences.preferences objectForKey:@"prefTFP"] boolValue] == YES) {
-                    notification[@"type"] = @"Task For Pid injection";
-                    notification[@"attacker_path"] = process.path;
-                    notification[@"victim_path"] = @(message->event.exec.target->executable->path.data);
+                if([[preferences.preferences objectForKey:PREF_TFP] boolValue] == YES) {
+                    notification[NOTIFICATION_TYPE] = @"Task For Pid injection";
+                    notification[NOTIFICATION_ATTACKER_PATH] = process.path;
+                    notification[NOTIFICATION_VICTIM_PATH] = @(message->event.exec.target->executable->path.data);
+                    //check whitelist
+                    if([allowlist is_item_in_allowlist:notification]) {
+                        res = es_respond_auth_result(client, message, authResult, false);
+                        break;
+                    }
                     notify = YES;
-                    if([[preferences.preferences objectForKey:@"isBlocking"] boolValue] == NO) {
+                    if([[preferences.preferences objectForKey:PREF_ISBLOCKING] boolValue] == NO) {
                         os_log_error(log_handle, "task_for_pid injection detected, attacker process:%@ , target process:%s", process.path, message->event.exec.target->executable->path.data);
                     }
                     else {
@@ -282,10 +317,20 @@ extern os_log_t log_handle;
                 break;
             }
         }
+        
+        //something was detected
         if(notify) {
-            [self.xpc_client send:[notification copy] blocked:blocked];
+            //learning mode check, only effective if non-blocking
+            if(([preferences.preferences[PREF_ISLEARNING] boolValue] == YES) && ([preferences.preferences[PREF_ISBLOCKING] boolValue] == NO)) {
+                //add to allowlist
+                [allowlist add_item_to_allowlist:notification];
+            }
+            //notify otherwise
+            else {
+                [self.xpc_client send:[notification copy] blocked:blocked];
+            }
         }
-
+        
     };
         
     //start monitoring

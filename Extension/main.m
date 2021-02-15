@@ -59,6 +59,10 @@ int main(int argc, const char * argv[]) {
         register4Shutdown();
 
         shield_monitor = [ShieldMonitor new];
+        
+        if([preferences.preferences[PREF_ISRUNNING] boolValue]) {
+            [shield_monitor start];
+        }
         [[NSRunLoop currentRunLoop] run];
         //dispatch_main();
 

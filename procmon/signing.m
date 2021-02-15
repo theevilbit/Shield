@@ -199,7 +199,9 @@ CFDictionaryRef staticCodeCheck(Process* process, SecCSFlags flags, NSMutableDic
     }
     
     //create static code ref via path
-    status = SecStaticCodeCreateWithPath((__bridge CFURLRef)([NSURL fileURLWithPath:process.path]), kSecCSDefaultFlags, &staticCode);
+    CFURLRef cfurl = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)[process.path cStringUsingEncoding:NSUTF8StringEncoding], process.path.length, false);
+    status = SecStaticCodeCreateWithPath(cfurl, kSecCSDefaultFlags, &staticCode);
+
     if(errSecSuccess != status)
     {
         //set error

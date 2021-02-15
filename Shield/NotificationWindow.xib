@@ -13,6 +13,7 @@
                 <outlet property="label_arguments" destination="Pp9-qA-5PE" id="yVR-Bc-Vt6"/>
                 <outlet property="label_attack_type" destination="73f-6p-c1u" id="PnA-BK-nzF"/>
                 <outlet property="label_attacker_process" destination="5Ew-Vg-btU" id="Nqr-CH-uz5"/>
+                <outlet property="label_blocked" destination="hbF-9b-b2i" id="LkS-3r-LAl"/>
                 <outlet property="label_dylib_path" destination="KHb-RP-8xv" id="Xj3-Ub-ZzU"/>
                 <outlet property="label_env" destination="c5e-zl-DEd" id="eKc-iX-GHM"/>
                 <outlet property="label_victim_process" destination="aXf-uK-C4A" id="HmW-4Q-x2W"/>
@@ -144,9 +145,9 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VIq-Zg-aXP">
-                        <rect key="frame" x="279" y="28" width="272" height="32"/>
+                        <rect key="frame" x="349" y="28" width="133" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Allow Next Time (Not Implemented Yet)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NdP-F0-BgE">
+                        <buttonCell key="cell" type="push" title="Allow Next Time" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NdP-F0-BgE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="13" name="AvenirNext-Medium"/>
                         </buttonCell>
@@ -165,6 +166,14 @@
                             <action selector="button_ok_action:" target="-2" id="jaj-en-vmD"/>
                         </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hbF-9b-b2i">
+                        <rect key="frame" x="388" y="269" width="37" height="22"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="8Lz-k8-i3g">
+                            <font key="font" size="16" name="AvenirNext-DemiBold"/>
+                            <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="EPQ-BZ-vgz" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="27" id="77d-SX-VAO"/>
@@ -192,6 +201,7 @@
                     <constraint firstItem="73f-6p-c1u" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="80" id="kCi-We-hPx"/>
                     <constraint firstItem="ROd-XZ-ZhF" firstAttribute="top" secondItem="EPQ-BZ-vgz" secondAttribute="bottom" constant="15" id="lUx-KI-DxP"/>
                     <constraint firstItem="d2w-SI-f8Z" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="62" id="nSS-IH-OCU"/>
+                    <constraint firstItem="hbF-9b-b2i" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="36" id="nin-g8-p6q"/>
                     <constraint firstItem="hSQ-s7-P16" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="62" id="ot1-Ep-EiF"/>
                     <constraint firstItem="Pp9-qA-5PE" firstAttribute="top" secondItem="aXf-uK-C4A" secondAttribute="bottom" constant="7" id="tPm-ui-rPU"/>
                     <constraint firstItem="AEg-Vi-vU7" firstAttribute="top" secondItem="ROd-XZ-ZhF" secondAttribute="bottom" constant="7" id="v7q-8r-q17"/>

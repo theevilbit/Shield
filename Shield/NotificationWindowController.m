@@ -8,8 +8,11 @@
 
 #import "NotificationWindowController.h"
 #import "AppDelegate.h"
+#import "XPCExtensionClient.h"
 
 extern os_log_t log_handle;
+
+extern XPCExtensionClient* xpc_extension_client;
 
 
 @interface NotificationWindowController ()
@@ -19,6 +22,8 @@ extern os_log_t log_handle;
 @property (weak) IBOutlet NSTextField *label_arguments;
 @property (weak) IBOutlet NSTextField *label_env;
 @property (weak) IBOutlet NSTextField *label_dylib_path;
+@property (weak) IBOutlet NSTextField *label_blocked;
+
 @property (weak) IBOutlet NSButton *button_ok;
 @property (weak) IBOutlet NSButton *button_allow;
 
@@ -39,24 +44,30 @@ extern os_log_t log_handle;
 
 - (void)windowDidLoad {
     
-    //self.
+    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [super windowDidLoad];
     if(self.notification != nil) {
-        [self.label_arguments setStringValue:self.notification[@"arguments"]];
-        [self.label_env setStringValue:self.notification[@"env"]];
-        [self.label_dylib_path setStringValue:self.notification[@"dylib_path"]];
-        [self.label_attacker_process setStringValue:self.notification[@"attacker_path"]];
-        [self.label_victim_process setStringValue:self.notification[@"victim_path"]];
-        [self.label_attack_type setStringValue:self.notification[@"type"]];
-        //[self.label_env setToolTip:self.notification[@"env"]];
+        [self.label_arguments setStringValue:self.notification[NOTIFICATION_ARGUMENTS]];
+        [self.label_env setStringValue:self.notification[NOTIFICATION_ENV]];
+        [self.label_dylib_path setStringValue:self.notification[NOTIFICATION_DYLIB_PATH]];
+        [self.label_attacker_process setStringValue:self.notification[NOTIFICATION_ATTACKER_PATH]];
+        [self.label_victim_process setStringValue:self.notification[NOTIFICATION_VICTIM_PATH]];
+        [self.label_attack_type setStringValue:self.notification[NOTIFICATION_TYPE]];
     }
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    if(self.blocked) {
+        [self.label_blocked setStringValue:@"BLOCKED"];
+    }
+    else {
+        [self.label_blocked setStringValue:@"DETECTED"];
+    }
     
 }
 
 
 - (IBAction)button_allow_action:(id)sender {
     os_log_debug(log_handle, "button_allow clicked '%s'", __PRETTY_FUNCTION__);
+    [xpc_extension_client add_item_to_allowlist:self.notification];
+    [xpc_extension_client clear_cache];
     [self.window close];
 }
 

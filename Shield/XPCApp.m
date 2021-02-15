@@ -23,11 +23,12 @@ extern os_log_t log_handle;
 //alert (windows)
 extern NSMutableDictionary* notification_collection;
 
+
 //show an alert window
 -(void)notify:(NSDictionary*)notification blocked:(BOOL)blockStatus reply:(void (^)(NSDictionary*))reply
 {
     //get the notification id
-    NSString* string_id =[notification[@"id"] stringValue];
+    NSString* string_id =notification[@"id"];
 
     //dbg msg
     os_log_debug(log_handle, "extension invoked user XPC method, '%s', with %{public}@", __PRETTY_FUNCTION__, notification);
@@ -52,6 +53,7 @@ extern NSMutableDictionary* notification_collection;
         }
         
         notification_window.notification = notification;
+        notification_window.blocked = blockStatus;
                 
         //show window
         [notification_window showWindow:self];

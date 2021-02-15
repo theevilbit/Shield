@@ -62,12 +62,14 @@ bail:
         }
     }
     self.preferences = [NSMutableDictionary new];
-    self.preferences[@"prefElectron"] = @YES;
-    self.preferences[@"prefEnvVars"] = @YES;
-    self.preferences[@"prefTFP"] = @YES;
-    self.preferences[@"prefDylib"] = @YES;
-    self.preferences[@"skipApple"] = @YES;
-    self.preferences[@"isBlocking"] = @NO;
+    self.preferences[PREF_ELECTRON] = @YES;
+    self.preferences[PREF_ENVVARS] = @YES;
+    self.preferences[PREF_TFP] = @YES;
+    self.preferences[PREF_DYLIB] = @YES;
+    self.preferences[PREF_SKIPAPPLE] = @YES;
+    self.preferences[PREF_ISBLOCKING] = @NO;
+    self.preferences[PREF_ISLEARNING] = @NO;
+    self.preferences[PREF_ISRUNNING] = @NO;
 
     BOOL saved = [self save];
     if(saved == NO) {

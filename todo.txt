@@ -1,14 +1,4 @@
-v1.0
-
-- improve prompting
-- implement allow list based on path
-
 v1.1
 
-- learning mode
+- self protection
 
-v1.2
-
-- allow list based on codesigning info
-
-  

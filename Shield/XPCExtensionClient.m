@@ -58,8 +58,8 @@ extern os_log_t log_handle;
      }] startWithReply:^(es_new_client_result_t rep)
      {
          //dbg msg
-         os_log_debug(log_handle, "got start reply: %d", rep);
-         
+        os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);
+
          //save
          started = rep;
          
@@ -79,8 +79,8 @@ extern os_log_t log_handle;
      }] stopWithReply:^(BOOL rep)
      {
          //dbg msg
-         os_log_debug(log_handle, "got stop reply: %d", rep);
-         
+        os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);
+
          //save
         stopped = rep;
          
@@ -100,8 +100,8 @@ extern os_log_t log_handle;
      }] getStatus:^(NSDictionary* rep)
      {
          //dbg msg
-         os_log_debug(log_handle, "got getStatus reply: %@", rep);
-         
+        os_log_debug(log_handle, "got %s reply: %@", __PRETTY_FUNCTION__, rep);
+
          //save
         extension_status = rep;
          
@@ -109,25 +109,25 @@ extern os_log_t log_handle;
     return extension_status;
 }
 
--(NSDictionary*) get_allowlist {
+-(NSArray*) get_allowlist {
     
     //placeholder for allowlist
-    __block NSDictionary* wl = nil;
+    __block NSArray* al = nil;
     [[self.extension synchronousRemoteObjectProxyWithErrorHandler:^(NSError * proxyError)
     {
         //err msg
         os_log_error(log_handle, "ERROR: failed to execute daemon XPC method '%s' (error: %@)", __PRETTY_FUNCTION__, proxyError);
         
-     }] get_allowlist:^(NSDictionary* rep)
+     }] get_allowlist:^(NSArray* rep)
      {
          //dbg msg
-         os_log_debug(log_handle, "got get_allowlist reply: %@", rep);
-         
+        os_log_debug(log_handle, "got %s reply: %@", __PRETTY_FUNCTION__, rep);
+
          //save
-        wl = rep;
+        al = rep;
          
      }];
-    return wl;
+    return al;
 }
 
 -(BOOL) update_preferences:(NSDictionary *)prefs {
@@ -142,8 +142,8 @@ extern os_log_t log_handle;
     }] update_preferences:prefs reply:^(BOOL rep)
      {
          //dbg msg
-         os_log_debug(log_handle, "got update_preferences reply: %d", rep);
-         
+        os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);
+
          //save
         ok = rep;
          
@@ -152,25 +152,74 @@ extern os_log_t log_handle;
 }
 
 
--(BOOL) update_allowlist:(NSMutableDictionary *)al {
+-(BOOL) add_item_to_allowlist:(NSDictionary *)al {
     
-    //placeholder for allowlist
     __block BOOL ok = NO;
     [[self.extension synchronousRemoteObjectProxyWithErrorHandler:^(NSError * proxyError)
     {
         //err msg
         os_log_error(log_handle, "ERROR: failed to execute daemon XPC method '%s' (error: %@)", __PRETTY_FUNCTION__, proxyError);
         
-    }] update_allowlist:al reply:^(BOOL rep)
+    }] add_item_to_allowlist:al reply:^(BOOL rep)
      {
          //dbg msg
-         os_log_debug(log_handle, "got update_allowlist reply: %d", rep);
+         os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);
          
          //save
         ok = rep;
          
      }];
     return ok;
+}
+
+-(BOOL) remove_item_from_allowlist:(NSDictionary *)al {
+    
+    __block BOOL ok = NO;
+    [[self.extension synchronousRemoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+    {
+        //err msg
+        os_log_error(log_handle, "ERROR: failed to execute daemon XPC method '%s' (error: %@)", __PRETTY_FUNCTION__, proxyError);
+        
+    }] remove_item_from_allowlist:al reply:^(BOOL rep)
+     {
+         //dbg msg
+        os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);
+
+         //save
+        ok = rep;
+         
+     }];
+    return ok;
+}
+
+-(BOOL) clear_allowlist {
+    
+    __block BOOL ok = NO;
+    [[self.extension synchronousRemoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+    {
+        //err msg
+        os_log_error(log_handle, "ERROR: failed to execute daemon XPC method '%s' (error: %@)", __PRETTY_FUNCTION__, proxyError);
+        
+    }] clear_allowlist:^(BOOL rep)
+     {
+         //dbg msg
+         os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);
+         
+         //save
+        ok = rep;
+         
+     }];
+    return ok;
+}
+
+//clear cache - to reset state if somethign was blocked but the user allows it
+-(void)clear_cache {
+    [[self.extension synchronousRemoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+    {
+        //err msg
+        os_log_error(log_handle, "ERROR: failed to execute daemon XPC method '%s' (error: %@)", __PRETTY_FUNCTION__, proxyError);
+        
+    }] clear_cache];
 }
 
 @end

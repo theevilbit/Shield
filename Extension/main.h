@@ -30,6 +30,8 @@ ShieldMonitor* shield_monitor = nil;
 
 XPCListener* xpc_listener = nil;
 
+es_client_t* endpointClient = nil;
+
 //log handle
 os_log_t log_handle = nil;
 

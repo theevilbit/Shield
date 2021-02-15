@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NotificationWindowController : NSWindowController <NSWindowDelegate>
 
 @property NSDictionary* notification;
+@property BOOL blocked;
 
 @end
 

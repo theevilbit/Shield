@@ -18,7 +18,7 @@
 @import OSLog;
 
 //endpoint
-es_client_t* endpointClient = nil;
+extern es_client_t* endpointClient;
 
 extern os_log_t log_handle;
 
