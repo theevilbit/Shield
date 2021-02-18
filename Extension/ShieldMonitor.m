@@ -136,6 +136,10 @@ extern es_client_t* endpointClient;
             case ES_EVENT_TYPE_AUTH_MMAP:
             {
                 es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
+                //variables for code signing
+                SecRequirementRef requirementRef = NULL;
+                SecStaticCodeRef staticCode = NULL;
+                CFURLRef cfurl = NULL;
                 bool set_cache = false;
                 //check if we care about dylib hijack
                 if([[preferences.preferences objectForKey:PREF_DYLIB] boolValue] == YES) {
@@ -151,14 +155,11 @@ extern es_client_t* endpointClient;
                     NSString *ext = [path pathExtension];
                     if ([ext isEqualToString:@"dylib"]) {
                         os_log_debug(log_handle,"checking dylib for process %@, dylib: %@",process.path, path);
-                        //variables for code signing
-                        SecStaticCodeRef staticCode = NULL;
-                        SecRequirementRef requirementRef = NULL;
                         //hold status
                         OSStatus status = !noErr;
 
                         //create static code ref from path
-                        CFURLRef cfurl = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)[path cStringUsingEncoding:NSUTF8StringEncoding], path.length, false);
+                        cfurl = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)[path cStringUsingEncoding:NSUTF8StringEncoding], path.length, false);
                         //conversion successful
                         if(cfurl) {
                             status = SecStaticCodeCreateWithPath(cfurl, kSecCSDefaultFlags, &staticCode);
@@ -166,15 +167,18 @@ extern es_client_t* endpointClient;
                             if (status == noErr) {
                                 //create req string
                                 //set req string, teamid = of the process
-                               NSString *requirementString = [NSString stringWithFormat:@"(anchor apple) or (anchor apple generic and certificate leaf[subject.OU] = \"%@\")", process.teamID];
+                                //anchor apple = apple's own binary - safe
+                                //anchor apple generic and certificate leaf [subject.CN] = \"Apple Mac OS Application Signing\" - app store, assume safe
+                                //anchor apple generic and certificate leaf[subject.OU] = \"%@\" - match dev teamid
+                               NSString *requirementString = [NSString stringWithFormat:@"(anchor apple) or (anchor apple generic and certificate leaf [subject.CN] = \"Apple Mac OS Application Signing\") or (anchor apple generic and certificate leaf[subject.OU] = \"%@\")", process.teamID];
                                 os_log_debug(log_handle,"Req string: %@", requirementString);
 
                                 status = SecRequirementCreateWithString((__bridge CFStringRef _Nonnull)(requirementString), kSecCSDefaultFlags, &requirementRef);
-                                os_log_debug(log_handle,"SecRequirementCreateWithString error: 0x%x",status);
+                                os_log_debug(log_handle,"SecRequirementCreateWithString error: %d",status);
                                 if (status == noErr) {
                                     //check code validity
                                     status = SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirementRef);
-                                    os_log_debug(log_handle,"SecStaticCodeCheckValidity error: 0x%x",status);
+                                    os_log_debug(log_handle,"SecStaticCodeCheckValidity error: %d",status);
                                    if (status != noErr) {
                                         notification[NOTIFICATION_TYPE] = @"Dylib hijacking";
                                         notification[NOTIFICATION_DYLIB_PATH] = path;
@@ -202,6 +206,28 @@ extern es_client_t* endpointClient;
                             }
                         }
                     }
+                }
+                //free static code
+                if(staticCode != NULL)
+                {
+                    //free
+                    CFRelease(staticCode);
+                    
+                    //unset
+                    staticCode = NULL;
+                }
+                if(requirementRef != NULL) {
+                    //free
+                    CFRelease(requirementRef);
+                    //unset
+                    requirementRef = NULL;
+                }
+                if(cfurl != NULL) {
+                    //free
+                    CFRelease(cfurl);
+                    
+                    //unset
+                    cfurl = NULL;
                 }
                 //set cache to true
                 res = es_respond_auth_result(client, message, authResult, set_cache);
