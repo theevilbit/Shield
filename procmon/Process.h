@@ -1,17 +1,12 @@
 //
-//  ProcessMonitor.h
-//  ProcessMonitor
+//  Process.h
+//  Shield System Extension
 //
-//  Created by Patrick Wardle on 9/1/19.
-//  Copyright © 2019 Objective-See. All rights reserved.
+//  Created by csaby on 2021. 05. 15..
+//  Copyright © 2021. csaba.fitzl. All rights reserved.
 //
-
-#import <Foundation/Foundation.h>
-#import <EndpointSecurity/EndpointSecurity.h>
 
 /* CONSTS */
-
-
 
 //code signing keys
 #define KEY_SIGNATURE_FLAGS @"csFlags"
@@ -30,24 +25,15 @@ enum Signer{None, Apple, AppStore, DevID, AdHoc};
 //cs options
 #define CS_STATIC_CHECK YES
 #define CS_CDHASH_LEN 20
+
+//architectures
+enum Architectures{ArchUnknown, ArchAppleSilicon, ArchIntel};
+
+
+
+
 /* CLASSES */
 @class Process;
-
-/* TYPEDEFS */
-
-//block for library
-typedef void (^ProcessCallbackBlock)(Process* _Nonnull, es_client_t* _Nonnull, es_message_t* _Nonnull);
-
-@interface ProcessMonitor : NSObject
-
-//start monitoring
-// pass in events of interest, count of said events, flag for codesigning, and callback
--(es_new_client_result_t)start:(es_event_type_t* _Nonnull)events count:(uint32_t)count csOption:(NSUInteger)csOption callback:(ProcessCallbackBlock _Nonnull)callback;
-
-//stop monitoring
--(BOOL)stop;
-
-@end
 
 /* OBJECT: PROCESS */
 

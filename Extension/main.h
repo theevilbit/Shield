@@ -11,7 +11,7 @@
 #import "XPCListener.h"
 #import "XPCExtension.h"
 #import "XPCAppClient.h"
-#import "ProcessMonitor.h"
+#import "Monitor.h"
 #import "ShieldMonitor.h"
 #import "../Common/logging.h"
 #import "../Common/Constants.h"
@@ -34,5 +34,7 @@ es_client_t* endpointClient = nil;
 
 //log handle
 os_log_t log_handle = nil;
+
+void register4Shutdown(void);
 
 #endif

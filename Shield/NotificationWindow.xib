@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NotificationWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="InjectionNotificationWindowController">
             <connections>
                 <outlet property="button_allow" destination="VIq-Zg-aXP" id="Jk2-fw-llA"/>
                 <outlet property="button_ok" destination="DKw-L1-SCg" id="ldT-xG-MAe"/>
@@ -31,88 +31,99 @@
                 <rect key="frame" x="0.0" y="0.0" width="812" height="327"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EPQ-BZ-vgz">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EPQ-BZ-vgz">
                         <rect key="frame" x="25" y="200" width="99" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Attacker Process:" id="Aca-or-FhH">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ROd-XZ-ZhF">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ROd-XZ-ZhF">
                         <rect key="frame" x="25" y="169" width="87" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Victim Process:" id="Cc6-g6-SZu">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AEg-Vi-vU7">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="AEg-Vi-vU7">
                         <rect key="frame" x="60" y="146" width="67" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="arguments:" id="ldG-eA-uGY">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d2w-SI-f8Z">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="d2w-SI-f8Z">
                         <rect key="frame" x="60" y="100" width="64" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="dylib path:" id="Gdx-wZ-cRn">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hSQ-s7-P16">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="hSQ-s7-P16">
                         <rect key="frame" x="60" y="123" width="130" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="environment variables:" id="mQg-Ni-jMf">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-dL-gmu">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ZBO-dL-gmu">
                         <rect key="frame" x="25" y="231" width="83" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Injection type:" id="q6e-X8-Lh0">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ANs-jS-eh1">
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ANs-jS-eh1">
                         <rect key="frame" x="744" y="259" width="48" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="48" id="6IO-uJ-gs4"/>
                             <constraint firstAttribute="width" constant="48" id="AOS-sh-jTk"/>
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="shield_yellow" id="Tzh-1e-7Yx"/>
                     </imageView>
-                    <textField identifier="label_injection_type" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73f-6p-c1u">
+                    <textField identifier="label_injection_type" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="73f-6p-c1u">
                         <rect key="frame" x="201" y="231" width="35" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="0Tg-FO-OWZ">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField identifier="label_attacker_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ew-Vg-btU">
+                    <textField identifier="label_attacker_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="5Ew-Vg-btU">
                         <rect key="frame" x="201" y="200" width="35" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="QEi-jH-nAt">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField identifier="label_victim_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXf-uK-C4A">
+                    <textField identifier="label_victim_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="aXf-uK-C4A">
                         <rect key="frame" x="201" y="169" width="35" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Cfn-F1-uOF">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField identifier="label_arguments" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pp9-qA-5PE">
+                    <textField identifier="label_arguments" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="Pp9-qA-5PE">
                         <rect key="frame" x="236" y="146" width="514" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="510" id="znK-yQ-kC2"/>
                         </constraints>
@@ -122,8 +133,9 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField identifier="label_env" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5e-zl-DEd">
+                    <textField identifier="label_env" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="c5e-zl-DEd">
                         <rect key="frame" x="236" y="123" width="514" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="510" id="qiP-XH-hN3"/>
                         </constraints>
@@ -133,8 +145,9 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField identifier="label_dylib_path" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KHb-RP-8xv">
+                    <textField identifier="label_dylib_path" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="KHb-RP-8xv">
                         <rect key="frame" x="236" y="100" width="514" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="510" id="SQJ-bh-v7h"/>
                         </constraints>
@@ -144,7 +157,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VIq-Zg-aXP">
+                    <button verticalHuggingPriority="750" id="VIq-Zg-aXP">
                         <rect key="frame" x="349" y="28" width="133" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Allow Next Time" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NdP-F0-BgE">
@@ -155,7 +168,7 @@
                             <action selector="button_allow_action:" target="-2" id="llH-Q3-ZNr"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKw-L1-SCg">
+                    <button verticalHuggingPriority="750" id="DKw-L1-SCg">
                         <rect key="frame" x="164" y="28" width="54" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MfL-Hb-2CO">
@@ -166,8 +179,9 @@
                             <action selector="button_ok_action:" target="-2" id="jaj-en-vmD"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hbF-9b-b2i">
-                        <rect key="frame" x="388" y="269" width="37" height="22"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="hbF-9b-b2i">
+                        <rect key="frame" x="388" y="269" width="52" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="8Lz-k8-i3g">
                             <font key="font" size="16" name="AvenirNext-DemiBold"/>
                             <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>

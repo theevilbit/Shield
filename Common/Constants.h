@@ -23,16 +23,24 @@
 
 //preferences strings
 
-#define PREF_ELECTRON @"prefElectron"
-#define PREF_ENVVARS @"prefEnvVars"
-#define PREF_TFP @"prefTFP"
-#define PREF_DYLIB @"prefDylib"
-#define PREF_SKIPAPPLE @"skipApple"
-#define PREF_ISBLOCKING @"isBlocking"
-#define PREF_ISLEARNING @"isLearning"
-#define PREF_ISRUNNING @"isRunning"
+#define PREF_ELECTRON @"pref_electron_debug"
+#define PREF_ENVVARS @"pref_env_vars"
+#define PREF_TFP @"pref_taskforpid"
+#define PREF_DYLIB @"pref_dylib"
+#define PREF_SKIPAPPLE @"skip_apple"
+#define PREF_ISBLOCKING @"is_blocking"
+#define PREF_ISLEARNING @"is_learning"
+#define PREF_ISRUNNING @"is_running"
+#define PREF_SELFPROTECTION @"pref_selfprotection"
+#define PREF_FILELINK_SYMBOLIC @"pref_filelink_symbolic"
+#define PREF_FILELINK_HARD @"pref_filelink_hard"
+
+//define attack types
+#define ATTACK_INJECTION @0
+#define ATTACK_FILELINKS @1
 
 //notification strings
+#define NOTIFICATION_ATTACK_TYPE @"attack_type"
 #define NOTIFICATION_TYPE @"type"
 #define NOTIFICATION_ID @"id"
 #define NOTIFICATION_VICTIM_PATH @"victim_path"
@@ -40,6 +48,15 @@
 #define NOTIFICATION_DYLIB_PATH @"dylib_path"
 #define NOTIFICATION_ENV @"env"
 #define NOTIFICATION_ARGUMENTS @"arguments"
+
+//notification strings for symlink/hardlink detection
+#define NOTIFICATION_LINK_TYPE @"type"
+#define NOTIFICATION_LINK_PROCESS_PATH @"process_path"
+#define NOTIFICATION_LINK_SOURCE_PATH @"source_path"
+#define NOTIFICATION_LINK_DESTINATION_PATH @"destination_path"
+#define NOTIFICATION_LINK_FILE_UID @"file_uid"
+#define NOTIFICATION_LINK_PROCESS_UID @"process_uid"
+
 
 #define CS_VALID 0x00000001
 #define CS_RUNTIME 0x00010000

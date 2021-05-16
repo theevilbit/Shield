@@ -14,7 +14,7 @@ dispatch_source_t dispatchSource = nil;
 
 //init a handler for SIGTERM
 // can perform actions such as disabling firewall and closing logging
-void register4Shutdown()
+void register4Shutdown(void)
 {
     //ignore sigterm
     // handling it via GCD dispatch

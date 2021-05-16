@@ -13,6 +13,10 @@
 #import <EndpointSecurity/EndpointSecurity.h>
 #import "../Common/logging.h"
 
+//return the first existing path
+NSString* existing_path(NSString *path);
+NSNumber* get_file_uid(NSString *path);
+
 //convert es_string_token_t to string
 NSString* convertStringToken(es_string_token_t* stringToken);
 NSString* getProcessPath(pid_t pid);

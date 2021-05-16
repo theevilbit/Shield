@@ -11,8 +11,9 @@
 @import OSLog;
 
 #import "XPCApp.h"
-#import "NotificationWindowController.h"
-
+#import "InjectionNotificationWindowController.h"
+#import "FilelinkNotificationWindowController.h"
+#import "Constants.h"
 @implementation XPCApp
 
 /* GLOBALS */
@@ -37,37 +38,70 @@ extern NSMutableDictionary* notification_collection;
     //on main (ui) thread
     dispatch_sync(dispatch_get_main_queue(), ^{
         
+        NSNumber* attack_type = notification[NOTIFICATION_ATTACK_TYPE];
+        if ([attack_type isEqualToNumber:ATTACK_INJECTION]) {
+            //notification window
+            InjectionNotificationWindowController* notification_window = nil;
+            
+            //alloc/init notification window
+            notification_window = [[InjectionNotificationWindowController alloc] initWithWindowNibName:@"NotificationWindow"];
+                    
+            //sync to save alert
+            // ensures there is a (memory) reference to the window
+            @synchronized(notification_collection)
+            {
+                //save
+                notification_collection[string_id] = notification_window;
+            }
+            
+            notification_window.notification = notification;
+            notification_window.blocked = blockStatus;
+                    
+            //show window
+            [notification_window showWindow:self];
         
-        //notification window
-        NotificationWindowController* notification_window = nil;
-        
-        //alloc/init notification window
-        notification_window = [[NotificationWindowController alloc] initWithWindowNibName:@"NotificationWindow"];
-                
-        //sync to save alert
-        // ensures there is a (memory) reference to the window
-        @synchronized(notification_collection)
-        {
-            //save
-            notification_collection[string_id] = notification_window;
+            //'request' user attention
+            //  bounces icon on the dock
+            [NSApp requestUserAttention:NSInformationalRequest];
+            
+            //make alert window key
+            [notification_window.window makeKeyAndOrderFront:self];
+            
+            //bring to front
+            [NSApp activateIgnoringOtherApps:YES];
         }
         
-        notification_window.notification = notification;
-        notification_window.blocked = blockStatus;
-                
-        //show window
-        [notification_window showWindow:self];
-    
-        //'request' user attention
-        //  bounces icon on the dock
-        [NSApp requestUserAttention:NSInformationalRequest];
+        else if ([attack_type isEqualToNumber:ATTACK_FILELINKS]) {
+            //notification window
+            FilelinkNotificationWindowController* notification_window = nil;
+            
+            //alloc/init notification window
+            notification_window = [[FilelinkNotificationWindowController alloc] initWithWindowNibName:@"FilelinkNotificationWindow"];
+                    
+            //sync to save alert
+            // ensures there is a (memory) reference to the window
+            @synchronized(notification_collection)
+            {
+                //save
+                notification_collection[string_id] = notification_window;
+            }
+            
+            notification_window.notification = notification;
+            notification_window.blocked = blockStatus;
+                    
+            //show window
+            [notification_window showWindow:self];
         
-        //make alert window key
-        [notification_window.window makeKeyAndOrderFront:self];
-        
-        //bring to front
-        [NSApp activateIgnoringOtherApps:YES];
-
+            //'request' user attention
+            //  bounces icon on the dock
+            [NSApp requestUserAttention:NSInformationalRequest];
+            
+            //make alert window key
+            [notification_window.window makeKeyAndOrderFront:self];
+            
+            //bring to front
+            [NSApp activateIgnoringOtherApps:YES];
+        }
         
     });
     

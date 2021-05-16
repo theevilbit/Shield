@@ -10,7 +10,7 @@
 #ifndef Signing_h
 #define Signing_h
 
-#import "ProcessMonitor.h"
+#import "Monitor.h"
 
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>

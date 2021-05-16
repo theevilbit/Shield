@@ -61,11 +61,25 @@ bail:
             goto bail;
         }
     }
+
+    BOOL reset_successful = [self reset];
+    
+    return reset_successful;
+    bail:
+        return NO;
+}
+
+-(BOOL)reset {
     self.preferences = [NSMutableDictionary new];
+    self.preferences[@"version"] = @2;
     self.preferences[PREF_ELECTRON] = @YES;
     self.preferences[PREF_ENVVARS] = @YES;
     self.preferences[PREF_TFP] = @YES;
     self.preferences[PREF_DYLIB] = @YES;
+    self.preferences[PREF_FILELINK_HARD] = @YES;
+    self.preferences[PREF_FILELINK_SYMBOLIC] = @YES;
+    self.preferences[PREF_SELFPROTECTION] = @NO;
+
     self.preferences[PREF_SKIPAPPLE] = @YES;
     self.preferences[PREF_ISBLOCKING] = @NO;
     self.preferences[PREF_ISLEARNING] = @NO;
@@ -74,12 +88,9 @@ bail:
     BOOL saved = [self save];
     if(saved == NO) {
         os_log_error(log_handle, "Preferences: Error saving preferences");
-        goto bail;
     }
     
-    return YES;
-    bail:
-        return NO;
+    return saved;
 }
 
 //load prefs from disk
@@ -88,12 +99,25 @@ bail:
     //flag
     BOOL loaded = NO;
     
+    //version
+    NSNumber* pref_version = nil;
+    
     //load
     self.preferences = [NSMutableDictionary dictionaryWithContentsOfFile:[DIR_PATH_ES stringByAppendingPathComponent:PREFS_FILE]];
     if(nil == self.preferences)
     {
         //bail
         goto bail;
+    }
+    
+    //reset preferences if older version is found
+    //1.0.1 didn't support versioning, so only checking if the key exists
+    pref_version = self.preferences[@"version"];
+    if (pref_version == nil) {
+        BOOL reset_successful = [self reset];
+        if(reset_successful == NO) {
+            goto bail;
+        }
     }
     
     //dbg msg

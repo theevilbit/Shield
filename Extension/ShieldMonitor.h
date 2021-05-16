@@ -6,21 +6,26 @@
 //  Copyright © 2020. csaba.fitzl. All rights reserved.
 //
 
+@import Foundation;
+
+#include <stdlib.h>
+#include <limits.h> /* PATH_MAX */
+
 #import "../Common/logging.h"
-#import "ProcessMonitor.h"
+#import "Monitor.h"
 #import "Preferences.h"
 #import "AllowList.h"
 #import "XPCAppClient.h"
 #import "XPCExtension.h"
-@import Foundation;
 #import "Constants.h"
 #import "utilities.h"
 
 @interface ShieldMonitor: NSObject
 
 @property BOOL isRunning;
-@property NSArray* monitoredEnvVars;
-@property ProcessMonitor* procMon;
+@property NSArray* monitored_env_vars;
+@property NSArray* monitored_electron_debug_strings;
+@property Monitor* procMon;
 @property XPCAppClient* xpc_client;
 
 - (BOOL) monitor;

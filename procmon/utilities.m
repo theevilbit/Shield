@@ -9,6 +9,32 @@
 #import "utilities.h"
 #import <libproc.h>
 #import <sys/sysctl.h>
+
+//return the first existing path
+NSString * existing_path(NSString *path)
+{
+    while (path && ![path isEqualToString:@""] && ![[NSFileManager defaultManager] fileExistsAtPath:path])
+        path = [path stringByDeletingLastPathComponent];
+    return path;
+}
+
+//get the file's UID
+NSNumber* get_file_uid(NSString *path) {
+    
+    NSNumber* file_uid = nil;
+    //get file attributes
+    NSDictionary* attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
+    
+    //sanitty check
+    if (attributes != nil) {
+        //file UID
+        file_uid = [attributes objectForKey:NSFileOwnerAccountID];
+    }
+    
+    return file_uid;
+}
+
+
 //convert es_string_token_t to string
 NSString* convertStringToken(es_string_token_t* stringToken)
 {

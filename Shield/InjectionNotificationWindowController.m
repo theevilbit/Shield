@@ -6,7 +6,7 @@
 //  Copyright © 2021. csaba.fitzl. All rights reserved.
 //
 
-#import "NotificationWindowController.h"
+#import "InjectionNotificationWindowController.h"
 #import "AppDelegate.h"
 #import "XPCExtensionClient.h"
 
@@ -15,7 +15,7 @@ extern os_log_t log_handle;
 extern XPCExtensionClient* xpc_extension_client;
 
 
-@interface NotificationWindowController ()
+@interface InjectionNotificationWindowController ()
 @property (weak) IBOutlet NSTextField *label_attacker_process;
 @property (weak) IBOutlet NSTextField *label_attack_type;
 @property (weak) IBOutlet NSTextField *label_victim_process;
@@ -29,7 +29,7 @@ extern XPCExtensionClient* xpc_extension_client;
 
 @end
 
-@implementation NotificationWindowController
+@implementation InjectionNotificationWindowController
 
 // also, transparency
 -(void)awakeFromNib

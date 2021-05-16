@@ -34,17 +34,21 @@ enum menuItems
 @interface AppDelegate ()<OSSystemExtensionRequestDelegate>
 
 //switch buttons
-@property (weak) IBOutlet NSSwitch *electronSwitch;
-@property (weak) IBOutlet NSSwitch *tfpSwitch;
-@property (weak) IBOutlet NSSwitch *envVarSwitch;
-@property (weak) IBOutlet NSSwitch *dylibHijackSwitch;
+@property (weak) IBOutlet NSSwitch *switch_electron_debug;
+@property (weak) IBOutlet NSSwitch *switch_taskforpid;
+@property (weak) IBOutlet NSSwitch *switch_env_vars;
+@property (weak) IBOutlet NSSwitch *switch_dylib_hijack;
 
-@property (weak) IBOutlet NSSwitch *skipAppleSwitch;
-@property (weak) IBOutlet NSSwitch *isBlockedSwitch;
-@property (weak) IBOutlet NSSwitch *onoffSwitch;
-@property (weak) IBOutlet NSWindow *prefWindow;
-@property (weak) IBOutlet NSSwitch *loginItemSwitch;
-@property (weak) IBOutlet NSSwitch *learningSwitch;
+@property (weak) IBOutlet NSSwitch *switch_skip_apple;
+@property (weak) IBOutlet NSSwitch *switch_isblocked;
+@property (weak) IBOutlet NSSwitch *switch_onoff;
+@property (weak) IBOutlet NSWindow *window_preferences;
+@property (weak) IBOutlet NSSwitch *switch_loginitem;
+@property (weak) IBOutlet NSSwitch *switch_learning_mode;
+@property (weak) IBOutlet NSSwitch *switch_selfprotection;
+
+@property (weak) IBOutlet NSSwitch *switch_hardlink;
+@property (weak) IBOutlet NSSwitch *switch_symbolic;
 
 @end
 
@@ -77,6 +81,9 @@ enum menuItems
     self.prefs[PREF_SKIPAPPLE] = @YES;
     self.prefs[PREF_ISBLOCKING] = @YES;
     self.prefs[PREF_ISLEARNING] = @NO;
+    self.prefs[PREF_FILELINK_HARD] = @YES;
+    self.prefs[PREF_FILELINK_SYMBOLIC] = @YES;
+    self.prefs[PREF_SELFPROTECTION] = @NO;
 
     self.isRunning = NO;
     
@@ -94,11 +101,11 @@ enum menuItems
     NSArray<NSRunningApplication *> *runningShieldHelper = [NSRunningApplication runningApplicationsWithBundleIdentifier:HELPER_BUNDLE_ID];
     //running app not found
     if (runningShieldHelper == nil || [runningShieldHelper count] == 0) {
-        self.loginItemSwitch.state = NSControlStateValueOff;
+        self.switch_loginitem.state = NSControlStateValueOff;
     }
     //running app found
     else {
-        self.loginItemSwitch.state = NSControlStateValueOn;
+        self.switch_loginitem.state = NSControlStateValueOn;
     }
     
     //disable menus until extsnion is installed
@@ -110,8 +117,6 @@ enum menuItems
     //create allowlist window
     self.allowlist_window = [[AllowListWindowController alloc] initWithWindowNibName:@"AllowListWindow"];
     self.allowlist_window.allowlist_app = [NSArray new];
-
-
 
 }
 
@@ -233,7 +238,7 @@ enum menuItems
 //display pref window
 - (IBAction)showPrefWindow:(id)sender {
     [self getStatus];
-    self.prefWindow.isVisible = YES;
+    self.window_preferences.isVisible = YES;
     [NSApp activateIgnoringOtherApps:YES];
 
 }
@@ -326,7 +331,7 @@ enum menuItems
 //here follows the switch button actions
 
 - (IBAction)onoffAction:(id)sender {
-    if(self.onoffSwitch.state == NSControlStateValueOn) {
+    if(self.switch_onoff.state == NSControlStateValueOn) {
         [self startSystemExtension];
     }
     else {
@@ -335,7 +340,7 @@ enum menuItems
 }
 
 - (IBAction)learningAction:(id)sender {
-    if(self.learningSwitch.state == NSControlStateValueOn) {
+    if(self.switch_learning_mode.state == NSControlStateValueOn) {
         self.prefs[PREF_ISLEARNING] = @YES;
         [self updatePrefs];
     }
@@ -358,7 +363,7 @@ enum menuItems
 
 
 - (IBAction)blockAction:(id)sender {
-    if (self.isBlockedSwitch.state == NSControlStateValueOn) {
+    if (self.switch_isblocked.state == NSControlStateValueOn) {
         self.prefs[PREF_ISBLOCKING] = @YES;
         [self updatePrefs];
     }
@@ -382,59 +387,77 @@ enum menuItems
         self.prefs[PREF_DYLIB] = reply[PREF_DYLIB];
         self.prefs[PREF_SKIPAPPLE] = reply[PREF_SKIPAPPLE];
         self.prefs[PREF_ISBLOCKING] = reply[PREF_ISBLOCKING];
+        self.prefs[PREF_FILELINK_HARD] = reply[PREF_FILELINK_HARD];
+        self.prefs[PREF_FILELINK_SYMBOLIC] = reply[PREF_FILELINK_SYMBOLIC];
         self.isRunning = [[reply objectForKey:PREF_ISRUNNING] boolValue];
-        if ([[self.prefs objectForKey:PREF_ELECTRON] boolValue] == YES)
-            self.electronSwitch.state = NSControlStateValueOn;
+
+        if ([[self.prefs objectForKey:PREF_SELFPROTECTION] boolValue] == YES)
+            self.switch_selfprotection.state = NSControlStateValueOn;
         else
-            self.electronSwitch.state = NSControlStateValueOff;
+            self.switch_selfprotection.state = NSControlStateValueOff;
+
+        if ([[self.prefs objectForKey:PREF_FILELINK_HARD] boolValue] == YES)
+            self.switch_hardlink.state = NSControlStateValueOn;
+        else
+            self.switch_hardlink.state = NSControlStateValueOff;
+
+        if ([[self.prefs objectForKey:PREF_FILELINK_SYMBOLIC] boolValue] == YES)
+            self.switch_symbolic.state = NSControlStateValueOn;
+        else
+            self.switch_symbolic.state = NSControlStateValueOff;
+
+        if ([[self.prefs objectForKey:PREF_ELECTRON] boolValue] == YES)
+            self.switch_electron_debug.state = NSControlStateValueOn;
+        else
+            self.switch_electron_debug.state = NSControlStateValueOff;
 
         if ([[self.prefs objectForKey:PREF_DYLIB] boolValue] == YES)
-            self.dylibHijackSwitch.state = NSControlStateValueOn;
+            self.switch_dylib_hijack.state = NSControlStateValueOn;
         else
-            self.dylibHijackSwitch.state = NSControlStateValueOff;
+            self.switch_dylib_hijack.state = NSControlStateValueOff;
 
         if ([[self.prefs objectForKey:PREF_ENVVARS] boolValue] == YES)
-            self.envVarSwitch.state = NSControlStateValueOn;
+            self.switch_env_vars.state = NSControlStateValueOn;
         else
-            self.envVarSwitch.state = NSControlStateValueOff;
+            self.switch_env_vars.state = NSControlStateValueOff;
 
         if ([[self.prefs objectForKey:PREF_TFP] boolValue] == YES)
-            self.tfpSwitch.state = NSControlStateValueOn;
+            self.switch_taskforpid.state = NSControlStateValueOn;
         else
-            self.tfpSwitch.state = NSControlStateValueOff;
+            self.switch_taskforpid.state = NSControlStateValueOff;
 
         if (self.isRunning == NO) {
             [self.statusItem.menu itemWithTag:status].title = @"Stopped";
             [self.statusItem.menu itemWithTag:toggle].title = @"Start";
-            self.onoffSwitch.state = NSControlStateValueOff;
+            self.switch_onoff.state = NSControlStateValueOff;
         }
         else {
             [self.statusItem.menu itemWithTag:status].title = @"Running";
             [self.statusItem.menu itemWithTag:toggle].title = @"Stop";
-            self.onoffSwitch.state = NSControlStateValueOn;
+            self.switch_onoff.state = NSControlStateValueOn;
         }
 
         if ([[self.prefs objectForKey:PREF_SKIPAPPLE] boolValue] == YES)
-            self.skipAppleSwitch.state = NSControlStateValueOn;
+            self.switch_skip_apple.state = NSControlStateValueOn;
         else
-            self.skipAppleSwitch.state = NSControlStateValueOff;
+            self.switch_skip_apple.state = NSControlStateValueOff;
 
         if ([[self.prefs objectForKey:PREF_ISLEARNING] boolValue] == YES)
-            self.learningSwitch.state = NSControlStateValueOn;
+            self.switch_learning_mode.state = NSControlStateValueOn;
         else
-            self.learningSwitch.state = NSControlStateValueOff;
+            self.switch_learning_mode.state = NSControlStateValueOff;
 
         if ([[self.prefs objectForKey:PREF_ISBLOCKING] boolValue] == YES) {
             [self.statusItem.menu itemWithTag:mode].title = @"Mode: Blocking";
             //[self.statusItem.menu itemWithTag:block].title = @"Alert";
-            self.isBlockedSwitch.state = NSControlStateValueOn;
-            self.learningSwitch.enabled = false;
+            self.switch_isblocked.state = NSControlStateValueOn;
+            self.switch_learning_mode.enabled = false;
         }
         else {
-            self.isBlockedSwitch.state = NSControlStateValueOff;
+            self.switch_isblocked.state = NSControlStateValueOff;
             [self.statusItem.menu itemWithTag:mode].title = @"Mode: Alerting";
             //[self.statusItem.menu itemWithTag:block].title = @"Block";
-            self.learningSwitch.enabled = true;
+            self.switch_learning_mode.enabled = true;
         }
     }
 }
@@ -445,7 +468,7 @@ enum menuItems
 }
 
 - (IBAction)skipAppleAction:(id)sender {
-    if(self.skipAppleSwitch.state == NSControlStateValueOn)
+    if(self.switch_skip_apple.state == NSControlStateValueOn)
         self.prefs[PREF_SKIPAPPLE] = @YES;
     else
         self.prefs[PREF_SKIPAPPLE] = @NO;
@@ -454,7 +477,7 @@ enum menuItems
 }
 
 - (IBAction)injEnvVarsAction:(id)sender {
-    if(self.envVarSwitch.state == NSControlStateValueOn)
+    if(self.switch_env_vars.state == NSControlStateValueOn)
         self.prefs[PREF_ENVVARS] = @YES;
     else
         self.prefs[PREF_ENVVARS] = @NO;
@@ -463,7 +486,7 @@ enum menuItems
 }
 
 - (IBAction)injTfpAction:(id)sender {
-    if(self.tfpSwitch.state == NSControlStateValueOn)
+    if(self.switch_taskforpid.state == NSControlStateValueOn)
         self.prefs[PREF_TFP] = @YES;
     else
         self.prefs[PREF_TFP] = @NO;
@@ -472,7 +495,7 @@ enum menuItems
 }
 
 - (IBAction)injElectronAction:(id)sender {
-    if(self.electronSwitch.state == NSControlStateValueOn)
+    if(self.switch_electron_debug.state == NSControlStateValueOn)
         self.prefs[PREF_ELECTRON] = @YES;
     else
         self.prefs[PREF_ELECTRON] = @NO;
@@ -481,7 +504,7 @@ enum menuItems
 }
 
 - (IBAction)injDylibAction:(id)sender {
-    if(self.dylibHijackSwitch.state == NSControlStateValueOn)
+    if(self.switch_dylib_hijack.state == NSControlStateValueOn)
         self.prefs[PREF_DYLIB] = @YES;
     else
         self.prefs[PREF_DYLIB] = @NO;
@@ -489,10 +512,38 @@ enum menuItems
     [self getStatus];
 }
 
+- (IBAction)hardlink_action:(id)sender {
+    if(self.switch_hardlink.state == NSControlStateValueOn)
+        self.prefs[PREF_FILELINK_HARD] = @YES;
+    else
+        self.prefs[PREF_FILELINK_HARD] = @NO;
+    [self updatePrefs];
+    [self getStatus];
+}
+
+- (IBAction)symbolic_action:(id)sender {
+    if(self.switch_symbolic.state == NSControlStateValueOn)
+        self.prefs[PREF_FILELINK_SYMBOLIC] = @YES;
+    else
+        self.prefs[PREF_FILELINK_SYMBOLIC] = @NO;
+    [self updatePrefs];
+    [self getStatus];
+}
+
+- (IBAction)selfprotection_action:(id)sender {
+    if(self.switch_selfprotection.state == NSControlStateValueOn)
+        self.prefs[PREF_SELFPROTECTION] = @YES;
+    else
+        self.prefs[PREF_SELFPROTECTION] = @NO;
+    [self updatePrefs];
+    [self getStatus];
+}
+
+
 //install / uninstall login item
 - (IBAction)loginItemAction:(id)sender {
     BOOL loginOnOff = NO;
-    if(self.loginItemSwitch.state == NSControlStateValueOn) {
+    if(self.switch_loginitem.state == NSControlStateValueOn) {
         loginOnOff = YES;
     }
     else {
