@@ -368,10 +368,10 @@ extern es_client_t* endpointClient;
     ESFileCallbackBlock file_block = ^(File* file, es_client_t *client, es_message_t *message)
     {
         
-        //ingore apple?
-        if( (YES == [[preferences.preferences objectForKey:PREF_SKIPAPPLE] boolValue]) && (YES == file.process.isPlatformBinary.boolValue))
+        /*temporary fix for time machine madness*/
+        NSString* tm = @"/System/Library/CoreServices/backupd.bundle/Contents/Resources/backupd";
+        if([file.process.path isEqualToString:tm])
         {
-            
             //we need to allow everything we ignore, otherwise everything will hang
             if(ES_ACTION_TYPE_AUTH == message->action_type) {
                 es_respond_auth_result(client,
@@ -383,7 +383,6 @@ extern es_client_t* endpointClient;
             //ignore
             return;
         }
-
         es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
         es_respond_result_t res;
         NSMutableDictionary* notification = [NSMutableDictionary new];
