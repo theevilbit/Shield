@@ -95,7 +95,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="shield_yellow" id="Tzh-1e-7Yx"/>
                     </imageView>
                     <textField identifier="label_injection_type" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="73f-6p-c1u">
-                        <rect key="frame" x="201" y="231" width="35" height="16"/>
+                        <rect key="frame" x="201" y="231" width="372" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="0Tg-FO-OWZ">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
@@ -104,7 +104,7 @@
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_attacker_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="5Ew-Vg-btU">
-                        <rect key="frame" x="201" y="200" width="35" height="16"/>
+                        <rect key="frame" x="201" y="200" width="441" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="QEi-jH-nAt">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
@@ -113,7 +113,7 @@
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_victim_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="aXf-uK-C4A">
-                        <rect key="frame" x="201" y="169" width="35" height="16"/>
+                        <rect key="frame" x="201" y="169" width="435" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Cfn-F1-uOF">
                             <font key="font" size="12" name="AvenirNext-Medium"/>
@@ -180,7 +180,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="hbF-9b-b2i">
-                        <rect key="frame" x="388" y="269" width="52" height="22"/>
+                        <rect key="frame" x="388" y="269" width="309" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="8Lz-k8-i3g">
                             <font key="font" size="16" name="AvenirNext-DemiBold"/>
