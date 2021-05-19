@@ -393,7 +393,7 @@ extern es_client_t* endpointClient;
                     NSNumber* file_uid = get_file_uid(file.sourcePath);
                     if (file_uid != nil) {
                         //file UID and process UID expected to be the same normally
-                        if ([file_uid intValue] != file.process.uid ) {
+                        if (([file_uid intValue] != file.process.uid)  && !([file_uid intValue] > 0 && file.process.uid == 0)) {
                             notification[NOTIFICATION_LINK_TYPE] = @"Hardlink";
                             notification[NOTIFICATION_LINK_DESTINATION_PATH] = file.destinationPath;
                             notification[NOTIFICATION_LINK_SOURCE_PATH] = file.sourcePath;
