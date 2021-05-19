@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="InjectionNotificationWindowController">
             <connections>
                 <outlet property="button_allow" destination="VIq-Zg-aXP" id="Jk2-fw-llA"/>
+                <outlet property="button_ignore_victim" destination="KZb-L9-5iV" id="COf-3g-79W"/>
                 <outlet property="button_ok" destination="DKw-L1-SCg" id="ldT-xG-MAe"/>
                 <outlet property="label_arguments" destination="Pp9-qA-5PE" id="yVR-Bc-Vt6"/>
                 <outlet property="label_attack_type" destination="73f-6p-c1u" id="PnA-BK-nzF"/>
@@ -25,68 +26,68 @@
         <window title="Shield Notification" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="812" height="327"/>
+            <rect key="contentRect" x="196" y="240" width="1060" height="366"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
-            <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="812" height="327"/>
+            <view key="contentView" misplaced="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="1060" height="366"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EPQ-BZ-vgz">
-                        <rect key="frame" x="25" y="200" width="99" height="16"/>
+                        <rect key="frame" x="18" y="194" width="133" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Attacker Process:" id="Aca-or-FhH">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="attacker process:" id="Aca-or-FhH">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ROd-XZ-ZhF">
-                        <rect key="frame" x="25" y="169" width="87" height="16"/>
+                        <rect key="frame" x="18" y="163" width="123" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Victim Process:" id="Cc6-g6-SZu">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="victim process:" id="Cc6-g6-SZu">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="AEg-Vi-vU7">
-                        <rect key="frame" x="60" y="146" width="67" height="16"/>
+                        <rect key="frame" x="54" y="131" width="88" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="arguments:" id="ldG-eA-uGY">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="d2w-SI-f8Z">
-                        <rect key="frame" x="60" y="100" width="64" height="16"/>
+                        <rect key="frame" x="54" y="75" width="98" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="dylib path:" id="Gdx-wZ-cRn">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="hSQ-s7-P16">
-                        <rect key="frame" x="60" y="123" width="130" height="16"/>
+                        <rect key="frame" x="54" y="107" width="172" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="environment variables:" id="mQg-Ni-jMf">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ZBO-dL-gmu">
-                        <rect key="frame" x="25" y="231" width="83" height="16"/>
+                        <rect key="frame" x="18" y="218" width="116" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Injection type:" id="q6e-X8-Lh0">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="injection type:" id="q6e-X8-Lh0">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ANs-jS-eh1">
-                        <rect key="frame" x="744" y="259" width="48" height="48"/>
+                        <rect key="frame" x="940" y="252" width="100" height="87"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="48" id="6IO-uJ-gs4"/>
@@ -95,99 +96,113 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="shield_yellow" id="Tzh-1e-7Yx"/>
                     </imageView>
                     <textField identifier="label_injection_type" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="73f-6p-c1u">
-                        <rect key="frame" x="201" y="231" width="372" height="16"/>
+                        <rect key="frame" x="230" y="221" width="812" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="0Tg-FO-OWZ">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="Label" usesSingleLineMode="YES" id="0Tg-FO-OWZ">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_attacker_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="5Ew-Vg-btU">
-                        <rect key="frame" x="201" y="200" width="441" height="16"/>
+                        <rect key="frame" x="230" y="190" width="812" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="QEi-jH-nAt">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="Label" usesSingleLineMode="YES" id="QEi-jH-nAt">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_victim_process" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="aXf-uK-C4A">
-                        <rect key="frame" x="201" y="169" width="435" height="16"/>
+                        <rect key="frame" x="230" y="159" width="812" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Cfn-F1-uOF">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="Label" usesSingleLineMode="YES" id="Cfn-F1-uOF">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_arguments" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="Pp9-qA-5PE">
-                        <rect key="frame" x="236" y="146" width="514" height="16"/>
+                        <rect key="frame" x="230" y="131" width="812" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="510" id="znK-yQ-kC2"/>
                         </constraints>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="OeN-QA-quu">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="Label" usesSingleLineMode="YES" id="OeN-QA-quu">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_env" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="c5e-zl-DEd">
-                        <rect key="frame" x="236" y="123" width="514" height="16"/>
+                        <rect key="frame" x="230" y="101" width="812" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="510" id="qiP-XH-hN3"/>
                         </constraints>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="aah-Gr-ETp">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="Label" usesSingleLineMode="YES" id="aah-Gr-ETp">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField identifier="label_dylib_path" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" id="KHb-RP-8xv">
-                        <rect key="frame" x="236" y="100" width="514" height="16"/>
+                        <rect key="frame" x="230" y="77" width="812" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="510" id="SQJ-bh-v7h"/>
                         </constraints>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="3vg-lb-Jtb">
-                            <font key="font" size="12" name="AvenirNext-Medium"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="Label" usesSingleLineMode="YES" id="3vg-lb-Jtb">
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" id="VIq-Zg-aXP">
-                        <rect key="frame" x="349" y="28" width="133" height="32"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" id="hbF-9b-b2i">
+                        <rect key="frame" x="376" y="324" width="309" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Allow Next Time" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NdP-F0-BgE">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="8Lz-k8-i3g">
+                            <font key="font" size="21" name="AvenirNext-DemiBold"/>
+                            <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="VIq-Zg-aXP">
+                        <rect key="frame" x="346" y="26" width="229" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="⚠️ put event on allowlist ⚠️" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NdP-F0-BgE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="13" name="AvenirNext-Medium"/>
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
                         </buttonCell>
                         <connections>
                             <action selector="button_allow_action:" target="-2" id="llH-Q3-ZNr"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="DKw-L1-SCg">
-                        <rect key="frame" x="164" y="28" width="54" height="32"/>
+                    <button verticalHuggingPriority="750" id="KZb-L9-5iV">
+                        <rect key="frame" x="596" y="26" width="231" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MfL-Hb-2CO">
+                        <buttonCell key="cell" type="push" title="☠️ put victim on allowlist ☠️" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DcU-1l-kZw">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="13" name="AvenirNext-Medium"/>
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="button_ignore_victim_action:" target="-2" id="A1G-vu-qcB"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="DKw-L1-SCg">
+                        <rect key="frame" x="256" y="26" width="52" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="ok" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MfL-Hb-2CO">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="15" name="AvenirNext-Medium"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                         </buttonCell>
                         <connections>
                             <action selector="button_ok_action:" target="-2" id="jaj-en-vmD"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="hbF-9b-b2i">
-                        <rect key="frame" x="388" y="269" width="309" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="8Lz-k8-i3g">
-                            <font key="font" size="16" name="AvenirNext-DemiBold"/>
-                            <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="EPQ-BZ-vgz" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="27" id="77d-SX-VAO"/>
@@ -206,7 +221,6 @@
                     <constraint firstItem="d2w-SI-f8Z" firstAttribute="top" secondItem="hSQ-s7-P16" secondAttribute="bottom" constant="7" id="YVP-WR-rmB"/>
                     <constraint firstItem="ANs-jS-eh1" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="b3T-dQ-9BL"/>
                     <constraint firstItem="hSQ-s7-P16" firstAttribute="top" secondItem="AEg-Vi-vU7" secondAttribute="bottom" constant="7" id="dNp-mv-ase"/>
-                    <constraint firstItem="ANs-jS-eh1" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="dTU-5X-MaK"/>
                     <constraint firstItem="ZBO-dL-gmu" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="80" id="eAM-Qy-jhv"/>
                     <constraint firstItem="c5e-zl-DEd" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="238" id="fgF-7K-9KR"/>
                     <constraint firstItem="aXf-uK-C4A" firstAttribute="top" secondItem="5Ew-Vg-btU" secondAttribute="bottom" constant="15" id="geN-Tj-7Fd"/>
@@ -225,7 +239,7 @@
                 <binding destination="e1d-dm-ZGX" name="title" keyPath="values" id="GQ2-LM-zOS"/>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-162" y="144.5"/>
+            <point key="canvasLocation" x="-12" y="164"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="e1d-dm-ZGX"/>
     </objects>

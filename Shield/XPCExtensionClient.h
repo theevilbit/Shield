@@ -36,7 +36,7 @@
 -(BOOL)update_preferences:(NSDictionary *)prefs;
 
 //allowlist operation
--(BOOL)add_item_to_allowlist:(NSDictionary *)al;
+-(BOOL)add_item_to_allowlist:(NSDictionary *)al generic:(BOOL)generic;
 -(BOOL)remove_item_from_allowlist:(NSDictionary *)al;
 -(NSArray*)get_allowlist;
 -(BOOL)clear_allowlist;

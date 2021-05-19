@@ -40,9 +40,12 @@
 #define ATTACK_FILELINKS @1
 
 //notification strings
+//common
 #define NOTIFICATION_ATTACK_TYPE @"attack_type"
-#define NOTIFICATION_TYPE @"type"
 #define NOTIFICATION_ID @"id"
+
+//notification strings for process injection
+#define NOTIFICATION_TYPE @"type"
 #define NOTIFICATION_VICTIM_PATH @"victim_path"
 #define NOTIFICATION_ATTACKER_PATH @"attacker_path"
 #define NOTIFICATION_DYLIB_PATH @"dylib_path"
@@ -50,7 +53,7 @@
 #define NOTIFICATION_ARGUMENTS @"arguments"
 
 //notification strings for symlink/hardlink detection
-#define NOTIFICATION_LINK_TYPE @"type"
+#define NOTIFICATION_LINK_TYPE @"link_type"
 #define NOTIFICATION_LINK_PROCESS_PATH @"process_path"
 #define NOTIFICATION_LINK_SOURCE_PATH @"source_path"
 #define NOTIFICATION_LINK_DESTINATION_PATH @"destination_path"

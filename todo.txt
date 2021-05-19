@@ -3,5 +3,4 @@ v1.2
 - self protection
 - new login items
 - different autorun setting
-- allowlist for links
-- injection allowlist: allow proces generically
+- headless mode

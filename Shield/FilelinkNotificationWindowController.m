@@ -27,6 +27,8 @@ extern XPCExtensionClient* xpc_extension_client;
 
 @property (weak) IBOutlet NSButton *button_ok;
 @property (weak) IBOutlet NSButton *button_allow;
+@property (weak) IBOutlet NSButton *button_ignore_process;
+
 @end
 
 @implementation FilelinkNotificationWindowController
@@ -52,7 +54,7 @@ extern XPCExtensionClient* xpc_extension_client;
         [self.label_file_source setStringValue:self.notification[NOTIFICATION_LINK_SOURCE_PATH]];
         [self.label_file_destination setStringValue:self.notification[NOTIFICATION_LINK_DESTINATION_PATH]];
         [self.label_file_uid setStringValue:self.notification[NOTIFICATION_LINK_FILE_UID]];
-        [self.label_attack_type setStringValue:self.notification[NOTIFICATION_TYPE]];
+        [self.label_attack_type setStringValue:self.notification[NOTIFICATION_LINK_TYPE]];
     }
     if(self.blocked) {
         [self.label_blocked setStringValue:@"BLOCKED"];
@@ -67,7 +69,8 @@ extern XPCExtensionClient* xpc_extension_client;
 - (IBAction)button_allow_action:(id)sender {
     os_log_debug(log_handle, "button_allow clicked '%s'", __PRETTY_FUNCTION__);
 
-    //TBD
+    [xpc_extension_client add_item_to_allowlist:self.notification generic:NO];
+    [xpc_extension_client clear_cache];
 
     [self.window close];
 }
@@ -79,4 +82,10 @@ extern XPCExtensionClient* xpc_extension_client;
     
 }
 
+- (IBAction)button_ignore_process_action:(id)sender {
+    os_log_debug(log_handle, "button_ignore_process clicked '%s'", __PRETTY_FUNCTION__);
+    [xpc_extension_client add_item_to_allowlist:self.notification generic:YES];
+    [xpc_extension_client clear_cache];
+    [self.window close];
+}
 @end

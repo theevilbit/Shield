@@ -152,7 +152,7 @@ extern os_log_t log_handle;
 }
 
 
--(BOOL) add_item_to_allowlist:(NSDictionary *)al {
+-(BOOL) add_item_to_allowlist:(NSDictionary *)al generic:(BOOL)generic{
     
     __block BOOL ok = NO;
     [[self.extension synchronousRemoteObjectProxyWithErrorHandler:^(NSError * proxyError)
@@ -160,7 +160,7 @@ extern os_log_t log_handle;
         //err msg
         os_log_error(log_handle, "ERROR: failed to execute daemon XPC method '%s' (error: %@)", __PRETTY_FUNCTION__, proxyError);
         
-    }] add_item_to_allowlist:al reply:^(BOOL rep)
+    }] add_item_to_allowlist:al generic:generic reply:^(BOOL rep)
      {
          //dbg msg
          os_log_debug(log_handle, "got %s reply: %d", __PRETTY_FUNCTION__, rep);

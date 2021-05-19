@@ -33,9 +33,9 @@
 -(BOOL)is_item_in_allowlist:(NSDictionary*)item;
 
 //manage allowlist
--(BOOL)add_item_to_allowlist:(NSDictionary*)item;
+-(BOOL)add_item_to_allowlist:(NSMutableDictionary*)item generic:(BOOL)generic;
 
--(BOOL)remove_item_from_allowlist:(NSDictionary*)item;
+-(BOOL)remove_item_from_allowlist:(NSMutableDictionary*)item;
 
 -(NSDictionary*) get_allowlist;
 

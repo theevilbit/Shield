@@ -10,12 +10,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AllowListWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSWindowDelegate>
+@interface AllowListTableController : NSTabViewController <NSTableViewDataSource, NSTableViewDelegate>
 
 //allow list in the app
 @property NSArray* allowlist_app;
-@property (weak) IBOutlet NSTableView *allowlist_table;
-
 @end
+
+@interface AllowListWindowController : NSWindowController <NSWindowDelegate>
+
+//allow list in the app
+@property NSArray* allowlist_app;
+@property (weak) IBOutlet NSTableView *allowlist_table_injection;
+@property (weak) IBOutlet NSTableView *allowlist_table_link;
+@property AllowListTableController* allow_inj_table_ctl;
+@property AllowListTableController* allow_link_table_ctl;
+@end
+
+
+
 
 NS_ASSUME_NONNULL_END

@@ -26,6 +26,7 @@ extern XPCExtensionClient* xpc_extension_client;
 
 @property (weak) IBOutlet NSButton *button_ok;
 @property (weak) IBOutlet NSButton *button_allow;
+@property (weak) IBOutlet NSButton *button_ignore_victim;
 
 @end
 
@@ -66,7 +67,7 @@ extern XPCExtensionClient* xpc_extension_client;
 
 - (IBAction)button_allow_action:(id)sender {
     os_log_debug(log_handle, "button_allow clicked '%s'", __PRETTY_FUNCTION__);
-    [xpc_extension_client add_item_to_allowlist:self.notification];
+    [xpc_extension_client add_item_to_allowlist:self.notification generic:NO];
     [xpc_extension_client clear_cache];
     [self.window close];
 }
@@ -76,6 +77,12 @@ extern XPCExtensionClient* xpc_extension_client;
     os_log_debug(log_handle, "button_ok clicked '%s'", __PRETTY_FUNCTION__);
     [self.window close];
     
+}
+- (IBAction)button_ignore_victim_action:(id)sender {
+    os_log_debug(log_handle, "button_ignore_victim clicked '%s'", __PRETTY_FUNCTION__);
+    [xpc_extension_client add_item_to_allowlist:self.notification generic:YES];
+    [xpc_extension_client clear_cache];
+    [self.window close];
 }
 
 @end

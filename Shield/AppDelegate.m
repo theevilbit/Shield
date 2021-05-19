@@ -203,7 +203,7 @@ enum menuItems
 
     NSMenuItem* menuAllow = [NSMenuItem new];
     menuAllow.tag = allowlist;
-    menuAllow.title = @"Allowed Injections";
+    menuAllow.title = @"Allowed Items";
     [menu addItem:menuAllow];
 
     [menu addItem:[NSMenuItem separatorItem]]; // A thin grey line
@@ -228,7 +228,7 @@ enum menuItems
 //show window for editing allow list
 - (IBAction)showAllowWindow:(id)sender {
     self.allowlist_window.allowlist_app = [xpc_extension_client get_allowlist];
-    [self.allowlist_window.allowlist_table reloadData];
+    [self.allowlist_window.allowlist_table_injection reloadData];
 
     self.allowlist_window.window.isVisible = YES;
     [NSApp activateIgnoringOtherApps:YES];

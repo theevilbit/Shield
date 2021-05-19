@@ -354,7 +354,7 @@ extern es_client_t* endpointClient;
             //learning mode check, only effective if non-blocking
             if(([preferences.preferences[PREF_ISLEARNING] boolValue] == YES) && ([preferences.preferences[PREF_ISBLOCKING] boolValue] == NO)) {
                 //add to allowlist
-                [allowlist add_item_to_allowlist:notification];
+                [allowlist add_item_to_allowlist:notification generic:NO];
             }
             //notify otherwise
             else {
@@ -368,21 +368,6 @@ extern es_client_t* endpointClient;
     ESFileCallbackBlock file_block = ^(File* file, es_client_t *client, es_message_t *message)
     {
         
-        /*temporary fix for time machine madness*/
-        NSString* tm = @"/System/Library/CoreServices/backupd.bundle/Contents/Resources/backupd";
-        if([file.process.path isEqualToString:tm])
-        {
-            //we need to allow everything we ignore, otherwise everything will hang
-            if(ES_ACTION_TYPE_AUTH == message->action_type) {
-                es_respond_auth_result(client,
-                                       message,
-                                       ES_AUTH_RESULT_ALLOW,
-                                       false
-                                       );
-            }
-            //ignore
-            return;
-        }
         es_auth_result_t authResult = ES_AUTH_RESULT_ALLOW;
         es_respond_result_t res;
         NSMutableDictionary* notification = [NSMutableDictionary new];
@@ -415,6 +400,10 @@ extern es_client_t* endpointClient;
                             notification[NOTIFICATION_LINK_PROCESS_PATH] = file.process.path;
                             notification[NOTIFICATION_LINK_FILE_UID] = [NSString stringWithFormat:@"%@",file_uid];
                             notification[NOTIFICATION_LINK_PROCESS_UID] = [NSString stringWithFormat:@"%d",file.process.uid];
+                            if([allowlist is_item_in_allowlist:notification]) {
+                                res = es_respond_auth_result(client, message, authResult, false);
+                                break;
+                            }
                             notify = YES;
                             if([[preferences.preferences objectForKey:PREF_ISBLOCKING] boolValue] == NO) {
                                 os_log_error(log_handle, "Hardlink Attack detected source:%@ , process:%@", file.sourcePath, file.process.path);
@@ -460,13 +449,18 @@ extern es_client_t* endpointClient;
                                     NSNumber* file_uid = get_file_uid(valid_path);
                                     if (file_uid != nil) {
                                         //file UID and process UID expected to be the same normally
-                                        if ([file_uid intValue] != file.process.uid ) {
+                                        //exclude events where a higgher priv process (0) point to lower priv (>0)
+                                        if (([file_uid intValue] != file.process.uid) && !([file_uid intValue] > 0 && file.process.uid == 0)) {
                                             notification[NOTIFICATION_LINK_TYPE] = @"Symbolic link";
                                             notification[NOTIFICATION_LINK_SOURCE_PATH] = [NSString stringWithFormat:@"%s",destination_path];
                                             notification[NOTIFICATION_LINK_DESTINATION_PATH] = file.destinationPath;
                                             notification[NOTIFICATION_LINK_PROCESS_PATH] = file.process.path;
                                             notification[NOTIFICATION_LINK_FILE_UID] = [NSString stringWithFormat:@"%@",file_uid];
                                             notification[NOTIFICATION_LINK_PROCESS_UID] = [NSString stringWithFormat:@"%d",file.process.uid];
+                                            if([allowlist is_item_in_allowlist:notification]) {
+                                                res = es_respond_auth_result(client, message, authResult, false);
+                                                break;
+                                            }
                                             notify = YES;
                                             if([[preferences.preferences objectForKey:PREF_ISBLOCKING] boolValue] == NO) {
                                                 os_log_error(log_handle, "Symlink Attack detected source:%@ , process:%@", file.destinationPath, file.process.path);
@@ -500,7 +494,7 @@ extern es_client_t* endpointClient;
             //learning mode check, only effective if non-blocking
             if(([preferences.preferences[PREF_ISLEARNING] boolValue] == YES) && ([preferences.preferences[PREF_ISBLOCKING] boolValue] == NO)) {
                 //add to allowlist
-                //[allowlist add_item_to_allowlist:notification];
+                [allowlist add_item_to_allowlist:notification generic:NO];
             }
             //notify otherwise
             else {

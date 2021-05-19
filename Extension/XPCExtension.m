@@ -74,10 +74,10 @@ extern os_log_t log_handle;
     reply([allowlist.allowlist_items copy]);
 }
 
--(void)add_item_to_allowlist:(NSDictionary *)al reply:(void (^)(BOOL))reply
+-(void)add_item_to_allowlist:(NSDictionary *)al generic:(BOOL)generic reply:(void (^)(BOOL))reply
 {
     os_log_debug(log_handle, "Updating allowlist");
-    reply([allowlist add_item_to_allowlist:[al mutableCopy]]);
+    reply([allowlist add_item_to_allowlist:[al mutableCopy] generic:generic]);
 }
 
 -(void)remove_item_from_allowlist:(NSDictionary *)al reply:(void (^)(BOOL))reply

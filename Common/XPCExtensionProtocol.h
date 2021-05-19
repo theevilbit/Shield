@@ -27,7 +27,7 @@
 -(void)update_preferences:(NSDictionary *)prefs reply:(void (^)(BOOL))reply;
 
 //allowlist operation
--(void)add_item_to_allowlist:(NSDictionary *)al reply:(void (^)(BOOL))reply;
+-(void)add_item_to_allowlist:(NSDictionary *)al generic:(BOOL)generic reply:(void (^)(BOOL))reply;
 -(void)remove_item_from_allowlist:(NSDictionary *)al reply:(void (^)(BOOL))reply;
 -(void)clear_allowlist:(void (^)(BOOL))reply;
 -(void)get_allowlist:(void (^)(NSArray *))reply;
